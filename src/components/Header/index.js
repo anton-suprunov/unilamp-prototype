@@ -1,33 +1,34 @@
 import React from 'react'
 import Link from 'gatsby-link'
 
+import './header.scss';
+
 const Header = () => (
-  <div
-    style={{
-      background: 'rebeccapurple',
-      marginBottom: '1.45rem',
-    }}
-  >
-    <div
-      style={{
-        margin: '0 auto',
-        maxWidth: 960,
-        padding: '1.45rem 1.0875rem',
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: 'white',
-            textDecoration: 'none',
-          }}
-        >
-          Gatsby
-        </Link>
-      </h1>
+  <header className="header">
+    <div className="header__container">
+      <Link to="/" className="header__logo"></Link>
+      <nav className="header__nav">
+        <ul className="header__nav-ul">
+          <li className="header__nav-li">
+            <a href="#" className="header__nav-link">Produkter</a>
+          </li>
+          <li className="header__nav-li">
+            <a href="#" className="header__nav-link">Bli inspirert</a>
+          </li>
+          <li className="header__nav-li">
+            <a href="#" className="header__nav-link">About Us</a>
+          </li>
+          <li className="header__nav-li">
+            <a href="#" className="header__nav-link">Kontakt</a>
+          </li>
+          <li className="header__nav-li">
+            <a href="#" className="header__nav-link">Support</a>
+          </li>
+        </ul>
+      </nav>
+      <div className="header__search"></div>
     </div>
-  </div>
+  </header>
 )
 
 export default Header
