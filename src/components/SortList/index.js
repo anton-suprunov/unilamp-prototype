@@ -10,8 +10,17 @@ export default class SortList extends Component {
     super(props);
     
     this.state = {
-      isActive: false,
-      activeSubmenus: []
+      isActive: props.activePath && props.activePath.length,
+      activeSubmenus: props.activePath ? props.activePath.slice(0, props.activePath.length - 1) : [],
+      lastActiveKey: props.activePath ? props.activePath[props.activePath.length - 1] : undefined
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.activePath) {
+      this.setState({
+        activeSubmenus: nextProps.activePath.slice(0, nextProps.activePath.length - 1)
+      });
     }
   }
 
@@ -30,6 +39,7 @@ export default class SortList extends Component {
 
   render() {  
     const { isActive } = this.state;
+
     
     return (
       <div className={classnames("sort-list", {
@@ -56,7 +66,12 @@ export default class SortList extends Component {
                 {item.sublist && item.sublist.length > 0 ? 
                   <ul className="sort-list__ul sort-list__ul_secondary">
                     {item.sublist.map(subitem => (
-                      <li className="sort-list__li" key={subitem.key}>
+                      <li 
+                        className={classnames("sort-list__li", {
+                          "sort-list__li_active": this.state.lastActiveKey === subitem.key
+                        })}
+                        key={subitem.key}
+                      >
                         <a href="#" className="sort-list__link">{subitem.title}</a>
                       </li>
                     ))}

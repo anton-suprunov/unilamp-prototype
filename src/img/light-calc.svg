@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>at/ico/Light Calc@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Pages---Unilamp-Update" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="at/ico/Light-Calc" stroke-width="0.5">
+            <polygon id="Rectangle" stroke="#D83F2A" points="2.69009719 1 10.0584847 1 13.6900972 4.52470017 13.6900972 15 2.69009719 15"></polygon>
+            <polyline id="Path-25" stroke="#D83F2A" transform="translate(11.789523, 2.736575) rotate(-270.000000) translate(-11.789523, -2.736575) " points="10.0888793 4.79417214 13.4901674 4.79417214 13.4901674 0.678977899"></polyline>
+            <path d="M7.3091163,12.5516271 L9.18082912,12.5516271 C9.19038409,11.5687867 9.27758704,11.0221661 9.44243796,10.9117652 C10.0461237,10.5074758 10.4435579,9.81917801 10.4435579,9.03805442 C10.4435579,7.79350241 9.4346492,6.78459367 8.19009719,6.78459367 C6.94554518,6.78459367 5.93663643,7.79350241 5.93663643,9.03805442 C5.93663643,9.86320737 6.38013753,10.5847751 7.04177141,10.9773893 C7.26596308,11.1104248 7.35507805,11.6351708 7.3091163,12.5516271 Z" id="Oval-4" stroke="#979797" fill="#D8D8D8"></path>
+        </g>
+    </g>
+</svg>

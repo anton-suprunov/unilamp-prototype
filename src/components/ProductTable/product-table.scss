@@ -1,0 +1,169 @@
+.table {
+  display: none;
+  &_active {
+    display: block
+  }
+}
+
+.table__body {
+	display: flex;
+	flex-wrap: wrap;
+	list-style: none;
+	padding: 20px 0;
+	margin: 0;
+}
+
+.table__row {
+  flex-basis: 100%;
+  display: flex;
+  margin-top: 50px;
+  cursor: pointer;
+  
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.table__cell {
+	flex-grow: 1;
+	position: relative;
+	text-align: center;
+  
+  &_first {
+    width: 137px;
+  }
+
+  &_last {
+    max-width: 120px;
+  }
+
+  &_features {
+    max-width: 150px;
+    margin-right: 30px;
+  }
+
+  &_colors {
+    width: 60px;
+  }
+}
+
+.table__photo {
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+  margin: 4px auto 0;
+  display: block
+}
+
+.grid__badge {
+	position: absolute;
+	left: 25px;
+	top: 7px;
+	height: 1.16%;
+	width: 1.45%;
+	color: #D83F2A;
+	font-family: "Open Sans";
+	font-size: 10px;
+	font-weight: 800;
+	line-height: 14px;
+}
+
+.table__product-title {
+  margin: 15px auto 0;
+  display: block;
+	color: #D83F2A;
+	font-size: 12px;
+	line-height: 16px;
+	text-decoration: none;
+  font-family: Muli;
+  position: relative;
+  padding-left: 32px;
+  text-align: left;
+
+  &:before {
+    content: "";
+    background-image: url(../../img/arrow-down.png);
+    background-size: 32px 32px;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+.table__cell-title {
+  margin: 0 0 6px;
+  padding: 0;
+	opacity: 0.5;
+	color: #4D4D4D;
+	font-family: "Open Sans";
+	font-size: 10px;
+  line-height: 16px;
+  font-weight: 400;
+  text-align: left
+}
+
+.table__cell-data {
+  margin: 0;
+  padding: 0;
+	width: 40px;
+	color: #4D4D4D;
+	font-family: Muli;
+	font-size: 10px;
+  line-height: 18px;
+  text-align: left;
+}
+
+.table__features {
+  display: flex;
+  flex-wrap: wrap;
+  
+  &_single-col {
+    .table__feature {
+      flex-basis: 100%;
+    }
+  }
+}
+
+.table__feature {
+  flex-basis: 50%;
+  text-align: left;
+	height: 16px;
+	color: #4D4D4D;
+	font-family: Muli;
+	font-size: 10px;
+  line-height: 16px;
+  margin: 0;
+  padding: 0;
+  padding-left: 24px;
+  margin-top: 12px;
+  box-sizing: border-box;
+  position: relative;
+  text-decoration: none;
+
+  &:before {
+    content: "";
+    background-image: url(../../img/info.svg);
+    background-repeat: no-repeat;
+    width: 14px;
+    height: 14px;
+    background-size: 14px 14px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &_manual:before {
+    background-image: url(../../img/pdf-doc.svg);
+  }
+  &_calc:before {
+    background-image: url(../../img/light-calc.svg);
+  }
+}
+
+.table__links {}
+.table__link {
+  display: block;
+  text-align: left
+}

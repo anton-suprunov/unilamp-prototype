@@ -4,13 +4,66 @@
 .col-container {
   display: flex;
   flex-grow: 1;
+  margin-top: 160px;
+  justify-content: space-between;
 }
 
 .lcol {
-  width: 265px;
-  margin-top: 180px;
+  width: 283px;
+  //margin-top: 20px;
 }
 
 .rcol {
+  position: relative;
+  width: 1025px
+}
 
+.view-toggles {
+  position: absolute;
+  right: 45px;
+  top: -70px;
+  display: flex;
+	//height: 51px;
+	//width: 76px;
+}
+
+.view-toggles__toggle {
+  width: 24px;
+  height: 24px;
+  text-indent: -999px;
+  overflow: hidden;
+  opacity: .5;
+  cursor: pointer;
+
+  &_active {
+    opacity: 1;
+  }
+
+  &_card {
+    background-image: url(../img/cardview.svg);
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    margin-right: 15px;
+    width: 30px;
+  }
+
+  &_table {
+    position: relative;
+    height: 22px;
+
+    &:after,
+    &:before {
+      content: "";
+      height: 8px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #d83f2a;
+    }
+    &:before {
+      bottom: 0;
+      top: auto;
+    }
+  }
 }

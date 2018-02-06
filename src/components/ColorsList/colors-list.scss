@@ -1,0 +1,30 @@
+.colors-list {
+	display: flex;
+	margin: 20px auto 0;
+	padding: 0;
+	list-style: none;
+	width: 80px;
+	justify-content: space-around;
+	
+	&_vertical {
+		flex-direction: column;
+		width: 14px;
+		margin: 0 10px 0;
+		height: 80px;
+		.colors-list__li {
+
+		}
+	}
+}
+
+.colors-list__li {
+	box-sizing: border-box;
+	width: 12px;
+	height: 12px;
+	border-radius: 44px;
+
+	&:first-child {
+		border: 0.8px solid #FF7676;
+		box-shadow: 0 0 5px 0 rgba(255,60,60,0.5);
+	}
+}

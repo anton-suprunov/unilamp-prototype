@@ -1,6 +1,36 @@
+.search {
+	position: absolute;
+	//left: 40px;
+	left: 0;
+	top: -80px;
+
+	&:before {
+		content: "";
+		position: absolute;
+		background-image: url(../../img/search.svg);
+		width: 53px;
+		height: 20px;
+		background-size: 20px 20px;
+		top: 50%;
+		left: 0;
+		background-position: 50% 0;
+		background-repeat: no-repeat;
+		opacity: 0.5;
+		transform: translateY(-50%);
+	}
+}
+
 .search__input {
 	height: 40px;
 	width: 480px;
 	border: 1px solid #979797;
 	opacity: 0.2;
+	text-indent: 53px;
+
+	
+	opacity: 0.5;
+	color: #4D4D4D;
+	font-family: "Open Sans";
+	font-size: 12px;
+	line-height: 16px;
 }

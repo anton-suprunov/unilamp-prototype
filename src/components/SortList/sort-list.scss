@@ -15,12 +15,13 @@
 .sort-list__title {
   line-height: 30px;
   color: $color-gray;
-  font-size: 14px;
+  font-size: 12px;
   position: relative;
   padding-left: 30px;
   margin: 15px 0 0;
-  font-weight: 400;
+  font-weight: 600;
   cursor: pointer;
+  position: relative;
 
   &_active,
   &:hover {
@@ -28,7 +29,14 @@
   }
     
   &:before {
-
+    content: "";
+    background-image: url(../../img/arrow-down.png);
+    background-size: 100% auto;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 0;
+    top: 0;
   }
 }
 
@@ -42,21 +50,46 @@
   &.sort-list__ul_secondary {
     display: none;
     padding-left: 0;
+
+    .sort-list__link {
+      
+    }
   }
 }
 
 .sort-list__li {
   padding-left: 30px;
   line-height: 32px;
+  position: relative;
 
   &_active {
-    .sort-list__link.sort-list__link_dropdown { color:$color-active }
-    .sort-list__ul.sort-list__ul_secondary { display: block }
+    > .sort-list__link { 
+      color: $color-active; 
+      font-weight: 600;
+    }
+
+    .sort-list__ul.sort-list__ul_secondary {
+      display: block;
+    }
+    .sort-list__ul.sort-list__ul_secondary & {
+
+      &:before {
+        content: '';
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background-color: $color-active;
+        border-radius: 12px;
+        top: 50%;
+        left: 12px;
+        transform: translateY(-50%);
+      }
+    }
   }
 }
 
 .sort-list__link {
-  font-size: 14px;
+  font-size: 12px;
   text-decoration: none;
   color: $color-gray;
   font-weight: 100;
