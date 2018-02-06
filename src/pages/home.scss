@@ -4,27 +4,25 @@
 .col-container {
   display: flex;
   flex-grow: 1;
-  margin-top: 160px;
+  margin-top: 85px;
   justify-content: space-between;
 }
 
 .lcol {
   width: 283px;
-  //margin-top: 20px;
+  padding-top: 84px;
 }
 
 .rcol {
   position: relative;
-  width: 1025px
+  width: 1025px;
 }
 
 .view-toggles {
   position: absolute;
   right: 45px;
-  top: -70px;
+  top: 10px;
   display: flex;
-	//height: 51px;
-	//width: 76px;
 }
 
 .view-toggles__toggle {
