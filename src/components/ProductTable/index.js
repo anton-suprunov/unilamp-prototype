@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import Link from 'gatsby-link'
-import classnames from 'classNames'
+import classnames from 'classnames'
+import some from 'lodash.some'
 
+import SubTable, { SubTableHeader } from './SubTable'
 import ColorsList from '../ColorsList'
 
+import subTableData from './sub-table-sample-data.js';
 import './product-table.scss'
 
 export default class ProductTable extends Component {
@@ -11,7 +14,7 @@ export default class ProductTable extends Component {
     super(props);
 
     this.state = {
-
+      expandedTables: []
     }
   }
 
@@ -25,8 +28,20 @@ export default class ProductTable extends Component {
         <ul className="table__body">
           {this.props.list.map((item, index) => (
             <li
-              className="table__row"
+              className={classnames("table__row", {
+                "table__row_active": some(this.state.expandedTables, i => i === index)
+              })}
               key={`product_${index}`}
+              onClick={() => {
+                let expandedTables = this.state.expandedTables.slice(0);
+                if (some(expandedTables, i => i === index)) {
+                  expandedTables = expandedTables.filter(i => i !== index)
+                } else {
+                  expandedTables.push(index)
+                }
+                this.setState({ expandedTables: expandedTables })
+                console.log(this.state.expandedTables);
+              }}
             >
               <div className="table__cell table__cell_first">
                 <span 
@@ -86,6 +101,17 @@ export default class ProductTable extends Component {
                 </div>
               </div>
               
+              <div className="table__sublist">
+                <SubTableHeader />
+                {subTableData && subTableData.map((subList, subIndex) => (
+                  <SubTable 
+                    list={subList} 
+                    key={`product_${index}_sublist_${subIndex}`}
+                  />
+                ))}
+                
+              </div>
+
             </li>
           ))}
         </ul>
