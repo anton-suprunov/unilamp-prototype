@@ -1,0 +1,135 @@
+@import '../../Shared/vars';
+
+.filters {
+  margin-top: 40px;
+}
+
+.filters__clear {
+  margin-top: 10px;
+	color: $color-active;
+	font-family: Muli;
+	font-size: 12px;
+  line-height: 30px;
+  padding-left: 24px;
+  position: relative;
+  display: block;
+
+  &::before {
+    content: "";
+    background-image: url(../../img/close.svg);
+    background-size: 14px 14px;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%)
+  }
+}
+
+.filters__group {
+  margin-top: 15px;
+}
+
+.filters__group-title {
+  margin: 0;
+  padding: 0;
+	width: 75px;
+	color: #474747;
+	font-family: Muli;
+	font-size: 12px;
+  line-height: 30px;
+  position: relative;
+  min-width: 115px;
+}
+
+.filters__info {
+  background-image: url(../../img/question.svg);
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-size: 15px 15px;
+
+}
+
+.filters__list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.filters__filter {
+  max-width: 157px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+
+  &_shorter {
+     max-width: 115px;
+  }
+
+  &_checkbox {
+    .ant-checkbox-inner {
+      height: 16px;
+      width: 16px;
+      opacity: 0.5;
+      border-color: #918BA3;
+    }
+
+    .ant-checkbox-wrapper:hover .ant-checkbox-inner, 
+    .ant-checkbox:hover .ant-checkbox-inner, 
+    .ant-checkbox-input:focus + .ant-checkbox-inner {
+      opacity: 1;
+      border-color: #918BA3;
+    }
+
+    .ant-checkbox + span {
+      width: 24px;
+      color: #474747;
+      font-family: Muli;
+      font-size: 12px;
+      line-height: 30px;
+      padding: 0 0 0 14px
+    }
+
+    .ant-checkbox-checked .ant-checkbox-inner, 
+    .ant-checkbox-indeterminate .ant-checkbox-inner {
+      background-color: #D83F2A;
+      border-color: #D83F2A;
+      opacity: 1;
+    }
+  }
+}
+
+.filters__filter-info {
+  background-image: url(../../img/info.svg);
+  background-size: 14px auto;
+  background-position: 50% 50%;
+  width: 14px;
+  height: 30px;
+  padding: 0 !important;
+  cursor: pointer;
+
+  background-repeat: no-repeat;
+}
+
+.filters__filter-color {
+	box-sizing: border-box;
+	height: 14.8px;
+	width: 14.8px;
+	border: 0.8px solid #EAEAEA;
+  //box-shadow: 0 0 5px 0 rgba(125,125,125,0.5);
+  border-radius: 44px;
+  padding: 0 !important;
+}
+
+.filters__wrap {
+  
+  &_top-margin {
+    margin-top: 34px;
+  }
+}

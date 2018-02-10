@@ -6,6 +6,7 @@ import Search from '../components/Search'
 import SortList from '../components/SortList'
 import ProductGrid from '../components/ProductGrid'
 import ProductTable from '../components/ProductTable'
+import Filters from '../components/Filters'
 
 import './home.scss';
 
@@ -159,8 +160,9 @@ class IndexPage extends Component {
           ]}
         />
 
-        <h3 className="section-title section-title_dropdown">Filter Products</h3>
+        <Filters />
       </div>
+
       <div className="rcol">
         <Search />
         <nav className="view-toggles">

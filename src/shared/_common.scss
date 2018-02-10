@@ -1,3 +1,10 @@
+@import './vars';
+
+// ant design overrides
+a:hover {
+	color: $color-active;
+}
+
 .section-title {
 	height: 32px;
 	opacity: 0.5;
