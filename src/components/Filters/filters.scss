@@ -28,7 +28,44 @@
 }
 
 .filters__group {
-  margin-top: 15px;
+  margin-top: 20px;
+}
+
+.filters__size {
+  display: flex;
+  justify-content: space-between;
+  width: 115px;
+  margin-top: 8px;
+
+  .ant-input {
+    height: 23px;
+    width: 40px;
+    border: 0.5px solid #979797;
+    opacity: 0.5;
+    border-radius: 2px;
+  }
+}
+
+.filters__input-wrap {
+  span {
+    display: block;
+    margin-top: 8px;
+    opacity: 0.5;
+    color: #4D4D4D;
+    font-family: "Open Sans";
+    font-size: 10px;
+    line-height: 16px;
+  }
+}
+
+.filters__note-text {
+  display: block;
+	opacity: 0.25;
+	color: #4D4D4D;
+	font-family: "Open Sans";
+	font-size: 12px;
+  line-height: 16px;
+  margin-top: 10px;
 }
 
 .filters__group-title {
@@ -52,7 +89,11 @@
   top: 50%;
   transform: translateY(-50%);
   background-size: 15px 15px;
+}
 
+.filters__advanced-lists {
+  margin-top: 40px;
+  .filters__group:first-child { margin-top: 0 }
 }
 
 .filters__list {
@@ -89,7 +130,7 @@
 
     .ant-checkbox + span {
       width: 24px;
-      color: #474747;
+      color: #999;
       font-family: Muli;
       font-size: 12px;
       line-height: 30px;
@@ -102,6 +143,48 @@
       border-color: #D83F2A;
       opacity: 1;
     }
+  } 
+}
+
+.filters__label {
+  cursor: pointer;
+}
+
+.filters__slider {
+  .ant-slider {
+    margin: 12px 0 0;
+    max-width: 125px
+  }
+
+  .ant-slider-rail {
+    background-color: #D3D3D3;
+  }
+  .ant-slider:hover .ant-slider-rail {
+    background-color: #D3D3D3;
+  }
+
+  
+  .ant-slider-track {
+    //background-color: rgba(216,63,42,.4)
+    background-color: $color-active;
+  }
+  .ant-slider:hover .ant-slider-track {
+    //background-color: rgba(216,63,42,.4)
+    background-color: $color-active;
+  }
+
+  .ant-slider-handle {
+    border-width: 4px;
+    border-color: #fff;
+    background-color: $color-active;
+    box-shadow: 0 2px 4px 0 rgba(12,0,51,0.1);
+    width: 18px;
+    height: 18px;
+    margin-top: -7px;
+  }
+  .ant-slider-handle.ant-tooltip-open,
+  .ant-slider:hover .ant-slider-handle:not(.ant-tooltip-open) {
+    border-color: #fff;
   }
 }
 
