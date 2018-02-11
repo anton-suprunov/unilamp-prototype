@@ -1,5 +1,6 @@
+import sampleSize from 'lodash/samplesize';
+
 const subTableData = [
-  [
     {
       article: "3306360",
       title: "M",
@@ -8,7 +9,7 @@ const subTableData = [
       power: "30W",
       brightness: "3000 lm",
       protection: "IP 44",
-      temperature: "3000 K",
+      temperature: "3500 K",
       features: [],
       downloadLink: "",
       manualLink: ""
@@ -21,7 +22,7 @@ const subTableData = [
       power: "30W",
       brightness: "3000 lm",
       protection: "IP 44",
-      temperature: "3000 K",
+      temperature: "4000 K",
       features: ["Eco"],
       downloadLink: "",
       manualLink: ""
@@ -34,7 +35,7 @@ const subTableData = [
       power: "30W",
       brightness: "3000 lm",
       protection: "IP 44",
-      temperature: "3000 K",
+      temperature: "6500 K",
       features: ["Eco", "Sensor"],
       downloadLink: "",
       manualLink: ""
@@ -47,23 +48,23 @@ const subTableData = [
       power: "30W",
       brightness: "3000 lm",
       protection: "IP 44",
-      temperature: "3000 K",
+      temperature: "2700 K",
       features: ["Sensor"],
       downloadLink: "",
       manualLink: ""
-    }
-  ],
+    },
+  
 
-  [
+  
     {
-      article: "3306337",
+      article: "3306937",
       title: "L",
       diameter: "340mm",
       width: "107mm",
       power: "30W",
       brightness: "3000 lm",
       protection: "IP 44",
-      temperature: "3000 K",
+      temperature: "3500 K",
       features: [],
       downloadLink: "",
       manualLink: ""
@@ -76,7 +77,7 @@ const subTableData = [
       power: "30W",
       brightness: "3000 lm",
       protection: "IP 44",
-      temperature: "3000 K",
+      temperature: "4000 K",
       features: ["Dali"],
       downloadLink: "",
       manualLink: ""
@@ -89,7 +90,7 @@ const subTableData = [
       power: "30W",
       brightness: "3000 lm",
       protection: "IP 44",
-      temperature: "3000 K",
+      temperature: "4000 K",
       features: ["Dim"],
       downloadLink: "",
       manualLink: ""
@@ -101,8 +102,8 @@ const subTableData = [
       width: "107mm",
       power: "30W",
       brightness: "3000 lm",
-      protection: "IP 44",
-      temperature: "3000 K",
+      protection: "IP 65",
+      temperature: "5500 K",
       features: ["EM03"],
       downloadLink: "",
       manualLink: ""
@@ -114,8 +115,8 @@ const subTableData = [
       width: "107mm",
       power: "30W",
       brightness: "3000 lm",
-      protection: "IP 44",
-      temperature: "3000 K",
+      protection: "IP 21",
+      temperature: "5500 K",
       features: ["EM03", "Sensor"],
       downloadLink: "",
       manualLink: ""
@@ -127,15 +128,14 @@ const subTableData = [
       width: "107mm",
       power: "30W",
       brightness: "3000 lm",
-      protection: "IP 44",
-      temperature: "3000 K",
+      protection: "IP 20",
+      temperature: "4000 K",
       features: ["Sensor"],
       downloadLink: "",
       manualLink: ""
-    }
-  ],
+    },
+  
 
-  [
     {
       article: "3306337",
       title: "XL",
@@ -144,7 +144,7 @@ const subTableData = [
       power: "30W",
       brightness: "3000 lm",
       protection: "IP 44",
-      temperature: "3000 K",
+      temperature: "5500 K",
       features: [],
       downloadLink: "",
       manualLink: ""
@@ -182,7 +182,7 @@ const subTableData = [
       width: "107mm",
       power: "30W",
       brightness: "3000 lm",
-      protection: "IP 44",
+      protection: "IP 65",
       temperature: "3000 K",
       features: ["EM03"],
       downloadLink: "",
@@ -195,7 +195,7 @@ const subTableData = [
       width: "107mm",
       power: "30W",
       brightness: "3000 lm",
-      protection: "IP 44",
+      protection: "IP 20",
       temperature: "3000 K",
       features: ["EM03", "Sensor"],
       downloadLink: "",
@@ -208,13 +208,122 @@ const subTableData = [
       width: "107mm",
       power: "30W",
       brightness: "3000 lm",
-      protection: "IP 44",
+      protection: "IP 21",
       temperature: "3000 K",
       features: ["Sensor"],
       downloadLink: "",
       manualLink: ""
     }
-  ]
 ]
 
-export default subTableData;
+const products = [
+  {
+    title: "NovoDisc - Static Landing",
+    new: true,
+    bgImage: "NovoDisc-White.png",
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+  {
+    title: "NovoDisc - Interactive Landing",
+    bgImage: "NovoDisc-White.png",
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+  {
+    title: "Eden Eyelid",
+    bgImage: "Eden-Eyelid-Black.png",
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+  {
+    title: "LED Panel",
+    bgImage: "NovoDisc-White.png",
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+  {
+    title: "Tyfon",
+    bgImage: "NovoDisc-White.png",
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+
+
+  {
+    title: "Retina Maxi LED",
+    bgImage: "Retina-Stripe-White.png",
+    colors: [
+      { title: 'White', hex: '#ffffff', },
+      { title: 'Graphite', hex: '#b9b9b9', },
+      { title: 'Black', hex: '#434848', },
+    ],
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+  {
+    title: "Retina Stripe",
+    new: true,
+    bgImage: "Retina-Stripe-White.png",
+    colors: [
+      { title: 'White', hex: '#ffffff', },
+      { title: 'Graphite', hex: '#b9b9b9', },
+      { title: 'Black', hex: '#434848', },
+    ],
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+  {
+    title: "Retina Cross",
+    bgImage: "Eden-Eyelid-Black.png",
+    colors: [
+      { title: 'White', hex: '#ffffff', },
+      { title: 'Graphite', hex: '#b9b9b9', },
+      { title: 'Black', hex: '#434848', },
+    ],
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+  {
+    title: "Retina Eyelid LED",
+    bgImage: "Eden-Eyelid-Black.png",
+    colors: [
+      { title: 'White', hex: '#ffffff', },
+      { title: 'Graphite', hex: '#b9b9b9', },
+      { title: 'Black', hex: '#434848', },
+    ],
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+  {
+    title: "Retina Eyelid LED",
+    bgImage: "Eden-Eyelid-Black.png",
+    colors: [
+      { title: 'White', hex: '#ffffff', },
+      { title: 'Graphite', hex: '#b9b9b9', },
+      { title: 'Black', hex: '#434848', },
+    ],
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+
+
+  {
+    title: "Juno Soft Pro",
+    bgImage: "Drift-Flat-Graphite.png",
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+  {
+    title: "LED Compact (1 & 2)",
+    bgImage: "Drift-Flat-Silver.png",
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+  {
+    title: "Ecoled",
+    bgImage: "Drift-Flat-White.png",
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+  {
+    title: "Ecoled Maxi",
+    new: true,
+    bgImage: "Drift-Flat-Graphite.png",
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+  {
+    title: "Ecoled Alu",
+    bgImage: "Drift-Flat-Silver.png",
+    subProducts: [sampleSize(subTableData, 3)]
+  },
+];
+
+export default products;

@@ -16,8 +16,8 @@ const ColorsList = ({
       {colors.map(color => (
         <li
           className="colors-list__li"
-          key={`${parentItemKey}_${color}`}
-          style={{ backgroundColor: color }} />
+          key={`${parentItemKey}_${color.hex}`}
+          style={{ backgroundColor: color.hex }} />
       )
       )}
     </ul>

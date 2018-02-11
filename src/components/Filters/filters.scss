@@ -141,11 +141,15 @@
 
     .ant-checkbox-checked .ant-checkbox-inner, 
     .ant-checkbox-indeterminate .ant-checkbox-inner {
-      background-color: #D83F2A;
-      border-color: #D83F2A;
+      background-color: $color-active;
+      border-color: $color-active;
       opacity: 1;
     }
-  } 
+
+    .ant-checkbox-checked:after {
+      border-color: $color-active
+    }
+  }
 }
 
 .filters__label {

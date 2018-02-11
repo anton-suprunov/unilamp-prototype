@@ -6,7 +6,6 @@ import some from 'lodash.some'
 import SubTable, { SubTableHeader } from './SubTable'
 import ColorsList from '../ColorsList'
 
-import subTableData from './sub-table-sample-data.js';
 import './product-table.scss'
 
 export default class ProductTable extends Component {
@@ -26,7 +25,7 @@ export default class ProductTable extends Component {
         })}
       >
         <ul className="table__body">
-          {this.props.list.map((item, index) => (
+          {this.props.products.map((item, index) => (
             <li
               className={classnames("table__row", {
                 "table__row_active": some(this.state.expandedTables, i => i === index)
@@ -40,7 +39,6 @@ export default class ProductTable extends Component {
                   expandedTables.push(index)
                 }
                 this.setState({ expandedTables: expandedTables })
-                console.log(this.state.expandedTables);
               }}
             >
               <div className="table__cell table__cell_first">
@@ -54,7 +52,7 @@ export default class ProductTable extends Component {
               <div className="table__cell table__cell_colors">
                 <ColorsList
                   colors={item.colors}
-                  parentItemKey={item.parentItemKey}
+                  parentItemKey={index}
                   isVertical={true}
                 />
               </div>
@@ -103,9 +101,9 @@ export default class ProductTable extends Component {
               
               <div className="table__sublist">
                 <SubTableHeader />
-                {subTableData && subTableData.map((subList, subIndex) => (
+                {item.subProducts && item.subProducts.map((subProducts, subIndex) => (
                   <SubTable 
-                    list={subList} 
+                    products={subProducts} 
                     key={`product_${index}_sublist_${subIndex}`}
                   />
                 ))}

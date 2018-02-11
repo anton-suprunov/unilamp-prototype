@@ -38,10 +38,10 @@ const SubTableHeader = () => {
   </div>
 }
 
-const SubTable = ({ list }) => (
+const SubTable = ({ products }) => (
   <div className="table table_sub">
     <ul className="table__body">
-      {list.map((item, index) => (
+      {products.map((item, index) => (
         <li className="table__row" key={item.article}>
           <div className="table__cell table__cell_first">
             <p className="table__cell-data table__cell-data_highlight">

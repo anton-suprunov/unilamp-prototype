@@ -22,7 +22,7 @@ export default class ProductGrid extends Component {
         })}
       >
         <ul className="grid__list">
-          {this.props.list.map((item, index) => (
+          {this.props.products.map((item, index) => (
             <li 
               className={classnames("grid__li", {
               
@@ -34,7 +34,7 @@ export default class ProductGrid extends Component {
               <Link to="/product/" className="grid__link">{item.title}</Link>
               <ColorsList 
                 colors={item.colors}
-                parentItemKey={item.key}
+                parentItemKey={index}
               />
             </li>
           ))}
