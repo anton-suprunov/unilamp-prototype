@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="5px" viewBox="0 0 8 5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>UXPT/Icon/Arrow Down@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="15.6278141 14.4441357 12.313907 10.3861848 9 14.4441357"></polygon>
+    </defs>
+    <g id="Pages---Unilamp-Update" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Assets---Lu---Icons" transform="translate(-78.000000, -246.000000)">
+            <g id="UXPT/Icon/Arrow-Down" transform="translate(69.856836, 235.672158)">
+                <g id="Group">
+                    <rect id="Bounding-Box" x="0" y="0" width="24" height="24"></rect>
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Arrow" fill-rule="nonzero" transform="translate(12.313907, 12.415160) rotate(-180.000000) translate(-12.313907, -12.415160) "></g>
+                    <g id="UXPT/Mixin/Fill/Black" mask="url(#mask-2)" fill="#4D4D4D">
+                        <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

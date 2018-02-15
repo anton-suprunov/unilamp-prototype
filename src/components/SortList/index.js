@@ -60,7 +60,12 @@ export default class SortList extends Component {
                   className={classnames("sort-list__link", {
                     "sort-list__link_dropdown": item.sublist
                   })}
-                  onClick={e => { this.toggleSubmenu(item.key); e.preventDefault(); }}
+                  onClick={e => { 
+                    if (item.sublist) {
+                      this.toggleSubmenu(item.key); 
+                    }
+                    e.preventDefault(); 
+                  }}
                 >{item.title}</a>
 
                 {item.sublist && item.sublist.length > 0 ? 

@@ -1,6 +1,6 @@
 .header {
 	width: 100%;
-	background-color: #D83F2A;
+	background-color: #fff;
   box-shadow: 0 6px 8px 0 rgba(213,213,213,0.15);
 }
 
@@ -8,7 +8,7 @@
   max-width: 1150px;
   margin: 0 auto;
   position: relative;
-  height: 80px;
+  height: 72px;
 }
 
 .header__logo {
@@ -43,7 +43,7 @@
 }
 
 .header__nav-link {
-	color: #FFFFFF;
+	color: #4D4D4D;
 	font-family: Muli;
 	font-size: 14px;
   line-height: 22px;
@@ -60,4 +60,38 @@
   top: 50%;
   transform: translateY(-50%);
   right: 20px;
+}
+
+.header__actions {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%)
+}
+
+.header__action {
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  margin-right: 25px;
+  width: 24px;
+  height: 24px;
+  background-size: 22px 22px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &_search {
+    background-image: url(../../img/search.svg);
+  }
+
+  &_user {
+    background-image: url(../../img/user.svg);
+  }
+  &_lang {
+    background-image: url(../../img/language.svg);
+    background-size: 24px 24px;
+  }
 }

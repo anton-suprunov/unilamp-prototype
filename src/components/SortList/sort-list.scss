@@ -23,20 +23,29 @@
   cursor: pointer;
   position: relative;
 
-  &_active,
+  .sort-list_active &,
   &:hover {
     color: $color-active;
+  }
+
+  .sort-list_active &:before {
+    transform: rotate(0deg);
+    background-image: url(../../img/arrow-down-red.svg);
   }
     
   &:before {
     content: "";
-    background-image: url(../../img/arrow-down.png);
+    background-image: url(../../img/arrow-down.svg);
+    transform: rotate(270deg);
     background-size: 100% auto;
-    width: 24px;
-    height: 24px;
+    background-repeat: no-repeat;
+    background-size: 9px 9px;
+    background-position: 50% 50%;
     position: absolute;
     left: 0;
     top: 0;
+    bottom: 0;
+    width: 24px;
   }
 }
 
@@ -51,27 +60,23 @@
     display: none;
     padding-left: 0;
 
-    .sort-list__link {
-      
+    .sort-list__li {
+      padding-left: 25px;
     }
   }
 }
 
 .sort-list__li {
-  padding-left: 30px;
-  line-height: 32px;
+  padding-left: 15px;
   position: relative;
 
   &_active {
-    > .sort-list__link { 
-      color: $color-active; 
-      font-weight: 600;
-    }
-
     .sort-list__ul.sort-list__ul_secondary {
       display: block;
     }
+
     .sort-list__ul.sort-list__ul_secondary & {
+      //padding-left: 13.5px;
 
       &:before {
         content: '';
@@ -93,4 +98,36 @@
   text-decoration: none;
   color: $color-gray;
   font-weight: 100;
+  line-height: 32px;
+  display: block;
+  text-decoration: none !important;
+
+  .sort-list__li_active > & { 
+    color: $color-active; 
+    font-weight: 600;
+  }
+
+  &_dropdown {
+    position: relative;
+
+    .sort-list__li_active &:before {
+      background-image: url(../../img/arrow-down-red.svg); 
+      transform: rotate(0deg);
+    }
+
+     &:before {
+      content: "";
+      background-image: url(../../img/arrow-down.svg);
+      transform: rotate(270deg);
+      background-size: 100% auto;
+      background-repeat: no-repeat;
+      background-size: 9px 9px;
+      background-position: 50% 50%;
+      position: absolute;
+      left: -30px;
+      top: 0;
+      bottom: 0;
+      width: 24px;
+    } 
+  }
 }

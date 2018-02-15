@@ -26,7 +26,11 @@ const Header = () => (
           </li>
         </ul>
       </nav>
-      <div className="header__search"></div>
+      <nav className="header__actions">
+        <a href="#" className="header__action header__action_search"></a>
+        <a href="#" className="header__action header__action_user"></a>
+        <a href="#" className="header__action header__action_lang"></a>
+      </nav>
     </div>
   </header>
 )

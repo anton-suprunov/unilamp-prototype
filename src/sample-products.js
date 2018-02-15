@@ -10,7 +10,7 @@ const subTableData = [
       brightness: "3000 lm",
       protection: "IP 44",
       temperature: "3500 K",
-      features: [],
+      features: ["LED"],
       downloadLink: "",
       manualLink: ""
     },

@@ -46,7 +46,8 @@
   
   margin-top: 5px;
 
-  &_active {
+  &_active,
+  &:hover {
     border-color:rgba(151,151,151,.2);
   }
   
@@ -130,16 +131,25 @@
 	text-decoration: none;
   font-family: Muli;
   position: relative;
-  //padding-left: 32px;
+  white-space: nowrap;
+  padding-left: 32px;
+  text-overflow: ellipsis;
+  overflow: hidden;
   text-align: center;
+
+  .table__row_active & { overflow: visible; }
 
   &:before {
     content: "";
-    background-image: url(../../img/arrow-down.png);
-    background-size: 32px 32px;
+    background-image: url(../../img/arrow-down.svg);
+    background-size: 10px 10px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    width: 32px;
     position: absolute;
     left: 0;
     top: 0;
+    bottom: 0;
   }
 }
 
