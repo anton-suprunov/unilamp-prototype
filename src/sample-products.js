@@ -219,12 +219,14 @@ const subTableData = [
 const products = [
   {
     title: "NovoDisc - Static Landing",
+    shortTitle: "NovoDisc",
     new: true,
     bgImage: "NovoDisc-White.png",
     subProducts: [sampleSize(subTableData, 3)]
   },
   {
     title: "NovoDisc - Interactive Landing",
+    shortTitle: "NovoDisc",
     bgImage: "NovoDisc-White.png",
     subProducts: [sampleSize(subTableData, 3)]
   },
@@ -305,6 +307,7 @@ const products = [
   },
   {
     title: "LED Compact (1 & 2)",
+    shortTitle: "LED Compact",
     bgImage: "Drift-Flat-Silver.png",
     subProducts: [sampleSize(subTableData, 3)]
   },

@@ -47,7 +47,9 @@ export default class ProductTable extends Component {
                   className="table__photo"
                 />
 
-                <Link to="/product/" className="table__product-title">{item.title}</Link>
+                <Link to="/product/" className="table__product-title">
+                  {item.shortTitle ? item.shortTitle : item.title}
+                </Link>
               </div>
               <div className="table__cell table__cell_colors">
                 <ColorsList

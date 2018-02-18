@@ -5,7 +5,7 @@ import {
   Slider,
   Input
 } from 'antd'
-import findIndex from 'lodash/findindex';
+import findIndex from 'lodash/findIndex';
 
 import { toggleArray } from '../../shared/helpers'
 import List from './List'
@@ -196,8 +196,9 @@ class Filters extends Component {
             <Slider
               min={0}
               max={4}
-              defaultValue={2}
+              defaultValue={[1,3]}
               tipFormatter={v => temps[v]}
+              range={true}
               onChange={v => this.onFilterChange('temperature', v)}
             />
             <span className="filters__note-text">Kelvin</span>

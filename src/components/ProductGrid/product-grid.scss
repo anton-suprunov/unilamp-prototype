@@ -1,6 +1,8 @@
 .grid {
 	margin-top: 67px;
 	display: none;
+	position: relative;
+	left: 30px;
 	
 	&_active {
 		display: block;

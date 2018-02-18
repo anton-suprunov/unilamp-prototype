@@ -5,19 +5,20 @@
 }
 
 .header__container {
-  max-width: 1150px;
+  max-width: 1360px;
   margin: 0 auto;
   position: relative;
   height: 72px;
 }
 
 .header__logo {
-  background-image: url(../../img/logo.png);
-  width: 166px;
-  height: 49px;
+  background-image: url(../../img/logo@2x.png);
+  background-size: 100% auto;
+  width: 90px;
+  height: 26px;
   position: absolute;
   top: 50%;
-  left: 20px;
+  left: 56px;
   transform: translateY(-50%);
 }
 
@@ -51,22 +52,11 @@
   text-decoration: none;
 }
 
-/* search placeholder */
-.header__search {
-  background-image: url(../../img/search-lang.png);
-  width: 75px;
-  height: 22px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 20px;
-}
-
 .header__actions {
   display: flex;
   justify-content: space-between;
   position: absolute;
-  right: 0;
+  right: 15px;
   top: 50%;
   transform: translateY(-50%)
 }

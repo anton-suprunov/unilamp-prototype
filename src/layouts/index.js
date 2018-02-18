@@ -5,6 +5,8 @@ import Helmet from 'react-helmet'
 import './layout.scss';
 
 import Header from '../components/Header'
+import Footer from '../components/Footer'
+import Subscribe from '../components/Subscribe'
 
 const TemplateWrapper = ({ children }) => (
   <div>
@@ -19,6 +21,8 @@ const TemplateWrapper = ({ children }) => (
     <div className="container">
       {children()} 
     </div>
+    <Subscribe />
+    <Footer />
   </div>
 )
 
