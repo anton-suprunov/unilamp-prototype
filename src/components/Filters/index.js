@@ -110,7 +110,8 @@ class Filters extends Component {
 
     this.state = {
       shown: true,
-      activeFilters: []
+      activeFilters: [],
+      tempSliderValues: [1,3]
     }
   }
 
@@ -120,9 +121,12 @@ class Filters extends Component {
 
     // single value filters
     if (type === 'temperature' || type === 'width' || type === 'length' || type === 'dim') {
+      
+      // provide all range of temps to filtering func
       if (type === 'temperature') {
-        value = temps[value];
+        value = temps.slice(value[0], value[1] + 1);
       }
+
       index = findIndex(activeFilters, { type });
       if (index === -1 && value) {
         activeFilters.push({ type, value });
@@ -168,8 +172,11 @@ class Filters extends Component {
         onClick={e => {
           e.preventDefault();
           this.setState({
-            activeFilters: []
-          })
+            activeFilters: [],
+            tempSliderValues: [1,3]
+          }, () => {
+            this.props.onFilterChange(this.state.activeFilters);
+          });
         }}
       >Clear Filters</a>
 
@@ -196,10 +203,13 @@ class Filters extends Component {
             <Slider
               min={0}
               max={4}
-              defaultValue={[1,3]}
+              value={this.state.tempSliderValues}
               tipFormatter={v => temps[v]}
               range={true}
-              onChange={v => this.onFilterChange('temperature', v)}
+              onChange={v => {
+                this.onFilterChange('temperature', v);
+                this.setState({ tempSliderValues: v });
+              }}
             />
             <span className="filters__note-text">Kelvin</span>
           </div>

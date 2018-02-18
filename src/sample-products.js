@@ -250,6 +250,11 @@ const products = [
   {
     title: "Retina Maxi LED",
     bgImage: "Retina-Stripe-White.png",
+    images: {
+      "white": "Retina-Stripe-White.png",
+      "graphite": "Retina-Stripe-Graphite.png",
+      "black": "Eden-Eyelid-Black.png",
+    },
     colors: [
       { title: 'White', hex: '#ffffff', },
       { title: 'Graphite', hex: '#b9b9b9', },
@@ -261,6 +266,11 @@ const products = [
     title: "Retina Stripe",
     new: true,
     bgImage: "Retina-Stripe-White.png",
+    images: {
+      "white": "Retina-Stripe-White.png",
+      "graphite": "Retina-Stripe-Graphite.png",
+      "black": "Eden-Eyelid-Black.png",
+    },
     colors: [
       { title: 'White', hex: '#ffffff', },
       { title: 'Graphite', hex: '#b9b9b9', },
@@ -271,6 +281,11 @@ const products = [
   {
     title: "Retina Cross",
     bgImage: "Eden-Eyelid-Black.png",
+    images: {
+      "white": "Retina-Stripe-White.png",
+      "graphite": "Retina-Stripe-Graphite.png",
+      "black": "Eden-Eyelid-Black.png",
+    },
     colors: [
       { title: 'White', hex: '#ffffff', },
       { title: 'Graphite', hex: '#b9b9b9', },
@@ -281,6 +296,11 @@ const products = [
   {
     title: "Retina Eyelid LED",
     bgImage: "Eden-Eyelid-Black.png",
+    images: {
+      "white": "Retina-Stripe-White.png",
+      "graphite": "Retina-Stripe-Graphite.png",
+      "black": "Eden-Eyelid-Black.png",
+    },
     colors: [
       { title: 'White', hex: '#ffffff', },
       { title: 'Graphite', hex: '#b9b9b9', },
@@ -291,6 +311,11 @@ const products = [
   {
     title: "Retina Eyelid LED",
     bgImage: "Eden-Eyelid-Black.png",
+    images: {
+      "white": "Retina-Stripe-White.png",
+      "graphite": "Retina-Stripe-Graphite.png",
+      "black": "Eden-Eyelid-Black.png",
+    },
     colors: [
       { title: 'White', hex: '#ffffff', },
       { title: 'Graphite', hex: '#b9b9b9', },

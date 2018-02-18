@@ -45,11 +45,17 @@ const filterProductByAttr = (products, filter) => {
   
   products.map(product => {
     let subProducts = flatten(product.subProducts);
-    subProducts.map(s => {
-      if (s[filter.type] && s[filter.type] === filter.value) {
-        res.push(product);
+    let passed = false;
+
+    passed = subProducts.some(s => {
+      if (filter.type === 'temperature') {
+        return filter.value.indexOf(s[filter.type]) !== -1;
+      } else  {
+        return s[filter.type] && s[filter.type] === filter.value;
       }
-    })
+    });
+
+    passed && res.push(product);
   });
 
   return res;
@@ -67,7 +73,9 @@ class IndexPage extends Component {
   }
 
   filterProducts = (activeFilters) => {
+    let filteredColor;
     let filteredProducts = activeFilters.reduce((products, filter) => {
+      
       switch (filter.type) {
         case 'functionality':
           return filterProductsByFeature(products, filter.value);
@@ -78,6 +86,7 @@ class IndexPage extends Component {
         break;
         
         case 'color':
+          !filteredColor && (filteredColor = filter.value);
           return filterProductsByColor(products, filter.value);
         break;
         
@@ -94,9 +103,9 @@ class IndexPage extends Component {
       }
     }, products.slice(0));
     
-    //console.log('final res', filteredProducts);
     this.setState({
-      products: filteredProducts
+      products: filteredProducts,
+      filteredColor
     })
   }
 
@@ -173,15 +182,19 @@ class IndexPage extends Component {
             })}>Table view</a>
         </nav>
 
-        <ProductGrid 
-          products={this.state.products} 
+        {this.state.products && <ProductGrid 
+          products={this.state.products}
+          filteredColor={this.state.filteredColor}
           shown={this.state.gridShown}
-        />
+        />}
 
-        <ProductTable 
-          products={this.state.products} 
+        {this.state.products && <ProductTable 
+          products={this.state.products}
+          filteredColor={this.state.filteredColor}
           shown={this.state.tableShown} 
-        />
+        />}
+        
+        {!this.state.products.length && <span>No matching products found</span>}
       </div>
     </div>
   }
