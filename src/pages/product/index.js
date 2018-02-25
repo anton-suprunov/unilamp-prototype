@@ -8,7 +8,7 @@ class IndexPage extends Component {
 
   render() {
     return <div>
-      dis is my product page
+      product page
     </div>
   }
 }

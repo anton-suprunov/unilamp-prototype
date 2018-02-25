@@ -1,0 +1,93 @@
+/// Mixin to manage responsive breakpoints
+/// @author Hugo Giraudel
+/// @param {String} $breakpoint - Breakpoint name
+/// @require $breakpoints
+@mixin mq($breakpoint) {
+  // If the key exists in the map
+  @if map-has-key($breakpoints, $breakpoint) {
+    // Prints a media query based on the value
+    @media #{inspect(map-get($breakpoints, $breakpoint))} {
+      @content;
+    }
+  }
+ 
+  // If the key doesn't exist in the map
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
+
+/**
+ * Extends all the rules needed for the svg from the generated sprite
+ * example: sprite('logo')
+ */
+@mixin sprite($name) {
+  @extend %svg-common;
+  @extend .svg-#{$name};
+  @extend .svg-#{$name}-dims;
+}
+
+/**
+ * How many grid cells should element take vertically,
+ * also sets the margin-bottom to gutter height
+ */
+@mixin gridCellHeight($num, $addGutter: false) {
+  height: ($num * map-get($grid, 'verticalHeight')) + (($num - 1) * map-get($grid, 'gutterHeight'));
+  @if ($addGutter) {
+    margin-bottom: map-get($grid, 'gutterHeight');
+  }
+}
+
+/**
+ * Push element to $num vertical cells
+ */
+@mixin gridVerticalPosition($num, $usePadding: false) {
+  @if (not $usePadding) {
+    margin-top: $num * (map-get($grid, 'verticalHeight') + map-get($grid, 'gutterHeight'));
+  } @else {
+    padding-top: $num * (map-get($grid, 'verticalHeight') + map-get($grid, 'gutterHeight'));
+  }
+}
+
+/*
+ * Adds background image
+ * @name - image name, @w - image width, $h - image height, @setSize - sets the elements width and height same to image
+ */
+@mixin bg($path, $w, $h, $setSize: true) {
+  $w: pxToRem($w);
+  $h: pxToRem($h);
+
+  background : {
+    image: url('#{$path}');
+    size: $w, $h;
+    repeat: no-repeat;
+  };
+  @if ($setSize) {
+    width : $w;
+    height: $h;
+  }
+}
+
+@mixin font($family: 'open') {
+  @if ($family == 'source') {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  } @else {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+}
+
+@mixin placeholder-color($color: #d7dce5) {
+  &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: $color;
+  }
+  &::-moz-placeholder { /* Firefox 19+ */
+    color: $color;
+  }
+  &:-ms-input-placeholder { /* IE 10+ */
+    color: $color;
+  }
+  &:-moz-placeholder { /* Firefox 18- */
+    color: $color;
+  }
+}

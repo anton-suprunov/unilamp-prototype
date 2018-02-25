@@ -1,3 +1,10 @@
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+
+@import "../../shared/vars";
+@import "../../shared/mixins";
+@import "../../shared/common";
+
 .table {
   display: none;
   margin-top: 67px;
@@ -11,6 +18,7 @@
     margin-bottom: 40px;
     margin-top: 0;
     padding: 0 25px;
+    
     &:last-child {
       margin-bottom: 0;
     }
@@ -20,18 +28,53 @@
     margin-top: 20px;
     margin-bottom: 10px;
   }
+  
+  &_sub-mobile {
+    padding: 0;
+    max-width: none;
+  }
+
+  &_sub-names {
+    flex-basis: 30%;
+    flex-grow: 1;
+    max-width: 30vw;
+  }
+
+
+  // single slide
+  &_sub-slide {
+    padding: 0;
+    float: left;
+    margin-top: 4px;
+    margin-right: 15px;
+    width: 62vw;
+
+    &:first-child {
+      margin-left: 5px;
+    }
+
+    &:last-child {
+      margin-right: 50px;
+    }
+  }
 }
 
 .table__body {
 	display: flex;
 	flex-wrap: wrap;
 	list-style: none;
-  //padding: 20px 0;
   padding: 0;
   margin: 0;
   
-  .table.table_sub & {
+  .table_sub & {
     padding: 0;
+  }
+
+  .table_sub-slide & {
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid rgba(151, 151, 151, 0.2);
+    box-shadow: 0 0 5px rgba(151, 151, 151, 0.4);
   }
 }
 
@@ -39,23 +82,27 @@
   flex-basis: 100%;
   display: flex;
   flex-wrap: wrap;
-  //margin-top: 50px;
   padding: 25px 0;
   cursor: pointer;
   border: 1px solid #fff;
-  
   margin-top: 5px;
 
   &_active,
   &:hover {
     border-color:rgba(151,151,151,.2);
+
+    @include mq('mobile') {
+      border-color: #fff;
+    } 
   }
+
+  
   
   &:first-child {
     margin-top: 0;
   }
 
-  .table.table_sub & {
+  .table_sub & {
     height: 34px;
     margin-top: 0;
     line-height: 34px;
@@ -71,7 +118,11 @@
     }
   }
 
-  .table.table_sub:not(.table_header-only) &:hover {
+  .table_sub-mobile & {
+    height: auto;
+  }
+
+  .table_sub:not(.table_header-only) &:hover {
     border-color:#D83F2A
   }
 }
@@ -79,21 +130,35 @@
 .table__cell {
 	flex-grow: 1;
 	position: relative;
-	//text-align: center;
+  
+  // hide top cells
+  .table_main > .table__body > .table__row > & {
+    @include mq('mobile') {
+      display: none;
+    }
+  }
   
   &_first {
     width: 137px;
     max-width: 137px;
 
-    .table.table_sub & {
+    .table_sub & {
       width: 180px;
       max-width: 180px;
+    }
+
+    .table_sub-mobile & {
+      width: auto;
+    }
+
+    @include mq('mobile') {
+      display: block !important;
     }
   }
 
   &_last {
     max-width: 120px;
-    .table.table_sub & {
+    .table_sub & {
       max-width: 65px;
     }
   }
@@ -108,6 +173,7 @@
     width: 60px;
   }
 
+  // hide top columns except first for expanded product
   .table__row.table__row_active > &:not(.table__cell_first) {
     display: none;
   }
@@ -119,7 +185,11 @@
   width: 50px;
   height: 50px;
   margin: 4px auto 0;
-  display: block
+  display: block;
+
+  @include mq('mobile') {
+    margin: 4px 0 0 10px
+  }
 }
 
 .table__product-title {
@@ -139,6 +209,12 @@
   text-align: center;
 
   .table__row_active & { overflow: visible; }
+
+  @include mq('mobile') {
+    padding-left: 10px;
+    text-align: left;
+    &:before { display: none }
+  }
 
   &:before {
     content: "";
@@ -164,12 +240,16 @@
   line-height: 16px;
   font-weight: 400;
   text-align: left;
+
+  .table_sub-names & {
+    padding-left: 10px;
+    padding-top: 10px;
+  }
 }
 
 .table__cell-data {
   margin: 0;
   padding: 0;
-	//width: 40px;
 	color: #4D4D4D;
 	font-family: Muli;
 	font-size: 10px;
@@ -178,6 +258,10 @@
 
   &_highlight {
     color: #D83F2A;
+  }
+
+  .table_sub-slide & {
+    min-height: 52px;
   }
 }
 
@@ -257,7 +341,66 @@
   display: none;
   flex-basis: 100%;
 
+  @include mq('mobile') {
+    
+  }
+
   .table__row.table__row_active & {
     display: block;
+  }
+}
+
+.table__sublist-wrap {
+  display: flex;
+  max-width: 100vw;
+  width: 100%;
+  position: relative;
+}
+
+.table__article {
+  @include mq('mobile') {
+    display: block;
+    margin-top: -15px;
+    color: #4D4D4D;
+  }
+}
+
+.table__product-names {
+  color: #4D4D4D;
+  display: block;
+  padding-left: 10px;
+  font-size: 12px;
+  margin: 7px 0 5px
+}
+
+.table__slider {
+  flex-basis: 70%;
+  max-width: 70vw;
+  flex-grow: 1;
+  //overflow: hidden;
+  margin-top: -10px;
+}
+
+.table__slider-wrap {
+  * {
+    min-width:0;
+    //max-height:0;
+  }
+}
+
+.slick-dots {
+  bottom: auto;
+  top: -25px;
+  width: 62vw;
+ 
+  li {
+    margin: 0;
+    button:before {
+      color: rgba(120, 120, 120, .75);
+    }
+  }
+
+  li.slick-active button:before {
+    color: rgba(120, 120, 120, 1);
   }
 }

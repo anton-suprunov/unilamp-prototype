@@ -3,7 +3,8 @@ import Link from 'gatsby-link'
 import classnames from 'classnames'
 import some from 'lodash.some'
 
-import SubTable, { SubTableHeader } from './SubTable'
+//import SubTable, { SubTableHeader } from './SubTable'
+import SubTable, { SubTableHeader } from './SubTableMobile'
 import ColorsList from '../ColorsList'
 
 import './product-table.scss'
@@ -24,7 +25,10 @@ class ProductRow extends Component {
   }
 
   render() {
-    const { index, item } = this.props;
+    const { 
+      index, 
+      item,
+    } = this.props;
 
     let bgImage = item.bgImage;
     if (this.state.colorSelected) {
@@ -47,6 +51,7 @@ class ProductRow extends Component {
           {item.shortTitle ? item.shortTitle : item.title}
         </Link>
       </div>
+
       <div className="table__cell table__cell_colors">
         {item.colors && <ColorsList
           colors={item.colors}
@@ -56,32 +61,39 @@ class ProductRow extends Component {
           activeColor={this.state.colorSelected ? this.state.colorSelected : item.colors[0]}
         />}
       </div>
+
       <div className="table__cell">
         <p className="table__cell-title">Diameter</p>
         <p className="table__cell-data">260 mm</p>
         <p className="table__cell-data">340 mm</p>
         <p className="table__cell-data">400 mm</p>
       </div>
+
       <div className="table__cell">
         <p className="table__cell-title">Width</p>
         <p className="table__cell-data">107 mm</p>
       </div>
+
       <div className="table__cell">
         <p className="table__cell-title">LED Power</p>
         <p className="table__cell-data">30W</p>
       </div>
+
       <div className="table__cell">
         <p className="table__cell-title">Brigthness</p>
         <p className="table__cell-data">3000 lumen</p>
       </div>
+
       <div className="table__cell">
         <p className="table__cell-title">Protection</p>
         <p className="table__cell-data">IP44</p>
       </div>
+
       <div className="table__cell">
         <p className="table__cell-title">Temperature</p>
         <p className="table__cell-data">3000K</p>
       </div>
+
       <div className="table__cell table__cell_features">
         <p className="table__cell-title">Features</p>
         <div className="table__features">
@@ -91,6 +103,7 @@ class ProductRow extends Component {
           <p className="table__feature">Dim</p>
         </div>
       </div>
+
       <div className="table__cell table__cell_last">
         <p className="table__cell-title">View/Download</p>
         <div className="table__features table__features_single-col">
@@ -100,7 +113,7 @@ class ProductRow extends Component {
       </div>
 
       <div className="table__sublist">
-        <SubTableHeader />
+        { /* <SubTableHeader /> */ }
         {item.subProducts && item.subProducts.map((subProducts, subIndex) => (
           <SubTable
             products={subProducts}
@@ -123,9 +136,13 @@ export default class ProductTable extends Component {
   }
 
   render() {
+    const { 
+      renderSliders
+    } = this.props;
+
     return (
       <div 
-        className={classnames("table",{
+        className={classnames("table", "table_main", {
           "table_active": this.props.shown
         })}
       >

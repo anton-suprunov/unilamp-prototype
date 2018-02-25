@@ -1,4 +1,5 @@
 @import "../shared/vars";
+@import "../shared/mixins";
 @import "../shared/common";
 
 .col-container {
@@ -12,11 +13,19 @@
   width: 283px;
   padding-top: 84px;
   padding-left: 24px;
+
+  @include mq('mobile') {
+    display: none;
+  }
 }
 
 .rcol {
   position: relative;
   width: 1025px;
+
+  @include mq('mobile') {
+    width: auto;
+  }
 }
 
 .view-toggles {

@@ -1,3 +1,7 @@
+@import "../../shared/vars";
+@import "../../shared/mixins";
+@import "../../shared/common";
+
 .subscribe {
   position: fixed;
   bottom: 0;
@@ -5,7 +9,11 @@
   right: 0;
 	height: 88px;
 	background-color: #F5F5F5;
-	box-shadow: 0 8px 8px 0 rgba(216,63,42,0.18);
+  box-shadow: 0 8px 8px 0 rgba(216,63,42,0.18);
+  
+  @include mq('mobile') {
+    display: none;
+  }
 }
 
 .subscribe__container {

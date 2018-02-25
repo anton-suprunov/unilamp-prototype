@@ -15,7 +15,9 @@
     "gatsby-transformer-json": "^1.0.14",
     "lodash": "^4.17.4",
     "normalize.css": "^7.0.0",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "react-slick": "^0.18.1",
+    "slick-carousel": "^1.8.1"
   },
   "keywords": [
     "gatsby"

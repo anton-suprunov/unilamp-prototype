@@ -1,6 +1,14 @@
+@import "../../shared/vars";
+@import "../../shared/mixins";
+@import "../../shared/common";
+
 .search {
 	position: relative;
 	left: 20px;
+
+	@include mq('mobile') {
+    display: none;
+  }
 
 	&:before {
 		content: "";

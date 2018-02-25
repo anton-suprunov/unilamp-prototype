@@ -1,7 +1,15 @@
+@import "../../shared/vars";
+@import "../../shared/mixins";
+@import "../../shared/common";
+
 .footer {
 	background-color: #A0A0A0;
   box-shadow: 0 8px 8px 0 rgba(216,63,42,0.18);
   margin-bottom: 88px;
+
+  @include mq('mobile') {
+    margin-bottom: 0
+  }
 }
 
 .footer__container {

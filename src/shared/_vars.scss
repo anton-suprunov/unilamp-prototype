@@ -1,2 +1,8 @@
 $color-active: #D83F2A;
 $color-gray: #474747;
+
+// sample breakpoints, usage @include mq('desktop') { ... }
+$breakpoints: (
+  'desktop':  ( min-width:  601px ),
+  'mobile':  ( max-width:  600px ),
+);
