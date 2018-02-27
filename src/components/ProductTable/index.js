@@ -6,15 +6,17 @@ import some from 'lodash.some'
 //import SubTable, { SubTableHeader } from './SubTable'
 import SubTable, { SubTableHeader } from './SubTableMobile'
 import ColorsList from '../ColorsList'
+import WindowSize from '../../shared/WindowSize';
 
 import './product-table.scss'
 
 class ProductRow extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       colorSelected: undefined,
-      expanded: false
+      expanded: props.expanded ? true : false
     };
   }
 
@@ -24,11 +26,22 @@ class ProductRow extends Component {
     })
   }
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.expanded !== this.state.expanded) {
+      this.setState({
+        expanded: newProps.expanded
+      })
+    }
+  }
+
   render() {
     const { 
       index, 
       item,
+      windowWidth,
     } = this.props;
+
+    const isMobile = (windowWidth <= 600);
 
     let bgImage = item.bgImage;
     if (this.state.colorSelected) {
@@ -36,21 +49,45 @@ class ProductRow extends Component {
     }
 
     return <li
-      className={classnames("table__row", {
-        "table__row_active": this.state.expanded
+      className={classnames("table__row", "table__row_top-product", {
+        "table__row_active": this.state.expanded,
+        "table__row_collapsed": !this.state.expanded,
       })}
       onClick={() => this.setState({ expanded: !this.state.expanded })}
     >
       <div className="table__cell table__cell_first">
-        <span
-          style={{ 'backgroundImage': `url(${bgImage})` }}
-          className="table__photo"
-        />
+        { !isMobile ? 
+          <div>
+            <span
+              style={{ 'backgroundImage': `url(${bgImage})` }}
+              className="table__photo"
+            />
 
-        <Link to="/product/" className="table__product-title">
-          {item.shortTitle ? item.shortTitle : item.title}
-        </Link>
+            <Link to="/product/" className="table__product-title">
+              {item.shortTitle ? item.shortTitle : item.title}
+            </Link>
+          </div> : 
+
+          <div>
+            <Link to="/product/" className="table__product-title">
+              {item.shortTitle ? item.shortTitle : item.title}
+            </Link>
+
+            <span
+              style={{ 'backgroundImage': `url(${bgImage})` }}
+              className="table__photo"
+            />
+          </div>
+        }
       </div>
+
+      { isMobile &&
+        <div className="table__cell table__cell_expand">
+          <a href="#" className="table__product-expand">
+            {this.state.expanded ? "Collapse" : "Expand" } Product Family
+          </a>
+        </div>
+      }
 
       <div className="table__cell table__cell_colors">
         {item.colors && <ColorsList
@@ -126,12 +163,14 @@ class ProductRow extends Component {
   }
 }
 
+ProductRow = WindowSize(ProductRow);
+
 export default class ProductTable extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      expandedTables: []
+      allProductsExpanded: false,
     }
   }
 
@@ -146,12 +185,21 @@ export default class ProductTable extends Component {
           "table_active": this.props.shown
         })}
       >
+        <a 
+          href="#" 
+          className={"expand-all " + (this.state.allProductsExpanded ? "expand-all_expanded" : "")}
+          onClick={() => this.setState({ allProductsExpanded: !this.state.allProductsExpanded })}
+        >
+          { !this.state.allProductsExpanded ? "expand all" : "collapse all" }
+        </a>
+
         <ul className="table__body">
           {this.props.products.map((item, index) => (
             <ProductRow 
               key={`product_${index}`}
               item={item}
               index={index} // TODO: replace with product article
+              expanded={this.state.allProductsExpanded}
             />
           ))}
         </ul>

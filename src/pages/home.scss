@@ -1,12 +1,15 @@
 @import "../shared/vars";
 @import "../shared/mixins";
-@import "../shared/common";
 
 .col-container {
   display: flex;
   flex-grow: 1;
   margin-top: 85px;
   justify-content: space-between;
+
+  @include mq('mobile') {
+    margin-top: 10px;
+  }
 }
 
 .lcol {
@@ -49,25 +52,40 @@
 
   &_card {
     background-image: url(../img/cardview.svg);
-    background-size: auto 100%;
+    background-size: 100% auto;
     background-repeat: no-repeat;
     margin-right: 15px;
     width: 30px;
+    height: 24px;
+
+    @include mq('mobile') {
+      width: 18px;
+      height: auto;
+      margin-right: 10px;
+    }
   }
 
   &_table {
     position: relative;
-    height: 22px;
+    height: 24px;
+    
+    @include mq('mobile') {
+      height: 15px;
+      width: 17px;
+    }
 
     &:after,
     &:before {
       content: "";
-      height: 8px;
+      height: 9px;
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       background-color: #d83f2a;
+      @include mq('mobile') {
+        height: 5.5px;
+      }
     }
     &:before {
       bottom: 0;

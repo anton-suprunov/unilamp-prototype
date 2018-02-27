@@ -161,6 +161,7 @@ class IndexPage extends Component {
 
       <div className="rcol">
         <Search />
+
         <nav className="view-toggles">
           <a 
             href="#" 

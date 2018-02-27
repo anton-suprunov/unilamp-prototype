@@ -109,7 +109,7 @@ const ProductFields = ({
 )
 
 class SubTable extends Component { 
-  componentDidMount() { setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 0); }
+  //componentDidMount() { setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 0); }
 
   render() { 
     const { products } = this.props;

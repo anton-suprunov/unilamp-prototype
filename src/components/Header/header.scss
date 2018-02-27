@@ -1,6 +1,5 @@
 @import "../../shared/vars";
 @import "../../shared/mixins";
-@import "../../shared/common";
 
 .header {
 	width: 100%;
@@ -13,6 +12,10 @@
   margin: 0 auto;
   position: relative;
   height: 72px;
+
+  @include mq('mobile') {
+    height: 40px;
+  }
 }
 
 .header__logo {
@@ -24,6 +27,11 @@
   top: 50%;
   left: 56px;
   transform: translateY(-50%);
+
+  @include mq('mobile') {
+    left: 50%;
+    transform: translate(-50%, -50%); 
+  }
 }
 
 .header__nav {
@@ -77,6 +85,12 @@
   height: 24px;
   background-size: 22px 22px;
 
+  @include mq('mobile') {
+    width: 14px;
+    height: 14px;
+    background-size: 14px 14px;
+  }
+
   &:last-child {
     margin-right: 0;
   }
@@ -87,9 +101,14 @@
 
   &_user {
     background-image: url(../../img/user.svg);
+    @include mq('mobile') { display: none }
   }
+
   &_lang {
     background-image: url(../../img/language.svg);
     background-size: 24px 24px;
+    @include mq('mobile') { 
+      background-size: 16px 16px;
+    }
   }
 }
