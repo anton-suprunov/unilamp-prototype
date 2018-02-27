@@ -134,13 +134,13 @@
   &_top-product {
     
     @include mq('mobile') {
-      height: 163px;
+      height: 169px;
       overflow: hidden;
       padding-bottom: 0;
 
       &:first-child { 
         padding-top:0;
-        height: 138px;
+        height: 143px;
       }
       
       &:after {

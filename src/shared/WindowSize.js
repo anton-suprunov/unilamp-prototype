@@ -5,13 +5,12 @@ import React, { Component } from 'react';
 export default (ComposedComponent) => {
 
   class windowSize extends Component {
-
     constructor() {
       super();
       this.state = {
-        width: window.innerWidth,
-        height: window.innerHeight,
-      };
+        width: 0,
+        height: 0
+      }    
     }
 
     handleResize  = () => {
@@ -23,6 +22,10 @@ export default (ComposedComponent) => {
 
     componentDidMount() {
       window.addEventListener('resize', this.handleResize);
+      this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
     }
 
     componentWillUnmount() {
