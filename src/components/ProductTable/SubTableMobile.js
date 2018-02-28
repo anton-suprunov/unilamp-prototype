@@ -10,7 +10,8 @@ const sliderSettings = {
   speed: 300,
   slidesToShow: 1,
   slidesToScroll: 1,
-  arrows: false
+  arrows: false,
+  variableWidth: true
 };
 
 const SubTableHeader = () => {

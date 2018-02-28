@@ -52,9 +52,7 @@ class ProductRow extends Component {
       className={classnames("table__row", "table__row_top-product", {
         "table__row_active": this.state.expanded,
         "table__row_collapsed": !this.state.expanded,
-      })}
-      onClick={() => this.setState({ expanded: !this.state.expanded })}
-    >
+      })}>
       <div className="table__cell table__cell_first">
         { !isMobile ? 
           <div>
@@ -73,17 +71,23 @@ class ProductRow extends Component {
               {item.shortTitle ? item.shortTitle : item.title}
             </Link>
 
-            <span
-              style={{ 'backgroundImage': `url(${bgImage})` }}
-              className="table__photo"
-            />
+            <Link to="/product/">
+              <span
+                style={{ 'backgroundImage': `url(${bgImage})` }}
+                className="table__photo"
+              />
+            </Link>
           </div>
         }
       </div>
 
       { isMobile &&
         <div className="table__cell table__cell_expand">
-          <a href="#" className="table__product-expand">
+          <a 
+            href="#" 
+            className="table__product-expand"
+            onClick={() => this.setState({ expanded: !this.state.expanded })}
+          >
             {this.state.expanded ? "Collapse" : "Expand" } Product Family
           </a>
         </div>
