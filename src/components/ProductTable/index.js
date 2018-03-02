@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Link from 'gatsby-link'
 import classnames from 'classnames'
 import some from 'lodash.some'
+import { StickyContainer, Sticky } from 'react-sticky'
 
 //import SubTable, { SubTableHeader } from './SubTable'
 import SubTable, { SubTableHeader } from './SubTableMobile'
@@ -48,14 +49,27 @@ class ProductRow extends Component {
       bgImage = item.images[this.state.colorSelected.title.toLowerCase()];
     }
 
-    return <li
+    const TitlePhotoMobile = <div>
+      <Link to="/product/" className="table__product-title">
+        {item.shortTitle ? item.shortTitle : item.title}
+      </Link>
+
+      <Link to="/product/">
+        <span
+          style={{ 'backgroundImage': `url(${bgImage})` }}
+          className="table__photo"
+        />
+      </Link>
+    </div>;
+
+    return <StickyContainer
       className={classnames("table__row", "table__row_top-product", {
         "table__row_active": this.state.expanded,
         "table__row_collapsed": !this.state.expanded,
       })}>
-      <div className="table__cell table__cell_first">
-        { !isMobile ? 
-          <div>
+
+        {/* non mobile header */}
+        { !isMobile && <div className="table__cell table__cell_first">    
             <span
               style={{ 'backgroundImage': `url(${bgImage})` }}
               className="table__photo"
@@ -64,106 +78,143 @@ class ProductRow extends Component {
             <Link to="/product/" className="table__product-title">
               {item.shortTitle ? item.shortTitle : item.title}
             </Link>
-          </div> : 
-
-          <div>
-            <Link to="/product/" className="table__product-title">
-              {item.shortTitle ? item.shortTitle : item.title}
-            </Link>
-
-            <Link to="/product/">
-              <span
-                style={{ 'backgroundImage': `url(${bgImage})` }}
-                className="table__photo"
-              />
-            </Link>
           </div>
         }
-      </div>
 
-      { isMobile &&
-        <div className="table__cell table__cell_expand">
-          <a 
-            href="#" 
-            className="table__product-expand"
-            onClick={() => this.setState({ expanded: !this.state.expanded })}
-          >
-            {this.state.expanded ? "Collapse" : "Expand" } Product Family
-          </a>
+        { isMobile && 
+          <div className="table__cell table__cell_first">
+            {/* bottom offset should be equal height of "product names" label plus some extra space for padding */}
+            { this.state.expanded ?
+              <Sticky bottomOffset={76} className="sticky">
+                {({
+                  isSticky,
+                  style,
+                }) => <div className="table__sticky"
+                  style={{
+                    ...style,
+                    top: 0,
+                    transform: "translateY(" + style.top + "px)"
+                  }}>
+                    {TitlePhotoMobile}
+                  </div>
+                }
+              </Sticky> : 
+              <div>{TitlePhotoMobile}</div>
+            }
+          </div>
+        }
+
+        { isMobile &&
+          <div className="table__cell table__cell_expand">
+            { this.state.expanded ? 
+
+              <Sticky bottomOffset={76}>
+                {({
+                  isSticky,
+                  style,
+                }) => <a 
+                    href="#" 
+                    className="table__product-expand table__product-expand_sticky"
+                    style={{
+                      ...style,
+                      top: 0,
+                      transform: "translateY(" + style.top + "px)"
+                    }}
+                    onClick={e => {
+                      e.preventDefault();
+                      this.setState({ expanded: !this.state.expanded })
+                    }}
+                  >
+                    {this.state.expanded ? "Collapse" : "Expand" } Product Family
+                  </a>
+                }
+              </Sticky> :
+
+              <a href="#" className="table__product-expand"
+                onClick={e => {
+                  e.preventDefault();
+                  this.setState({ expanded: !this.state.expanded })
+                }}
+              >
+                {this.state.expanded ? "Collapse" : "Expand" } Product Family
+              </a>
+            }
+          </div>
+        }
+
+        <div className="table__cell table__cell_colors">
+          {item.colors && <ColorsList
+            colors={item.colors}
+            parentItemKey={index}
+            isVertical={true}
+            onClick={this.onColorClicked}
+            activeColor={this.state.colorSelected ? this.state.colorSelected : item.colors[0]}
+          />}
         </div>
-      }
 
-      <div className="table__cell table__cell_colors">
-        {item.colors && <ColorsList
-          colors={item.colors}
-          parentItemKey={index}
-          isVertical={true}
-          onClick={this.onColorClicked}
-          activeColor={this.state.colorSelected ? this.state.colorSelected : item.colors[0]}
-        />}
-      </div>
-
-      <div className="table__cell">
-        <p className="table__cell-title">Diameter</p>
-        <p className="table__cell-data">260 mm</p>
-        <p className="table__cell-data">340 mm</p>
-        <p className="table__cell-data">400 mm</p>
-      </div>
-
-      <div className="table__cell">
-        <p className="table__cell-title">Width</p>
-        <p className="table__cell-data">107 mm</p>
-      </div>
-
-      <div className="table__cell">
-        <p className="table__cell-title">LED Power</p>
-        <p className="table__cell-data">30W</p>
-      </div>
-
-      <div className="table__cell">
-        <p className="table__cell-title">Brigthness</p>
-        <p className="table__cell-data">3000 lumen</p>
-      </div>
-
-      <div className="table__cell">
-        <p className="table__cell-title">Protection</p>
-        <p className="table__cell-data">IP44</p>
-      </div>
-
-      <div className="table__cell">
-        <p className="table__cell-title">Temperature</p>
-        <p className="table__cell-data">3000K</p>
-      </div>
-
-      <div className="table__cell table__cell_features">
-        <p className="table__cell-title">Features</p>
-        <div className="table__features">
-          <p className="table__feature">EM03</p>
-          <p className="table__feature">Dali</p>
-          <p className="table__feature">Sendor</p>
-          <p className="table__feature">Dim</p>
+        <div className="table__cell">
+          <p className="table__cell-title">Diameter</p>
+          <p className="table__cell-data">260 mm</p>
+          <p className="table__cell-data">340 mm</p>
+          <p className="table__cell-data">400 mm</p>
         </div>
-      </div>
 
-      <div className="table__cell table__cell_last">
-        <p className="table__cell-title">View/Download</p>
-        <div className="table__features table__features_single-col">
-          <a href="#" className="table__feature table__feature_manual">Manual</a>
-          <a href="#" className="table__feature table__feature_calc">Light Calc</a>
+        <div className="table__cell">
+          <p className="table__cell-title">Width</p>
+          <p className="table__cell-data">107 mm</p>
         </div>
-      </div>
 
-      <div className="table__sublist">
-        { /* <SubTableHeader /> */ }
-        {item.subProducts && item.subProducts.map((subProducts, subIndex) => (
-          <SubTable
-            products={subProducts}
-            key={`product_${index}_sublist_${subIndex}`}
-          />
-        ))}
+        <div className="table__cell">
+          <p className="table__cell-title">LED Power</p>
+          <p className="table__cell-data">30W</p>
+        </div>
 
-      </div>
-    </li>
+        <div className="table__cell">
+          <p className="table__cell-title">Brigthness</p>
+          <p className="table__cell-data">3000 lumen</p>
+        </div>
+
+        <div className="table__cell">
+          <p className="table__cell-title">Protection</p>
+          <p className="table__cell-data">IP44</p>
+        </div>
+
+        <div className="table__cell">
+          <p className="table__cell-title">Temperature</p>
+          <p className="table__cell-data">3000K</p>
+        </div>
+
+        <div className="table__cell table__cell_features">
+          <p className="table__cell-title">Features</p>
+          <div className="table__features">
+            <p className="table__feature">EM03</p>
+            <p className="table__feature">Dali</p>
+            <p className="table__feature">Sendor</p>
+            <p className="table__feature">Dim</p>
+          </div>
+        </div>
+
+        <div className="table__cell table__cell_last">
+          <p className="table__cell-title">View/Download</p>
+          <div className="table__features table__features_single-col">
+            <a href="#" className="table__feature table__feature_manual">Manual</a>
+            <a href="#" className="table__feature table__feature_calc">Light Calc</a>
+          </div>
+        </div>
+
+        <div className="table__sublist">
+          { /* <SubTableHeader /> */ }
+          {item.subProducts && item.subProducts.map((subProducts, subIndex) => (
+            <SubTable
+              products={subProducts}
+              key={`product_${index}_sublist_${subIndex}`}
+              expanded={this.state.expanded}
+            />
+          ))}
+
+        </div>
+      </StickyContainer>
+    
   }
 }
 

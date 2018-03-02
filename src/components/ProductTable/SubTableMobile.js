@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import Link from 'gatsby-link'
 import classnames from 'classnames'
-
+import { Sticky } from 'react-sticky'
 import Slick from 'react-slick'
+
+import WindowSize from '../../shared/WindowSize'
+import config from '../../shared/config'
+
 
 const sliderSettings = {
   dots: true,
@@ -50,23 +54,47 @@ const SubTableHeader = () => {
   </div>
 }
 
-const ProductNames = ({ products }) => (
-  <div className="table table_sub table_sub-mobile table_sub-names">
-    <p className="table__cell-title">Product Names</p>
-    <ul className="table__body">
-      {products.map((item, index) => (
-        <li className="table__row" key={item.article}>
-          <div className="table__cell table__cell_first">
-            <p className="table__cell-data table__cell-data_highlight">
-              {item.title}
-              <span className="table__article">{item.article}</span>
+const ProductNames = ({ 
+    products,
+    isMobile,
+    expanded,
+  }) => {
+    return <div className="table table_sub table_sub-mobile table_sub-names">
+      {isMobile && expanded ?
+        <Sticky bottomOffset={156}>
+          {({
+            style,
+            isSticky
+          }) =>
+            <p
+              className={"table__cell-title " + (isSticky ? "table__cell-title_sticky" : "")}
+              style={{
+                ...style,
+                top: 0,
+                transform: (isSticky ? "translateY(" + (111 + style.top) + "px)" : "none") 
+              }}>
+                Product Names
             </p>
-          </div>
-        </li>
-      ))}
-    </ul>
-  </div>
-)
+          }
+        </Sticky> :
+        <p className="table__cell-title">Product Names</p>
+      }
+      
+
+      <ul className="table__body">
+        {products.map((item, index) => (
+          <li className="table__row" key={item.article}>
+            <div className="table__cell table__cell_first">
+              <p className="table__cell-data table__cell-data_highlight">
+                {item.title}
+                <span className="table__article">{item.article}</span>
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+}
 
 const fieldsMap = {
   "diameter": "Diameter",
@@ -81,51 +109,128 @@ const fieldsMap = {
 
 const ProductFields = ({ 
   products, 
-  fields
-}) => (
-  <div className="table table_sub table_sub-mobile table_sub-slide">
-    <ul className="table__body">
-      <li className="table__row">
-        { fields.map(field => (
-          <div className="table__cell" key={"table_header_" + field}>
-            <p className="table__cell-title">{fieldsMap[field]}</p>
-          </div>
-        ))}        
-      </li>
+  fields,
+  expanded,
+  isMobile,
+  onlyTitles = false
+}) => {
+  
+  const TitleFields = (
+    fields.map(field => (
+      <div className="table__cell" key={"table_header_" + field}>
+        <p className="table__cell-title">{fieldsMap[field]}</p>
+      </div>
+    ))
+  )
 
-      { products.map((item, index) => 
-        <li className="table__row" key={item.article}>
-          { fields.map(field => 
-            <div className="table__cell" key={"table_cell_" + field}>
-              <p className="table__cell-data">
-                {item[field]}
-              </p>
+  return <div className="table table_sub table_sub-mobile table_sub-slide">  
+  <div className="table__body">
+    <div className="table__row">
+      { isMobile && expanded ?    
+        <Sticky bottomOffset={156}>
+          {({
+            style,
+            isSticky,
+            distanceFromTop 
+          }) => {
+            return <div 
+              className={"table__row-wrap " + (isSticky ? "table__row-wrap_sticky" : "")}
+              style={{
+                ...style,
+                top: 0,
+                left: 'auto',
+                transform: (isSticky ? "translateY(" + (-1 * (distanceFromTop)) + "px)" : "none"),
+                //transform: (isSticky ? "translateY(" + (style.top) + "px)" : "none"),
+              }}
+            >
+              {TitleFields}
             </div>
-          ) }
-        </li>
-      ) }
+          }}
+        </Sticky> :
 
-    </ul>
+        <div className="table__row-wrap">
+          {TitleFields}
+        </div>
+      }
+    </div>
+    
+    { !onlyTitles && products.map((item, index) => 
+      <div className="table__row" key={item.article}>
+        { fields.map(field => 
+          <div className="table__cell" key={"table_cell_" + field}>
+            <p className="table__cell-data">
+              {item[field]}
+            </p>
+          </div>
+        ) }
+      </div>
+    ) }
+
   </div>
-)
+  </div>
+}
+
 
 class SubTable extends Component { 
-  //componentDidMount() { setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 0); }
-
   render() { 
-    const { products } = this.props;
+    const isMobile = (this.props.windowWidth <= config.breakpoints.mobile);
+
     return <div className="table__sublist-wrap">
-      <ProductNames products={products} />
+      <ProductNames 
+        {...this.props}
+        isMobile={isMobile}
+      />
+
+      
       <div className="table__slider">
+
+        { this.props.expanded && false &&
+          <Sticky bottomOffset={76}>
+            {({
+              style,
+              isSticky,
+              distanceFromTop
+            }) => (
+              <div
+                className={"table__sticky-row " + (isSticky ? "table__sticky-row" : "")}
+                style={{
+                  ...style,
+                  top: 0,
+                  transform: (isSticky ? "translateY(" + (111 + style.top) + "px)" : "none"),
+                }}
+              >
+                <Slick {...sliderSettings}>
+                  <ProductFields
+                    {...this.props}
+                    fields={['diameter', 'width', 'power']}
+                    isMobile={isMobile}
+                    onlyTitles={true}
+                  />
+
+                  <ProductFields
+                    {...this.props}
+                    fields={['brightness', 'temperature', 'protection']}
+                    isMobile={isMobile}
+                    onlyTitles={true}
+                  />
+                </Slick>
+              </div>
+            )}
+          </Sticky> 
+        }
+
         <div className="table__slider-wrap">
           <Slick { ...sliderSettings }>
             <ProductFields 
-              products={products} 
+              {...this.props}
               fields={['diameter', 'width', 'power']} 
+              isMobile={isMobile}
             />
+            
             <ProductFields
-              products={products}
+              {...this.props}
               fields={['brightness', 'temperature', 'protection']}
+              isMobile={isMobile}
             />
           </Slick>
         </div>
@@ -136,7 +241,7 @@ class SubTable extends Component {
 
 export { SubTableHeader }
 
-export default SubTable
+export default WindowSize(SubTable)
 
 /*<div className="table__cell">
   <p className="table__cell-data">{item.diameter}</p>
