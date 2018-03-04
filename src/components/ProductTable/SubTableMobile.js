@@ -8,7 +8,6 @@ import _ from 'lodash'
 import WindowSize from '../../shared/WindowSize'
 import config from '../../shared/config'
 
-
 const sliderSettings = {
   dots: true,
   infinite: false,
@@ -19,41 +18,6 @@ const sliderSettings = {
   variableWidth: true,
 };
 
-const SubTableHeader = () => {
-  return <div className="table table_sub-mobile table_header-only">
-    <ul className="table__body">
-      <li className="table__row">
-        <div className="table__cell table__cell_first">
-          <p className="table__cell-title">Novodisk Types</p>
-        </div>
-        <div className="table__cell">
-          <p className="table__cell-title">Diameter</p>
-        </div>
-        <div className="table__cell">
-          <p className="table__cell-title">Width</p>
-        </div>
-        <div className="table__cell">
-          <p className="table__cell-title">LED Power</p>
-        </div>
-        <div className="table__cell">
-          <p className="table__cell-title">Brigthness</p>
-        </div>
-        <div className="table__cell">
-          <p className="table__cell-title">Protection</p>
-        </div>
-        <div className="table__cell">
-          <p className="table__cell-title">Temperature</p>
-        </div>
-        <div className="table__cell table__cell_features">
-          <p className="table__cell-title">Features</p>
-        </div>
-        <div className="table__cell table__cell_last">
-          <p className="table__cell-title">&nbsp;</p>
-        </div>
-      </li>
-    </ul>
-  </div>
-}
 
 const ProductNames = ({ 
     products,
@@ -199,18 +163,7 @@ const ProductFields = ({
   </div>
 }
 
-function difference(object, base) {
-  function changes(object, base) {
-    return _.transform(object, function (result, value, key) {
-      if (!_.isEqual(value, base[key])) {
-        result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
-      }
-    });
-  }
-  return changes(object, base);
-}
-
-class SubTable extends Component {
+class SubTableMobile extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -342,6 +295,4 @@ class SubTable extends Component {
   }
 }
 
-export { SubTableHeader }
-
-export default WindowSize(SubTable)
+export default WindowSize(SubTableMobile)
