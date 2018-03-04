@@ -8,16 +8,6 @@ import _ from 'lodash'
 import WindowSize from '../../shared/WindowSize'
 import config from '../../shared/config'
 
-function difference(object, base) {
-  function changes(object, base) {
-    return _.transform(object, function (result, value, key) {
-      if (!_.isEqual(value, base[key])) {
-        result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
-      }
-    });
-  }
-  return changes(object, base);
-}
 
 const sliderSettings = {
   dots: true,
@@ -185,7 +175,6 @@ class SubTableMobile extends Component {
   }
 
   componentWillReceiveProps(nextProps) {  
-    console.log('sub table mobile received props', difference(nextProps, this.props));
     if (nextProps.activeSlide !== undefined) {
       // check if this slider instance called the update
       if (this.state.slideInProgress) {

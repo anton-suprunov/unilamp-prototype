@@ -9,17 +9,6 @@ import SubTableMobile from './SubTableMobile'
 import ColorsList from '../ColorsList'
 import WindowSize from '../../shared/WindowSize'
 
-function difference(object, base) {
-  function changes(object, base) {
-    return _.transform(object, function (result, value, key) {
-      if (!_.isEqual(value, base[key])) {
-        result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
-      }
-    });
-  }
-  return changes(object, base);
-}
-
 class ProductRow extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +27,6 @@ class ProductRow extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log('product row received props', difference(newProps, this.props));
     if (newProps.expanded !== this.props.expanded
       && newProps.activeSlide === this.props.activeSlide) {
       this.setState({
@@ -95,8 +83,6 @@ class ProductRow extends Component {
       })}
       onClick={() => {
         if (isMobile) return;
-        console.log('sticky container expand click desktop');
-        //this.setState({ expanded: !this.state.expanded };
         onExpandClick();
       }}
       >
@@ -156,9 +142,7 @@ class ProductRow extends Component {
                     href="#"
 
                     onClick={e => {
-                      console.log('sticky container expand/collapse');
                       e.preventDefault();
-                      //this.setState({ expanded: !this.state.expanded })
                       onExpandClick();
                     }}
                   >
@@ -171,9 +155,7 @@ class ProductRow extends Component {
             <div className="table__product-expand">
               <a href="#"
                 onClick={e => {
-                  console.log('sticky container expand/collapse');
                   e.preventDefault();
-                  //this.setState({ expanded: !this.state.expanded })
                   onExpandClick();
                 }}
               >
