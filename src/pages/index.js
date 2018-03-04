@@ -1,19 +1,20 @@
-//TODO: flatten subproducts in sample data and implemented subgroups and subgroups order based on object values
-
 import React, { Component } from 'react'
 import Link from 'gatsby-link'
 import classnames from 'classnames'
 import flatten from 'lodash/flatten'
 
+import config from '../shared/config'
+import WindowSize from '../shared/WindowSize'
 import Search from '../components/Search'
 import SortList from '../components/SortList'
 import ProductGrid from '../components/ProductGrid'
 import ProductTable from '../components/ProductTable'
 import Filters from '../components/Filters'
+import ViewToggles from '../components/ViewToggles'
 
 import products from '../sample-products'
 
-import './home.scss';
+import './home.scss'
 
 const filterProductsByFeature = (products, feature) => {
   let res = [];
@@ -109,7 +110,10 @@ class IndexPage extends Component {
     })
   }
 
-  render() {    
+  render() {
+    const { windowWidth } = this.props;
+    const isMobile = (windowWidth <= config.breakpoints.mobile);
+
     return <div className="home-page col-container">
       <div className="lcol">
         <h3 className="section-title">Sort Products</h3>
@@ -159,46 +163,40 @@ class IndexPage extends Component {
         <Filters onFilterChange={this.filterProducts} />
       </div>
 
-      <div className="rcol">
-        <Search />
-
-        <nav className="view-toggles">
-          <a 
-            href="#" 
-            onClick={() => this.setState({
-              'gridShown': true, 
+      
+        <div className="rcol">
+          <Search />      
+          <ViewToggles 
+            onClickGrid={() => this.setState({
+              'gridShown': true,
               'tableShown': false
             })}
-            className={classnames("view-toggles__toggle", "view-toggles__toggle_card", {
-              "view-toggles__toggle_active": this.state.gridShown
-            })}>Card view</a>
-          <a 
-            href="#" 
-            onClick={() => this.setState({
+            onClickTable={() => this.setState({
               'gridShown': false,
               'tableShown': true
             })}
-            className={classnames("view-toggles__toggle", "view-toggles__toggle_table", {
-              "view-toggles__toggle_active": this.state.tableShown
-            })}>Table view</a>
-        </nav>
-
-        {this.state.products && <ProductGrid 
-          products={this.state.products}
-          filteredColor={this.state.filteredColor}
-          shown={this.state.gridShown}
-        />}
-
-        {this.state.products && <ProductTable 
-          products={this.state.products}
-          filteredColor={this.state.filteredColor}
-          shown={this.state.tableShown} 
-        />}
+            gridShown={this.state.gridShown}
+            tableShown={this.state.tableShown}
+          />
         
-        {!this.state.products.length && <span>No matching products found</span>}
-      </div>
+
+          {this.state.products && <ProductGrid 
+            products={this.state.products}
+            filteredColor={this.state.filteredColor}
+            shown={this.state.gridShown}
+          />}
+
+          {this.state.products && <ProductTable 
+            products={this.state.products}
+            filteredColor={this.state.filteredColor}
+            shown={this.state.tableShown} 
+          />}
+          
+          {!this.state.products.length && <span>No matching products found</span>}
+        </div>
+      
     </div>
   }
 }
 
-export default IndexPage
+export default WindowSize(IndexPage)

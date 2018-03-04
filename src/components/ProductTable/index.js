@@ -17,7 +17,8 @@ class ProductRow extends Component {
 
     this.state = {
       colorSelected: undefined,
-      expanded: props.expanded ? true : false
+      expanded: props.expanded ? true : false,
+      activeSlide: 0
     };
   }
 
@@ -28,11 +29,22 @@ class ProductRow extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.expanded !== this.state.expanded) {
+    if (newProps.expanded !== this.state.expanded 
+        && newProps.activeSlide === this.props.activeSlide) {
       this.setState({
         expanded: newProps.expanded
       })
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    /* Do not update component in case of slide update */
+    if (nextProps.activeSlide !== this.props.activeSlide
+        && nextProps.expanded !== this.state.expanded) {
+      return false;
+    }
+
+    return true;
   }
 
   render() {
@@ -40,6 +52,8 @@ class ProductRow extends Component {
       index, 
       item,
       windowWidth,
+      onSlideChange,
+      activeSlide,
     } = this.props;
 
     const isMobile = (windowWidth <= 600);
@@ -85,7 +99,7 @@ class ProductRow extends Component {
           <div className="table__cell table__cell_first">
             {/* bottom offset should be equal height of "product names" label plus some extra space for padding */}
             { this.state.expanded ?
-              <Sticky bottomOffset={76} className="sticky">
+              <Sticky topOffset={-85} bottomOffset={161} className="sticky">
                 {({
                   isSticky,
                   style,
@@ -93,7 +107,7 @@ class ProductRow extends Component {
                   style={{
                     ...style,
                     top: 0,
-                    transform: "translateY(" + style.top + "px)"
+                    transform: isSticky ? "translateY(" + (style.top + 85) + "px)" : "none"
                   }}>
                     {TitlePhotoMobile}
                   </div>
@@ -107,37 +121,42 @@ class ProductRow extends Component {
         { isMobile &&
           <div className="table__cell table__cell_expand">
             { this.state.expanded ? 
-
-              <Sticky bottomOffset={76}>
+              <Sticky topOffset={-85} bottomOffset={161}>
                 {({
                   isSticky,
                   style,
-                }) => <a 
-                    href="#" 
-                    className="table__product-expand table__product-expand_sticky"
-                    style={{
-                      ...style,
-                      top: 0,
-                      transform: "translateY(" + style.top + "px)"
-                    }}
-                    onClick={e => {
-                      e.preventDefault();
-                      this.setState({ expanded: !this.state.expanded })
-                    }}
-                  >
-                    {this.state.expanded ? "Collapse" : "Expand" } Product Family
-                  </a>
+                }) => 
+                <div 
+                  className="table__product-expand table__product-expand_sticky"
+                  style={{
+                    ...style,
+                    top: 0,
+                    transform: isSticky ? "translateY(" + (style.top + 85) + "px)" : "none"
+                  }}>
+                    <a 
+                      href="#" 
+                      
+                      onClick={e => {
+                        e.preventDefault();
+                        this.setState({ expanded: !this.state.expanded })
+                      }}
+                    >
+                      {this.state.expanded ? "Collapse" : "Expand" } Product Family
+                    </a>
+                  </div>
                 }
               </Sticky> :
 
-              <a href="#" className="table__product-expand"
-                onClick={e => {
-                  e.preventDefault();
-                  this.setState({ expanded: !this.state.expanded })
-                }}
-              >
-                {this.state.expanded ? "Collapse" : "Expand" } Product Family
-              </a>
+              <div className="table__product-expand">
+                <a href="#"
+                  onClick={e => {
+                    e.preventDefault();
+                    this.setState({ expanded: !this.state.expanded })
+                  }}
+                >
+                  {this.state.expanded ? "Collapse" : "Expand" } Product Family
+                </a>
+              </div>
             }
           </div>
         }
@@ -209,15 +228,15 @@ class ProductRow extends Component {
               products={subProducts}
               key={`product_${index}_sublist_${subIndex}`}
               expanded={this.state.expanded}
+              onSlideChange={onSlideChange}
+              activeSlide={activeSlide}
             />
           ))}
 
         </div>
       </StickyContainer>
-    
   }
 }
-
 ProductRow = WindowSize(ProductRow);
 
 export default class ProductTable extends Component {
@@ -227,6 +246,11 @@ export default class ProductTable extends Component {
     this.state = {
       allProductsExpanded: false,
     }
+  }
+
+  updateActiveSlide = i => {
+    i !== this.state.activeSlide && 
+      this.setState({ activeSlide: i })
   }
 
   render() {
@@ -239,7 +263,7 @@ export default class ProductTable extends Component {
         className={classnames("table", "table_main", {
           "table_active": this.props.shown
         })}
-      >
+      >        
         <a 
           href="#" 
           className={"expand-all " + (this.state.allProductsExpanded ? "expand-all_expanded" : "")}
@@ -255,6 +279,8 @@ export default class ProductTable extends Component {
               item={item}
               index={index} // TODO: replace with product article
               expanded={this.state.allProductsExpanded}
+              activeSlide={this.state.activeSlide}
+              onSlideChange={this.updateActiveSlide}
             />
           ))}
         </ul>

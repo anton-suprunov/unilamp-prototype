@@ -1,0 +1,80 @@
+@import "../../shared/vars";
+@import "../../shared/mixins";
+
+.view-toggles {
+  position: absolute;
+  right: 25px;
+  top: 10px;
+  display: flex;
+  width: auto !important;
+
+  @include mq('mobile') {
+    height: 45px;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    top: 40px;
+    padding-top: 20px;
+    justify-content: flex-end;
+    background-color: #fff;
+    z-index: 12;
+    right: 0;
+    padding-right: 25px;
+  }
+}
+
+.view-toggles__toggle {
+  width: 24px;
+  height: 24px;
+  text-indent: -999px;
+  overflow: hidden;
+  opacity: .5;
+  cursor: pointer;
+
+  &_active {
+    opacity: 1;
+  }
+
+  &_card {
+    background-image: url(../../img/cardview.svg);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    margin-right: 15px;
+    width: 30px;
+    height: 24px;
+
+    @include mq('mobile') {
+      width: 18px;
+      height: auto;
+      margin-right: 10px;
+    }
+  }
+
+  &_table {
+    position: relative;
+    height: 24px;
+    
+    @include mq('mobile') {
+      height: 15px;
+      width: 17px;
+    }
+
+    &:after,
+    &:before {
+      content: "";
+      height: 9px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #d83f2a;
+      @include mq('mobile') {
+        height: 5.5px;
+      }
+    }
+    &:before {
+      bottom: 0;
+      top: auto;
+    }
+  }
+}

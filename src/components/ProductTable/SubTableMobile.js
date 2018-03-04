@@ -3,6 +3,7 @@ import Link from 'gatsby-link'
 import classnames from 'classnames'
 import { Sticky } from 'react-sticky'
 import Slick from 'react-slick'
+import _ from 'lodash'
 
 import WindowSize from '../../shared/WindowSize'
 import config from '../../shared/config'
@@ -15,7 +16,7 @@ const sliderSettings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   arrows: false,
-  variableWidth: true
+  variableWidth: true,
 };
 
 const SubTableHeader = () => {
@@ -61,7 +62,7 @@ const ProductNames = ({
   }) => {
     return <div className="table table_sub table_sub-mobile table_sub-names">
       {isMobile && expanded ?
-        <Sticky bottomOffset={156}>
+        <Sticky topOffset={-85} bottomOffset={241}>
           {({
             style,
             isSticky
@@ -71,7 +72,7 @@ const ProductNames = ({
               style={{
                 ...style,
                 top: 0,
-                transform: (isSticky ? "translateY(" + (111 + style.top) + "px)" : "none") 
+                transform: isSticky ? "translateY(" + (111 + 85 + style.top) + "px)" : "none"
               }}>
                 Product Names
             </p>
@@ -105,6 +106,8 @@ const fieldsMap = {
   "temperature": "Temperature",
   "protection": "Protection",
 
+  "features": "Features",
+  "downloads": "Downloads",
 }
 
 const ProductFields = ({ 
@@ -112,12 +115,11 @@ const ProductFields = ({
   fields,
   expanded,
   isMobile,
-  onlyTitles = false
 }) => {
   
   const TitleFields = (
     fields.map(field => (
-      <div className="table__cell" key={"table_header_" + field}>
+      <div className={"table__cell table__cell_" + field} key={"table_header_" + field}>
         <p className="table__cell-title">{fieldsMap[field]}</p>
       </div>
     ))
@@ -126,7 +128,7 @@ const ProductFields = ({
   return <div className="table table_sub table_sub-mobile table_sub-slide">  
   <div className="table__body">
     <div className="table__row">
-      { isMobile && expanded ?    
+      { isMobile && expanded && false ?    
         <Sticky bottomOffset={156}>
           {({
             style,
@@ -154,15 +156,42 @@ const ProductFields = ({
       }
     </div>
     
-    { !onlyTitles && products.map((item, index) => 
+    { products.map((item, index) => 
       <div className="table__row" key={item.article}>
-        { fields.map(field => 
-          <div className="table__cell" key={"table_cell_" + field}>
+        { fields.map(field => {
+          if (field === 'features') {
+            return <div className={"table__cell table__cell_" + field} key={"table_cell_" + field}>
+              <div className="table__cell-data">
+                <div className="table__features">
+                  {item.features && item.features.map((feature, index) => (
+                    <a
+                      href="#"
+                      key={`${item.article}_features_${index}`}
+                      className={`table__feature table__feature_${feature}`}
+                    >
+                      {feature}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          }
+
+          if (field === 'downloads') {
+            return <div className="table__cell" key={"table_cell_" + field}>
+              <p className="table__cell-data">
+                <a href="#" className="table__feature table__feature_manual table__feature_icon-only">Manual</a>
+                <a href="#" className="table__feature table__feature_calc table__feature_icon-only">Light calc</a>
+              </p>
+            </div>
+          }
+
+          return <div className="table__cell" key={"table_cell_" + field}>
             <p className="table__cell-data">
               {item[field]}
             </p>
           </div>
-        ) }
+        }) }
       </div>
     ) }
 
@@ -170,10 +199,63 @@ const ProductFields = ({
   </div>
 }
 
+function difference(object, base) {
+  function changes(object, base) {
+    return _.transform(object, function (result, value, key) {
+      if (!_.isEqual(value, base[key])) {
+        result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
+      }
+    });
+  }
+  return changes(object, base);
+}
 
-class SubTable extends Component { 
+class SubTable extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      // flag set to identify the instance that was manually swiped to skip it in auto slide change
+      slideInProgress: false,
+      // flag set once the auto slide change is run to skip the callback execution in beforeChange handler
+      autoSlideChange: false 
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {  
+    if (nextProps.activeSlide !== undefined) {
+      // check if this slider instance called the update
+      if (this.state.slideInProgress) {
+        this.setState({
+          slideInProgress: false
+        })
+
+      } else if (nextProps.activeSlide !== this.slider.innerSlider.state.currentSlide) {
+        this.setState({
+          autoSlideChange: true
+        }, () => this.slider.slickGoTo(nextProps.activeSlide, false))
+      }
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    /* Cancel component re-render for a smooth slide transition in case of slide change or autoSlideChange flag */
+    if (nextProps.activeSlide !== this.props.activeSlide
+        || nextState.autoSlideChange !== this.state.autoSlideChange) {
+      return false;
+    }
+
+    return true;
+  }
+
   render() { 
-    const isMobile = (this.props.windowWidth <= config.breakpoints.mobile);
+    const { 
+      expanded,
+      onSlideChange,
+      activeSlide,
+      windowWidth,
+     } = this.props;
+    
+     const isMobile = (windowWidth <= config.breakpoints.mobile);
 
     return <div className="table__sublist-wrap">
       <ProductNames 
@@ -181,46 +263,60 @@ class SubTable extends Component {
         isMobile={isMobile}
       />
 
-      
       <div className="table__slider">
-
-        { this.props.expanded && false &&
-          <Sticky bottomOffset={76}>
-            {({
-              style,
-              isSticky,
-              distanceFromTop
-            }) => (
-              <div
-                className={"table__sticky-row " + (isSticky ? "table__sticky-row" : "")}
-                style={{
-                  ...style,
-                  top: 0,
-                  transform: (isSticky ? "translateY(" + (111 + style.top) + "px)" : "none"),
-                }}
-              >
-                <Slick {...sliderSettings}>
-                  <ProductFields
-                    {...this.props}
-                    fields={['diameter', 'width', 'power']}
-                    isMobile={isMobile}
-                    onlyTitles={true}
-                  />
-
-                  <ProductFields
-                    {...this.props}
-                    fields={['brightness', 'temperature', 'protection']}
-                    isMobile={isMobile}
-                    onlyTitles={true}
-                  />
-                </Slick>
-              </div>
-            )}
-          </Sticky> 
-        }
-
         <div className="table__slider-wrap">
-          <Slick { ...sliderSettings }>
+          <Slick 
+            ref={slider => this.slider = slider} 
+            { ...sliderSettings }
+            customPaging={i => {
+              if (expanded) {
+                return <Sticky topOffset={-85} bottomOffset={251}>
+                  {({
+                    isSticky,
+                    style,
+                  }) => (
+                    <div 
+                      className="sticky-dot"
+                      style={{
+                        ...style,
+                        top: 0,
+                        transform: (isSticky ? "translateY(" + (83 + 85 + style.top) + "px)" : "none")
+                      }}
+                    >
+                      <button className="table__dot"></button>
+                      <p className="table__dot-label">
+                        {i === 0 && "specs"}
+                        {i === 1 && "light"}
+                        {i === 2 && "features"}
+                      </p>
+                    </div>
+                  )}
+                </Sticky>
+
+              } else {
+                return <div>
+                  <button className="table__dot"></button>
+                  <p className="table__dot-label">
+                    {i === 0 && "specs"}
+                    {i === 1 && "light"}
+                    {i === 2 && "features"}
+                  </p>
+                </div>
+              }
+            }}
+            beforeChange={(current, next) => {
+              if (this.state.autoSlideChange) {
+                this.setState({
+                  autoSlideChange: false
+                });
+                return;  
+              }
+              this.setState({
+                slideInProgress: true
+              }, () => onSlideChange(next))
+            }}
+            //afterChange={(next) => { onSlideChange(next); }}
+          >
             <ProductFields 
               {...this.props}
               fields={['diameter', 'width', 'power']} 
@@ -232,6 +328,13 @@ class SubTable extends Component {
               fields={['brightness', 'temperature', 'protection']}
               isMobile={isMobile}
             />
+
+            <ProductFields
+              {...this.props}
+              fields={['features', 'downloads']}
+              isMobile={isMobile}
+            />
+            
           </Slick>
         </div>
       </div>
@@ -242,39 +345,3 @@ class SubTable extends Component {
 export { SubTableHeader }
 
 export default WindowSize(SubTable)
-
-/*<div className="table__cell">
-  <p className="table__cell-data">{item.diameter}</p>
-</div>
-<div className="table__cell">
-  <p className="table__cell-data">{item.width}</p>
-</div>
-<div className="table__cell">
-  <p className="table__cell-data">{item.power}</p>
-</div>
-<div className="table__cell">
-  <p className="table__cell-data">{item.brightness}</p>
-</div>
-<div className="table__cell">
-  <p className="table__cell-data">{item.protection}</p>
-</div>
-<div className="table__cell">
-  <p className="table__cell-data">{item.temperature}</p>
-</div>
-<div className="table__cell table__cell_features">
-  <div className="table__features">
-    {item.features && item.features.map((feature, index) => (
-      <a
-        href="#"
-        key={`${item.article}_features_${index}`}
-        className={`table__feature table__feature_${feature}`}
-      >
-        {feature}
-      </a>
-    ))}
-  </div>
-</div>
-<div className="table__cell table__cell_last">
-  <a href="#" className="table__feature table__feature_manual table__feature_icon-only">Manual</a>
-  <a href="#" className="table__feature table__feature_calc table__feature_icon-only">Light calc</a>
-  </div> */

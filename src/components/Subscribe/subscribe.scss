@@ -10,6 +10,7 @@
 	height: 88px;
 	background-color: #F5F5F5;
   box-shadow: 0 8px 8px 0 rgba(216,63,42,0.18);
+  z-index: 1;
   
   @include mq('mobile') {
     display: none;
