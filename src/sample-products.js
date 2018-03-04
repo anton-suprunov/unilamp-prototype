@@ -222,28 +222,28 @@ const products = [
     shortTitle: "NovoDisc",
     new: true,
     bgImage: "NovoDisc-White.png",
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
   {
     title: "NovoDisc - Interactive Landing",
     shortTitle: "NovoDisc",
     bgImage: "NovoDisc-White.png",
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
   {
     title: "Eden Eyelid",
     bgImage: "Eden-Eyelid-Black.png",
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
   {
     title: "LED Panel",
     bgImage: "NovoDisc-White.png",
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
   {
     title: "Tyfon",
     bgImage: "NovoDisc-White.png",
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
 
 
@@ -260,7 +260,7 @@ const products = [
       { title: 'Graphite', hex: '#b9b9b9', },
       { title: 'Black', hex: '#434848', },
     ],
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
   {
     title: "Retina Stripe",
@@ -276,7 +276,7 @@ const products = [
       { title: 'Graphite', hex: '#b9b9b9', },
       { title: 'Black', hex: '#434848', },
     ],
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
   {
     title: "Retina Cross",
@@ -291,7 +291,7 @@ const products = [
       { title: 'Graphite', hex: '#b9b9b9', },
       { title: 'Black', hex: '#434848', },
     ],
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
   {
     title: "Retina Eyelid LED",
@@ -306,7 +306,7 @@ const products = [
       { title: 'Graphite', hex: '#b9b9b9', },
       { title: 'Black', hex: '#434848', },
     ],
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
   {
     title: "Retina Eyelid LED",
@@ -321,36 +321,36 @@ const products = [
       { title: 'Graphite', hex: '#b9b9b9', },
       { title: 'Black', hex: '#434848', },
     ],
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
 
 
   {
     title: "Juno Soft Pro",
     bgImage: "Drift-Flat-Graphite.png",
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
   {
     title: "LED Compact (1 & 2)",
     shortTitle: "LED Compact",
     bgImage: "Drift-Flat-Silver.png",
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
   {
     title: "Ecoled",
     bgImage: "Drift-Flat-White.png",
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
   {
     title: "Ecoled Maxi",
     new: true,
     bgImage: "Drift-Flat-Graphite.png",
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
   {
     title: "Ecoled Alu",
     bgImage: "Drift-Flat-Silver.png",
-    subProducts: [sampleSize(subTableData, 7)]
+    subProducts: sampleSize(subTableData, 7)
   },
 ];
 

@@ -2,11 +2,23 @@ import React, { Component } from 'react'
 import Link from 'gatsby-link'
 import classnames from 'classnames'
 import { StickyContainer, Sticky } from 'react-sticky'
+import _ from 'lodash'
 
 import SubTable, { SubTableHeader } from './SubTable'
 import SubTableMobile from './SubTableMobile'
 import ColorsList from '../ColorsList'
 import WindowSize from '../../shared/WindowSize'
+
+function difference(object, base) {
+  function changes(object, base) {
+    return _.transform(object, function (result, value, key) {
+      if (!_.isEqual(value, base[key])) {
+        result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
+      }
+    });
+  }
+  return changes(object, base);
+}
 
 class ProductRow extends Component {
   constructor(props) {
@@ -14,7 +26,7 @@ class ProductRow extends Component {
 
     this.state = {
       colorSelected: undefined,
-      expanded: props.expanded ? true : false,
+      //expanded: props.expanded ? true : false,
       activeSlide: 0
     };
   }
@@ -26,7 +38,8 @@ class ProductRow extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.expanded !== this.state.expanded
+    console.log('product row received props', difference(newProps, this.props));
+    if (newProps.expanded !== this.props.expanded
       && newProps.activeSlide === this.props.activeSlide) {
       this.setState({
         expanded: newProps.expanded
@@ -37,7 +50,7 @@ class ProductRow extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     /* Do not update component in case of slide update */
     if (nextProps.activeSlide !== this.props.activeSlide
-      && nextProps.expanded !== this.state.expanded) {
+      && nextProps.expanded !== this.props.expanded) {
       return false;
     }
 
@@ -51,8 +64,10 @@ class ProductRow extends Component {
       windowWidth,
       onSlideChange,
       activeSlide,
+      onExpandClick,
+      expanded,
     } = this.props;
-
+    
     const isMobile = (windowWidth <= 600);
 
     let bgImage = item.bgImage;
@@ -80,7 +95,9 @@ class ProductRow extends Component {
       })}
       onClick={() => {
         if (isMobile) return;
-        this.setState({ expanded: !this.state.expanded })
+        console.log('sticky container expand click desktop');
+        //this.setState({ expanded: !this.state.expanded };
+        onExpandClick();
       }}
       >
 
@@ -100,7 +117,7 @@ class ProductRow extends Component {
       {isMobile &&
         <div className="table__cell table__cell_first">
           {/* bottom offset should be equal height of "product names" label plus some extra space for padding */}
-          {this.state.expanded ?
+          {expanded ?
             <Sticky topOffset={-85} bottomOffset={161} className="sticky">
               {({
                 isSticky,
@@ -122,7 +139,7 @@ class ProductRow extends Component {
 
       {isMobile &&
         <div className="table__cell table__cell_expand">
-          {this.state.expanded ?
+          {expanded ?
             <Sticky topOffset={-85} bottomOffset={161}>
               {({
                 isSticky,
@@ -139,11 +156,13 @@ class ProductRow extends Component {
                     href="#"
 
                     onClick={e => {
+                      console.log('sticky container expand/collapse');
                       e.preventDefault();
-                      this.setState({ expanded: !this.state.expanded })
+                      //this.setState({ expanded: !this.state.expanded })
+                      onExpandClick();
                     }}
                   >
-                    {this.state.expanded ? "Collapse" : "Expand"} Product Family
+                    {expanded ? "Collapse" : "Expand"} Product Family
                     </a>
                 </div>
               }
@@ -152,11 +171,13 @@ class ProductRow extends Component {
             <div className="table__product-expand">
               <a href="#"
                 onClick={e => {
+                  console.log('sticky container expand/collapse');
                   e.preventDefault();
-                  this.setState({ expanded: !this.state.expanded })
+                  //this.setState({ expanded: !this.state.expanded })
+                  onExpandClick();
                 }}
               >
-                {this.state.expanded ? "Collapse" : "Expand"} Product Family
+                {expanded ? "Collapse" : "Expand"} Product Family
                 </a>
             </div>
           }
@@ -226,26 +247,24 @@ class ProductRow extends Component {
       {!isMobile ?
         <div className="table__sublist">
           <SubTableHeader />
-          {item.subProducts && item.subProducts.map((subProducts, subIndex) => (
+          {item.subProducts && 
             <SubTable
-              products={subProducts}
-              key={`product_${index}_sublist_${subIndex}`}
-              expanded={this.state.expanded}
+              products={item.subProducts}
+              expanded={expanded}
               onSlideChange={onSlideChange}
               activeSlide={activeSlide}
             />
-          ))}
+          }
         </div> :
         <div className="table__sublist">
-          {item.subProducts && item.subProducts.map((subProducts, subIndex) => (
+          {item.subProducts &&
             <SubTableMobile
-              products={subProducts}
-              key={`product_${index}_sublist_${subIndex}`}
-              expanded={this.state.expanded}
+              products={item.subProducts}
+              expanded={expanded}
               onSlideChange={onSlideChange}
               activeSlide={activeSlide}
             />
-          ))}
+          }
         </div>
       }
     </StickyContainer>

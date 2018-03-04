@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Link from 'gatsby-link'
 import classnames from 'classnames'
+import range from 'lodash/range'
 
 import ProductRow from './ProductRow'
 
@@ -12,7 +13,37 @@ export default class ProductTable extends Component {
 
     this.state = {
       allProductsExpanded: false,
-      activeSlide: 0
+      activeSlide: 0,
+      expandedTables: [],
+    }
+  }
+
+  toggleAllTables = () => {
+    if (this.state.allProductsExpanded) {
+      this.setState({ 
+        allProductsExpanded: false,
+        expandedTables: []
+      })
+    } else {
+      this.setState({ 
+        allProductsExpanded: true,
+        expandedTables: range(this.props.products.length)
+      })
+    }
+  }
+
+  toggleRow = (i) => {
+    let expandedTables = this.state.expandedTables.slice(0);
+    
+    if (this.state.expandedTables.indexOf(i) !== -1) {
+      this.setState({
+        expandedTables: expandedTables.filter(j => j !== i)
+      })
+    } else {
+      expandedTables.push(i);
+      this.setState({
+        expandedTables: expandedTables
+      })
     }
   }
 
@@ -35,7 +66,7 @@ export default class ProductTable extends Component {
         <a 
           href="#" 
           className={"expand-all " + (this.state.allProductsExpanded ? "expand-all_expanded" : "")}
-          onClick={() => this.setState({ allProductsExpanded: !this.state.allProductsExpanded })}
+          onClick={this.toggleAllTables}
         >
           { !this.state.allProductsExpanded ? "expand all" : "collapse all" }
         </a>
@@ -46,9 +77,10 @@ export default class ProductTable extends Component {
               key={`product_${index}`}
               item={item}
               index={index} // TODO: replace with product article
-              expanded={this.state.allProductsExpanded}
+              expanded={(this.state.expandedTables.indexOf(index) !== -1)}
               activeSlide={this.state.activeSlide}
               onSlideChange={this.updateActiveSlide}
+              onExpandClick={this.toggleRow.bind(this, index)}
             />
           ))}
         </ul>

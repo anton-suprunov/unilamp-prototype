@@ -37,7 +37,7 @@ export default (ComposedComponent) => {
         <ComposedComponent
           {...this.props}
           windowWidth={this.state.width}
-          windowHeight={this.state.height}
+          //windowHeight={this.state.height}
         />
       );
     }
