@@ -342,7 +342,6 @@
   font-family: Muli;
   position: relative;
   white-space: nowrap;
-  //padding-left: 32px;
   padding-left: 16px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -353,6 +352,7 @@
   @include mq('mobile') {
     padding-left: 10px;
     text-align: left;
+    white-space: normal;
     margin-top: 5px;
 
     &:before { display: none }
