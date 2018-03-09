@@ -49,7 +49,8 @@ const filterProductByAttr = (products, filter) => {
     let passed = false;
 
     passed = subProducts.some(s => {
-      if (filter.type === 'temperature') {
+      if (filter.type === 'temperature' || filter.type === 'brightness' || filter.type === 'power') {
+        console.log(filter);
         return filter.value.indexOf(s[filter.type]) !== -1;
       } else  {
         return s[filter.type] && s[filter.type] === filter.value;
@@ -82,9 +83,6 @@ class IndexPage extends Component {
           return filterProductsByFeature(products, filter.value);
           break;
         
-          case 'dim':
-          return filterProductsByFeature(products, 'dim');
-        break;
         
         case 'color':
           !filteredColor && (filteredColor = filter.value);
@@ -92,6 +90,8 @@ class IndexPage extends Component {
         break;
         
         case 'temperature':
+        case 'power':
+        case 'brightness':
         case 'width':
         case 'length':
         case 'protection':
