@@ -1,6 +1,9 @@
 .popup-container {
   cursor: pointer;
+
   &_open {
+    z-index: 1;
+
     .popup { 
       display: block;
       z-index: 10;

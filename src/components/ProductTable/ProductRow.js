@@ -8,6 +8,7 @@ import SubTable, { SubTableHeader } from './SubTable'
 import SubTableMobile from './SubTableMobile'
 import ColorsList from '../ColorsList'
 import WindowSize from '../../shared/WindowSize'
+import Popup, { PopupContainer } from '../Popup'
 
 class ProductRow extends Component {
   constructor(props) {
@@ -63,9 +64,10 @@ class ProductRow extends Component {
       bgImage = item.images[this.state.colorSelected.title.toLowerCase()];
     }
 
-    const TitlePhotoMobile = <div>
+    const TitlePhoto = <div>
       <Link to="/product/" className="table__product-title">
-        {item.shortTitle ? item.shortTitle : item.title}
+        {item.shortTitle ? item.shortTitle : item.title} 
+        {!isMobile ? (" (" + item.subProducts.length + " products)") : ""}
       </Link>
 
       <Link to="/product/">
@@ -83,20 +85,13 @@ class ProductRow extends Component {
       })}
       onClick={() => {
         if (isMobile) return;
-        onExpandClick();
+        //onExpandClick();
       }}
       >
 
       {/* non mobile header */}
       {!isMobile && <div className="table__cell table__cell_first">
-        <span
-          style={{ 'backgroundImage': `url(${bgImage})` }}
-          className="table__photo"
-        />
-
-        <Link to="/product/" className="table__product-title">
-          {item.shortTitle ? item.shortTitle : item.title}
-        </Link>
+        {TitlePhoto}
       </div>
       }
 
@@ -114,16 +109,16 @@ class ProductRow extends Component {
                   top: 0,
                   transform: isSticky ? "translateY(" + (style.top + 85) + "px)" : "none"
                 }}>
-                  {TitlePhotoMobile}
+                  {TitlePhoto}
                 </div>
               }
             </Sticky> :
-            <div>{TitlePhotoMobile}</div>
+            <div>{TitlePhoto}</div>
           }
         </div>
       }
 
-      {isMobile &&
+      {isMobile ?
         <div className="table__cell table__cell_expand">
           {expanded ?
             <Sticky topOffset={-85} bottomOffset={161}>
@@ -163,6 +158,20 @@ class ProductRow extends Component {
                 </a>
             </div>
           }
+        </div> :
+        <div className="table__cell table__cell_expand">
+          <div className="table__product-expand">
+            <a href="#"
+              onClick={e => {
+                e.preventDefault();
+                onExpandClick();
+              }}
+            >
+              { /* {expanded ? "Collapse" : "Expand"} Product Family */ }
+              Entire Family characteristics 
+              <span> (expand for detailed info)</span>
+            </a>
+          </div>
         </div>
       }
 
@@ -190,22 +199,50 @@ class ProductRow extends Component {
 
       <div className="table__cell">
         <p className="table__cell-title">LED Power</p>
-        <p className="table__cell-data">30W</p>
+        <p className="table__cell-data table__cell-data_has-info">
+          <PopupContainer className="table__cell-info">
+            <Popup 
+              text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
+            />
+          </PopupContainer>
+          30W
+        </p>
       </div>
 
       <div className="table__cell">
         <p className="table__cell-title">Brigthness</p>
-        <p className="table__cell-data">3000 lumen</p>
+        <p className="table__cell-data table__cell-data_has-info">
+          <PopupContainer className="table__cell-info">
+            <Popup
+              text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
+            />
+          </PopupContainer>
+          3000 lumen
+        </p>
       </div>
 
       <div className="table__cell">
         <p className="table__cell-title">Protection</p>
-        <p className="table__cell-data">IP44</p>
+        <p className="table__cell-data table__cell-data_has-info">
+          <PopupContainer className="table__cell-info">
+            <Popup
+              text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
+            />
+          </PopupContainer>
+          IP44
+        </p>
       </div>
 
       <div className="table__cell">
         <p className="table__cell-title">Temperature</p>
-        <p className="table__cell-data">3000K</p>
+        <p className="table__cell-data table__cell-data_has-info">
+          <PopupContainer className="table__cell-info">
+            <Popup
+              text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
+            />
+          </PopupContainer>
+          3000K
+        </p>
       </div>
 
       <div className="table__cell table__cell_features">
@@ -219,16 +256,15 @@ class ProductRow extends Component {
       </div>
 
       <div className="table__cell table__cell_last">
-        <p className="table__cell-title">View/Download</p>
+        <p className="table__cell-title">Downloads</p>
         <div className="table__features table__features_single-col">
-          <a href="#" className="table__feature table__feature_manual">Manual</a>
-          <a href="#" className="table__feature table__feature_calc">Light Calc</a>
+          <a href="#" className="table__feature table__feature_manual">See all</a>
+          { /* <a href="#" className="table__feature table__feature_calc">Light Calc</a> */ }
         </div>
       </div>
 
       {!isMobile ?
         <div className="table__sublist">
-          <SubTableHeader />
           {item.subProducts && 
             <SubTable
               products={item.subProducts}
