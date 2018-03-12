@@ -199,50 +199,50 @@ class ProductRow extends Component {
 
       <div className="table__cell">
         <p className="table__cell-title">LED Power</p>
-        <p className="table__cell-data table__cell-data_has-info">
+        <div className="table__cell-data table__cell-data_has-info">
           <PopupContainer className="table__cell-info">
             <Popup 
               text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
             />
           </PopupContainer>
           30W
-        </p>
+        </div>
       </div>
 
       <div className="table__cell">
         <p className="table__cell-title">Brigthness</p>
-        <p className="table__cell-data table__cell-data_has-info">
+        <div className="table__cell-data table__cell-data_has-info">
           <PopupContainer className="table__cell-info">
             <Popup
               text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
             />
           </PopupContainer>
           3000 lumen
-        </p>
+        </div>
       </div>
 
       <div className="table__cell">
         <p className="table__cell-title">Protection</p>
-        <p className="table__cell-data table__cell-data_has-info">
+        <div className="table__cell-data table__cell-data_has-info">
           <PopupContainer className="table__cell-info">
             <Popup
               text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
             />
           </PopupContainer>
           IP44
-        </p>
+        </div>
       </div>
 
       <div className="table__cell">
         <p className="table__cell-title">Temperature</p>
-        <p className="table__cell-data table__cell-data_has-info">
+        <div className="table__cell-data table__cell-data_has-info">
           <PopupContainer className="table__cell-info">
             <Popup
               text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
             />
           </PopupContainer>
           3000K
-        </p>
+        </div>
       </div>
 
       <div className="table__cell table__cell_features">

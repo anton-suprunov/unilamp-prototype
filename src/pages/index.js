@@ -50,7 +50,6 @@ const filterProductByAttr = (products, filter) => {
 
     passed = subProducts.some(s => {
       if (filter.type === 'temperature' || filter.type === 'brightness' || filter.type === 'power') {
-        console.log(filter);
         return filter.value.indexOf(s[filter.type]) !== -1;
       } else  {
         return s[filter.type] && s[filter.type] === filter.value;

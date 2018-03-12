@@ -157,7 +157,6 @@ class Filters extends Component {
         }
         value = tempValue;
       }
-      //console.log(value);
 
       index = findIndex(activeFilters, { type });
       if (index === -1 && value) {
@@ -238,7 +237,7 @@ class Filters extends Component {
             <Slider
               min={10}
               max={75}
-              step={10}
+              step={5}
               value={this.state.powerSliderValues}
               //tipFormatter={v => temps[v]}
               range={true}
