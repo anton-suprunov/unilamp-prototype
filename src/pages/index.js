@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Link from 'gatsby-link'
 import classnames from 'classnames'
 import flatten from 'lodash/flatten'
+import values from 'lodash/values';
 
 import config from '../shared/config'
 import WindowSize from '../shared/WindowSize'
@@ -13,64 +14,66 @@ import Filters from '../components/Filters'
 import ViewToggles from '../components/ViewToggles'
 
 import products from '../sample-products'
+import {
+  filterProductsByFeature,
+  filterProductsByColor,
+  filterProductByAttr
+} from '../shared/product-filters';
 
 import './home.scss'
 
-const filterProductsByFeature = (products, feature) => {
-  let res = [];
 
-  products.map(product => {
-    let subProducts = flatten(product.subProducts);
-    let subProductsWithFeature = subProducts.filter(s => s.features && s.features.indexOf(feature) !== -1)
-    
-    if (subProductsWithFeature.length) {
-      res.push(product);
-    }
-  });
-  return res;
-}
-
-const filterProductsByColor = (products, color) => {
-  let res = [];
-  
-  products.map(product => {
-    if (product.colors && product.colors.find(c => c.title === color)) {
-      res.push(product);
-    }
-  });
-  return res;
-}
-
-const filterProductByAttr = (products, filter) => {
-  let res = [];
-  
-  products.map(product => {
-    let subProducts = flatten(product.subProducts);
-    let passed = false;
-
-    passed = subProducts.some(s => {
-      if (filter.type === 'temperature' || filter.type === 'brightness' || filter.type === 'power') {
-        return filter.value.indexOf(s[filter.type]) !== -1;
-      } else  {
-        return s[filter.type] && s[filter.type] === filter.value;
-      }
-    });
-
-    passed && res.push(product);
-  });
-
-  return res;
-}
 
 class IndexPage extends Component {
   constructor(props) {
     super(props);
+
+    const {
+      data: {
+        allAirtable: {
+          edges: initialProducts
+        }
+      }
+    } = props;
+
     this.state = {
       gridShown: true,
       tableShown: false,
       activeFilters: {},
-      products: products.slice(0)
+      //products: products.slice(0)
+      products: this.prepareData(initialProducts)
     };
+  }
+
+  prepareData = (data) => {
+    let res = data.reduce(function (prev, cur) {
+      prev[cur.node["Main_product"]] = prev[cur.node["Main_product"]] || {
+        "title": cur.node["Main_product"],
+        "shortTitle": cur.node["Main_product"],
+        "new": false,
+        "bgImage": cur.node["CardPhoto"][0].url,
+        subProducts: []
+      };
+
+      //ProductFamily1_ENG - what to do?
+      prev[cur.node["Main_product"]].subProducts.push({
+        article: cur.node.SKU,
+        diameter: '1000 mm',
+        width: '100 mm',
+        "title": cur.node.SKUProductName,
+        "power": "30W",
+        "brightness": "3000 lm",
+        "protection": "IP 44",
+        "temperature": "3000 K",
+        "features": cur.node.features,
+        "downloadLink": "",
+        "manualLink": ""
+      });
+
+      return prev;
+    }, Object.create(null));
+
+    return values(res);
   }
 
   filterProducts = (activeFilters) => {
@@ -110,9 +113,12 @@ class IndexPage extends Component {
   }
 
   render() {
-    const { windowWidth } = this.props;
-    const isMobile = (windowWidth <= config.breakpoints.mobile);
+    const {
+      windowWidth,
+     } = this.props;
 
+    const isMobile = (windowWidth <= config.breakpoints.mobile);
+     console.log(this.state.products);
     return <div className="home-page col-container">
       <div className="lcol">
         <h3 className="section-title">Sort Products</h3>
@@ -197,5 +203,26 @@ class IndexPage extends Component {
     </div>
   }
 }
+
+export const query = graphql `
+query Airtable {
+  allAirtable {
+    edges {
+      node {
+        SKU
+        CardPhoto {
+          url
+        }
+        Main_product
+        ProductFamily1_ENG
+        Applications
+        SKUProductName
+        Features
+        Color
+      }
+    }
+  }
+}
+`;
 
 export default WindowSize(IndexPage)

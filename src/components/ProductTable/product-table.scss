@@ -199,7 +199,8 @@
         top: 0;
         bottom: 1px;
         z-index: 1;
-        width: 33vw;
+        //width: 33vw;
+        width: 31vw;
         background: linear-gradient(to right, rgba(255,255,255,1) 90%,rgba(255,255,255,0) 100%);
       }
 
@@ -341,7 +342,7 @@
       max-width: none;
       width: auto;
       margin-right: 0;
-      min-width: 70%;
+      min-width: 65%;
     }
   }
 
@@ -461,6 +462,8 @@
   font-weight: 400;
   text-align: left;
 
+
+
   .table_sub-names & {
     padding-left: 10px;
     padding-top: 10px;
@@ -486,6 +489,11 @@
 	font-size: 10px;
   line-height: 18px;
   text-align: left;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding-right: 10px;
 
   &_has-info {
     position: relative;
