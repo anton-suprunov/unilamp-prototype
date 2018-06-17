@@ -1,11 +1,4 @@
 import React, { Component } from 'react'
-import Link from 'gatsby-link'
-import classnames from 'classnames'
-import flatten from 'lodash/flatten'
-import values from 'lodash/values';
-
-import config from '../shared/config'
-import WindowSize from '../shared/WindowSize'
 import Search from '../components/Search'
 import SortList from '../components/SortList'
 import ProductGrid from '../components/ProductGrid'
@@ -18,11 +11,10 @@ import {
   filterProductsByFeature,
   filterProductsByColor,
   filterProductByAttr
-} from '../shared/product-filters';
+} from '../shared/products-api/product-filters';
+import formatProductsData from '../shared/products-api/airtable-data-format';
 
 import './home.scss'
-
-
 
 class IndexPage extends Component {
   constructor(props) {
@@ -41,41 +33,13 @@ class IndexPage extends Component {
       tableShown: false,
       activeFilters: {},
       //products: products.slice(0)
-      products: this.prepareData(initialProducts)
+      products: formatProductsData(initialProducts)
     };
+
+    console.log(this.state.products);
   }
 
-  prepareData = (data) => {
-    let res = data.reduce(function (prev, cur) {
-      prev[cur.node["Main_product"]] = prev[cur.node["Main_product"]] || {
-        "title": cur.node["Main_product"],
-        "shortTitle": cur.node["Main_product"],
-        "new": false,
-        "bgImage": cur.node["CardPhoto"][0].url,
-        subProducts: []
-      };
-
-      //ProductFamily1_ENG - what to do?
-      prev[cur.node["Main_product"]].subProducts.push({
-        article: cur.node.SKU,
-        diameter: '1000 mm',
-        width: '100 mm',
-        "title": cur.node.SKUProductName,
-        "power": "30W",
-        "brightness": "3000 lm",
-        "protection": "IP 44",
-        "temperature": "3000 K",
-        "features": cur.node.features,
-        "downloadLink": "",
-        "manualLink": ""
-      });
-
-      return prev;
-    }, Object.create(null));
-
-    return values(res);
-  }
-
+ 
   filterProducts = (activeFilters) => {
     let filteredColor;
     let filteredProducts = activeFilters.reduce((products, filter) => {
@@ -84,7 +48,6 @@ class IndexPage extends Component {
         case 'functionality':
           return filterProductsByFeature(products, filter.value);
           break;
-        
         
         case 'color':
           !filteredColor && (filteredColor = filter.value);
@@ -113,12 +76,6 @@ class IndexPage extends Component {
   }
 
   render() {
-    const {
-      windowWidth,
-     } = this.props;
-
-    const isMobile = (windowWidth <= config.breakpoints.mobile);
-     console.log(this.state.products);
     return <div className="home-page col-container">
       <div className="lcol">
         <h3 className="section-title">Sort Products</h3>
@@ -225,4 +182,4 @@ query Airtable {
 }
 `;
 
-export default WindowSize(IndexPage)
+export default IndexPage
