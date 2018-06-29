@@ -1,43 +1,4 @@
 import React, { Component } from 'react'
-import Link from 'gatsby-link'
-import classnames from 'classnames'
-
-const SubTableHeader = () => {
-  return <div className="table table_sub table_header-only">
-    <ul className="table__body">
-      <li className="table__row">
-        <div className="table__cell table__cell_first table__cell_sub">
-          <p className="table__cell-title">Novodisk Types</p>
-        </div>
-        
-        <div className="table__cell table__cell_sub">
-          <p className="table__cell-title">Diameter</p>
-        </div>
-        <div className="table__cell table__cell_sub">
-          <p className="table__cell-title">Width</p>
-        </div>
-        <div className="table__cell table__cell_sub">
-          <p className="table__cell-title">LED Power</p>
-        </div>
-        <div className="table__cell table__cell_sub">
-          <p className="table__cell-title">Brigthness</p>
-        </div>
-        <div className="table__cell table__cell_sub">
-          <p className="table__cell-title">Protection</p>
-        </div>
-        <div className="table__cell table__cell_sub">
-          <p className="table__cell-title">Temperature</p>
-        </div>
-        <div className="table__cell table__cell_features table__cell_sub">
-          <p className="table__cell-title">Features</p>
-        </div>
-        <div className="table__cell table__cell_last table__cell_sub">
-          <p className="table__cell-title">Downloads</p>
-        </div>
-      </li>
-    </ul>
-  </div>
-}
 
 const SubTable = ({ products }) => (
   <div className="table table_sub">
@@ -74,7 +35,6 @@ const SubTable = ({ products }) => (
         </div>
       </li>
 
-
       {products.map((item, index) => (
         <li className="table__row" key={item.article}>
           <div className="table__cell table__cell_first table__cell_sub">
@@ -106,6 +66,7 @@ const SubTable = ({ products }) => (
             <div className="table__features">
               {item.features && item.features.map((feature, index) => (
                 <a 
+                  key={`feature-${index}`}
                   href="#" 
                   key={`${item.article}_features_${index}`}
                   className={`table__feature table__feature_${feature}`}
@@ -124,7 +85,5 @@ const SubTable = ({ products }) => (
     </ul>
   </div>
 )
-
-export { SubTableHeader }
 
 export default SubTable

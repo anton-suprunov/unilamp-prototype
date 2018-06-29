@@ -83,7 +83,7 @@ const ProductFields = ({
   
   const TitleFields = (
     fields.map(field => (
-      <div className={"table__cell table__cell_" + field} key={"table_header_" + field}>
+      <div className={"table__cell table__cell_sub table__cell_" + field} key={"table_header_" + field}>
         <p className="table__cell-title">{fieldsMap[field]}</p>
       </div>
     ))
@@ -142,7 +142,7 @@ const ProductFields = ({
           }
 
           if (field === 'downloads') {
-            return <div className="table__cell" key={"table_cell_" + field}>
+            return <div className={"table__cell table__cell_" + field} key={"table_cell_" + field}>
               <p className="table__cell-data">
                 <a href="#" className="table__feature table__feature_manual table__feature_icon-only">Manual</a>
                 <a href="#" className="table__feature table__feature_calc table__feature_icon-only">Light calc</a>
@@ -150,7 +150,7 @@ const ProductFields = ({
             </div>
           }
 
-          return <div className="table__cell" key={"table_cell_" + field}>
+          return <div className="table__cell table__cell_sub" key={"table_cell_" + field}>
             <p className="table__cell-data">
               {item[field]}
             </p>

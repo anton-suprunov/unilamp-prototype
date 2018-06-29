@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import Search from '../components/Search'
-import SortList from '../components/SortList'
 import ProductGrid from '../components/ProductGrid'
 import ProductTable from '../components/ProductTable'
 import Filters from '../components/Filters'
 import ViewToggles from '../components/ViewToggles'
 
-import products from '../sample-products'
 import {
   filterProductsByFeature,
   filterProductsByColor,
   filterProductByAttr
 } from '../shared/products-api/product-filters';
 import formatProductsData from '../shared/products-api/airtable-data-format';
+import Categories from '../components/Categories';
 
 import './home.scss'
 
@@ -32,7 +31,6 @@ class IndexPage extends Component {
       gridShown: true,
       tableShown: false,
       activeFilters: {},
-      //products: products.slice(0)
       products: formatProductsData(initialProducts)
     };
 
@@ -80,47 +78,7 @@ class IndexPage extends Component {
       <div className="lcol">
         <h3 className="section-title">Sort Products</h3>
     
-        <SortList 
-          title="New Products"
-          list={[
-            { key: "1", title: "new 1" },
-            { key: "2", title: "new 2" },
-          ]}
-        />
-
-        <SortList 
-          title="Applications"
-          list={[
-            { "key": "kitchen", "title": "Kitchen" },
-            { "key": "outdoors", "title": "Outdoors" },
-            { "key": "livingroom", "title": "Livingroom" },
-            { "key": "bathroom", "title": "Bathroom" },
-            {
-              "key": "trade-housing", 
-              "title": "Trade and Housing",
-              "sublist": [
-                { "key": "corridor", "title": "Corridor / Staircase" },
-                { "key": "reception", "title": "Reception" },
-                { "key": "office", "title": "Office and meeting rooms" },
-                { "key": "subordinate", "title": "Subordinate room" }
-              ]
-            },
-            { "key": "smarthome", "title": "Smarthome" },
-            { "key": "other", "title": "Other" }
-          ]}
-          activePath={[
-            'trade-housing',
-            'corridor'
-          ]}
-        />
-        
-        <SortList
-          title="Categories"
-          list={[
-            { key: "1", title: "cat 1" },
-            { key: "2", title: "cat 2" },
-          ]}
-        />
+        <Categories />
 
         <Filters onFilterChange={this.filterProducts} />
       </div>
@@ -166,20 +124,28 @@ query Airtable {
   allAirtable {
     edges {
       node {
-        SKU
-        CardPhoto {
+        A_SKU
+        A_CardPhoto {
           url
         }
+        Name_Original
+        Name_stripped
         Main_product
-        ProductFamily1_ENG
-        Applications
-        SKUProductName
-        Features
-        Color
+        A_CardNameLive
+        A_Applications1
+        A_Features
+        A_Color
+        Socket
+        Size
+        Power
+        Protection
+        Temperature
+        Brightness
+        Current
+        CRI
       }
     }
   }
-}
-`;
+}`;
 
 export default IndexPage

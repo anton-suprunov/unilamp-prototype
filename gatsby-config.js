@@ -33,28 +33,12 @@ module.exports = {
       options: {
         apiKey: `keylNnhWyJwtJp88R`,
         //baseId: `apply6kNJW5MM1eZ1`,
-        baseId: `appFtV9T1TrOaFvMl`,
-        tableName: `Imported table 0.2 -on SKU`,
-        tableView: `Descriptions - Product Page`,
+        //baseId: `appFtV9T1TrOaFvMl`,
+        baseId: `appJzeZHla96AZbFA`,
+        tableName: `Imported table`,
+        tableView: `Grid view`,
         queryName: ``
       }
     },
-    /* {
-      resolve: `gatsby-source-airtable-linked`,
-      options: {
-        apiKey: `keylNnhWyJwtJp88R`, // may instead specify via env, see below
-        tables: [{
-            baseId: `appFtV9T1TrOaFvMl`,
-            tableName: `Imported table 0.2 -on SKU`,
-            tableView: `Descriptions - Product Page`,
-            //queryName: ``, // optional
-            mapping: {
-              'COLUMN NAME AS SEEN IN AIRTABLE': `VALUE_FORMAT`
-            } // optional
-            tableLinks: [`ARRAY_OF_STRINGS_REPRESENTING_COLUMN_NAMES`] //optional
-          }
-        ]
-      }
-    }, */
   ],
 };

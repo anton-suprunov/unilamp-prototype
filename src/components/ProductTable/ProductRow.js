@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import Link from 'gatsby-link'
 import classnames from 'classnames'
 import { StickyContainer, Sticky } from 'react-sticky'
-import _ from 'lodash'
 
-import SubTable, { SubTableHeader } from './SubTable'
+import SubTable from './SubTable'
 import SubTableMobile from './SubTableMobile'
 import ColorsList from '../ColorsList'
 import WindowSize from '../../shared/WindowSize'
@@ -16,7 +15,6 @@ class ProductRow extends Component {
 
     this.state = {
       colorSelected: undefined,
-      //expanded: props.expanded ? true : false,
       activeSlide: 0
     };
   }

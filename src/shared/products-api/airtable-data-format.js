@@ -1,35 +1,46 @@
 import values from 'lodash/values';
 
-const MainProductCategoryField = 'ProductFamily1_ENG';
+const MainProductCategoryField = 'A_CardNameLive';
 
 const prepareData = (data) => {
-   let res = data.reduce(function (prev, cur) {
-     prev[cur.node[MainProductCategoryField]] = prev[cur.node[MainProductCategoryField]] || {
-       "title": cur.node[MainProductCategoryField],
-       "shortTitle": cur.node[MainProductCategoryField],
-       "new": false,
-       "bgImage": cur.node["CardPhoto"][0].url,
-       subProducts: []
-     };
+  let res = data.reduce(function (prev, cur) {
+    let node = cur.node;
 
-     prev[cur.node[MainProductCategoryField]].subProducts.push({
-       article: cur.node.SKU,
-       diameter: '1000 mm',
-       width: '100 mm',
-       "title": cur.node.SKUProductName,
-       "power": "30W",
-       "brightness": "3000 lm",
-       "protection": "IP 44",
-       "temperature": "3000 K",
-       "features": cur.node.Features,
-       "downloadLink": "",
-       "manualLink": ""
-     });
+    if (!node[MainProductCategoryField]) {
+      return prev;
+    }
 
-     return prev;
-   }, Object.create(null));
+    prev[node[MainProductCategoryField]] = prev[node[MainProductCategoryField]] || {
+      "title": node[MainProductCategoryField],
+      "shortTitle": node[MainProductCategoryField],
+      "new": false,
+      "bgImage": node["A_CardPhoto"][0].url,
+      subProducts: []
+    };
 
-   return values(res);
- }
+    prev[node[MainProductCategoryField]].subProducts.push({
+      article: node.A_SKU,
+      diameter: '1000 mm',
+      width: '100 mm',
+      "title": node.Name_Original,
+      "power": node.Power,
+      "brightness": node.Brightness,
+      "protection": node.Protection,
+      "temperature": node.Temperature,
+      "features": node.A_Features,
+      "color": node.A_Color,
+      "downloadLink": "",
+      "manualLink": ""
+    });
 
- export default prepareData;
+    return prev;
+  }, Object.create(null));
+
+  return values(res);
+}
+
+export default prepareData;
+
+const extractApplications = (data) => {
+
+}

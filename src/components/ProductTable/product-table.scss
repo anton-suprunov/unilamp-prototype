@@ -292,21 +292,26 @@
     }
   }
 
-  // hide all top cells except first for mobile
-  .table__row.table__row_top-product > & {
-    @include mq('mobile') {
+  @include mq('mobile') {
+    &.table__cell_sub:not(.table__cell_first):not(.table__cell_last):not(.table__cell_features) {
+      flex-basis: 33%;
+    }
+
+    // hide all top cells except first for mobile
+    .table__row.table__row_top-product > & {
       display: none;
       
       &_first {
         display: block;
         flex-basis: 30vw;
+        max-width: 30vw;
         z-index: 10;
       }
 
       &_expand {
-        flex-basis: 69vw;
+        flex-basis: 65vw;
         display: block;
-        max-width: 69vw;
+        max-width: 65vw;
       }
     }
   }

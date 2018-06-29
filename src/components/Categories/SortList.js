@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import Link from 'gatsby-link'
 import classnames from 'classnames'
-import isString from 'lodash/isString'
 
 import './sort-list.scss'
 
