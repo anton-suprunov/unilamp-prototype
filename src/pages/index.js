@@ -4,13 +4,17 @@ import ProductGrid from '../components/ProductGrid'
 import ProductTable from '../components/ProductTable'
 import Filters from '../components/Filters'
 import ViewToggles from '../components/ViewToggles'
+import findIndex from 'lodash/findIndex';
 
 import {
   filterProductsByFeature,
   filterProductsByColor,
-  filterProductByAttr
+  filterProductByAttr,
+  filterByCategory,
 } from '../shared/products-api/product-filters';
-import formatProductsData from '../shared/products-api/airtable-data-format';
+import formatProductsData, {
+  extractCategories
+} from '../shared/products-api/airtable-data-format';
 import Categories from '../components/Categories';
 
 import './home.scss'
@@ -27,20 +31,24 @@ class IndexPage extends Component {
       }
     } = props;
 
+    let products = formatProductsData(initialProducts);
+
     this.state = {
       gridShown: true,
       tableShown: false,
-      activeFilters: {},
-      products: formatProductsData(initialProducts)
+      activeFilters: [],
+      initialProducts: products.slice(0),
+      products: products.slice(0),
+      categories: extractCategories(initialProducts),
     };
 
     console.log(this.state.products);
   }
 
  
-  filterProducts = (activeFilters) => {
+  filterProducts = () => {
     let filteredColor;
-    let filteredProducts = activeFilters.reduce((products, filter) => {
+    let filteredProducts = this.state.activeFilters.reduce((products, filter) => {
       
       switch (filter.type) {
         case 'functionality':
@@ -59,13 +67,18 @@ class IndexPage extends Component {
         case 'length':
         case 'protection':
         case 'execution':
+        case 'category':
           return filterProductByAttr(products, filter);
         break;
+
+        /*case 'category': 
+          return filterByCategory(products, filter.value);
+        break;*/
         
         default: 
           return products;
       }
-    }, products.slice(0));
+    }, this.state.initialProducts.slice(0));
     
     this.setState({
       products: filteredProducts,
@@ -73,14 +86,89 @@ class IndexPage extends Component {
     })
   }
 
+  resetActiveFilters = () => {
+    this.setState({
+      activeFilters: [],
+    });
+    this.filterProducts();
+  }
+
+  onFilterChange = (type, value) => {
+    let activeFilters = this.state.activeFilters.slice(0);
+    let index;
+
+    // single value filters
+    if (type === 'temperature' ||
+      type === 'width' ||
+      type === 'length' ||
+      type === 'brightness' ||
+      type === 'power' ||
+      type === 'category') {
+
+      // provide all range of temps to filtering func
+      if (type === 'temperature') {
+        value = temps.slice(value[0], value[1] + 1);
+      }
+
+      if (type === 'power') {
+        let tempValue = [];
+        for (let i = value[0]; i <= value[1]; i++) {
+          tempValue.push(i + 'W');
+        }
+        value = tempValue;
+      }
+
+      if (type === 'brightness') {
+        let tempValue = [];
+        for (let i = value[0]; i <= value[1]; i++) {
+          tempValue.push(i + ' lm');
+        }
+        value = tempValue;
+      }
+
+      index = findIndex(activeFilters, { type });
+      if (index === -1 && value) {
+        activeFilters.push({ type, value });
+      } else {
+        if (!value) {
+          activeFilters.splice(index, 1);
+        } else {
+          activeFilters[index] = { type, value };
+        }
+      }
+
+      // checkboxes 
+    } else {
+      index = findIndex(activeFilters, { type, value });
+      if (index === -1) {
+        activeFilters.push({ type, value });
+
+      } else {
+        activeFilters.splice(index, 1);
+      }
+    }
+
+    this.setState({
+      activeFilters: activeFilters
+    }, () => this.filterProducts(activeFilters));
+    console.log('active filters', activeFilters);
+  }
+
   render() {
     return <div className="home-page col-container">
       <div className="lcol">
         <h3 className="section-title">Sort Products</h3>
     
-        <Categories />
+        <Categories 
+          categoriesList={this.state.categories}
+          onCategorySelect={cat => this.onFilterChange('category', cat)}
+        />
 
-        <Filters onFilterChange={this.filterProducts} />
+        <Filters 
+          onFilterChange={this.onFilterChange} 
+          resetActiveFilters={this.resetActiveFilters}
+          activeFilters={this.state.activeFilters}
+        />
       </div>
 
       
@@ -133,6 +221,7 @@ query Airtable {
         Main_product
         A_CardNameLive
         A_Applications1
+        A_Category
         A_Features
         A_Color
         Socket

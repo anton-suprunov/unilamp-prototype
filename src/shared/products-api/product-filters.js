@@ -1,5 +1,8 @@
+import flatten from 'lodash/flatten'
+
 export const filterProductsByFeature = (products, feature) => {
   let res = [];
+  //console.log('filtering by', feature);
 
   products.map(product => {
     let subProducts = flatten(product.subProducts);
@@ -25,7 +28,7 @@ export const filterProductsByColor = (products, color) => {
 
 export const filterProductByAttr = (products, filter) => {
   let res = [];
-
+  //console.log(filter);
   products.map(product => {
     let subProducts = flatten(product.subProducts);
     let passed = false;
@@ -34,6 +37,7 @@ export const filterProductByAttr = (products, filter) => {
       if (filter.type === 'temperature' || filter.type === 'brightness' || filter.type === 'power') {
         return filter.value.indexOf(s[filter.type]) !== -1;
       } else {
+        //console.log(s[filter.type]);
         return s[filter.type] && s[filter.type] === filter.value;
       }
     });
@@ -42,4 +46,8 @@ export const filterProductByAttr = (products, filter) => {
   });
 
   return res;
+}
+
+export const filterByCategory = (products, category) => {
+  return products.filter(p => p.category === category);
 }

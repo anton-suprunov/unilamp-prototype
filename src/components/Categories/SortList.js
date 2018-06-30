@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classnames from 'classnames'
+import isEqual from 'lodash/isEqual';
 
 import './sort-list.scss'
 
@@ -14,8 +15,12 @@ export default class SortList extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return !isEqual(nextState, this.state);
+  }
+
   componentWillReceiveProps(nextProps) {
-    if (nextProps.activePath) {
+    if (nextProps.activePath && !isEqual(nextProps, this.props)) {
       this.setState({
         activeSubmenus: nextProps.activePath.slice(0, nextProps.activePath.length - 1)
       });
@@ -35,22 +40,34 @@ export default class SortList extends Component {
     });
   }
 
-  render() {  
-    const { isActive } = this.state;
+  onItemClick = item => {
+    this.setState({
+      lastActiveKey: item.key
+    }, () => {
+      if (this.props.onClick)
+        this.props.onClick(item);
+    });
+  }
 
+  render() {
+    const { isActive } = this.state;
     
     return (
       <div className={classnames("sort-list", {
-        "sort-list_active": this.state.isActive
+        "sort-list_active": isActive
       })}>
         <h4 className="sort-list__title" onClick={() => {
-          this.setState({ isActive: !this.state.isActive });
+          this.setState({ 
+            isActive: !isActive
+          });
         }}>{ this.props.title }</h4>
 
         <ul className="sort-list__ul">
           { this.props.list.map(item => (
+
             <li className={classnames("sort-list__li", {
-              "sort-list__li_active": this.state.activeSubmenus.indexOf(item.key) !== -1
+              "sort-list__li_active": (this.state.activeSubmenus.indexOf(item.key) !== -1) || 
+                (this.state.lastActiveKey === item.key),
             })} key={item.key}>
 
                 <a 
@@ -61,6 +78,8 @@ export default class SortList extends Component {
                   onClick={e => { 
                     if (item.sublist) {
                       this.toggleSubmenu(item.key); 
+                    } else {
+                      this.onItemClick(item);
                     }
                     e.preventDefault(); 
                   }}
@@ -75,7 +94,16 @@ export default class SortList extends Component {
                         })}
                         key={subitem.key}
                       >
-                        <a href="#" className="sort-list__link">{subitem.title}</a>
+                        <a 
+                          href="#"
+                          className="sort-list__link"
+                          onClick={(e) => {
+                            this.onItemClick(subitem);
+                            e.preventDefault();
+                          }}
+                        >
+                          {subitem.title}
+                        </a>
                       </li>
                     ))}
                   </ul> 

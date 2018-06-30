@@ -61,7 +61,7 @@ class ProductRow extends Component {
     if (this.state.colorSelected) {
       bgImage = item.images[this.state.colorSelected.title.toLowerCase()];
     }
-
+    
     const TitlePhoto = <div>
       <Link to="/product/" className="table__product-title">
         {item.shortTitle ? item.shortTitle : item.title} 

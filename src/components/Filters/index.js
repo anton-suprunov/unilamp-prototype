@@ -5,10 +5,8 @@ import {
   Slider,
   Input
 } from 'antd'
-import findIndex from 'lodash/findIndex';
 
 import Popup, { PopupContainer } from '../Popup'
-import { toggleArray } from '../../shared/helpers'
 import List from './List'
 import {
   filtersSimple,
@@ -18,82 +16,26 @@ import {
 
 import './filters.scss'
 
-
 class Filters extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       shown: true,
-      activeFilters: [],
+      //activeFilters: [],
       tempSliderValues: [1, 3],
       powerSliderValues: [25, 50],
       lmSliderValues: [800, 1500]
     }
   }
 
-  onFilterChange = (type, value) => {
-    let activeFilters = this.state.activeFilters.slice(0);
-    let index;
-
-    // single value filters
-    if (type === 'temperature' ||
-      type === 'width' ||
-      type === 'length' ||
-      type === 'brightness' ||
-      type === 'power') {
-
-      // provide all range of temps to filtering func
-      if (type === 'temperature') {
-        value = temps.slice(value[0], value[1] + 1);
-      }
-
-      if (type === 'power') {
-        let tempValue = [];
-        for (let i = value[0]; i <= value[1]; i++) {
-          tempValue.push(i + 'W');
-        }
-        value = tempValue;
-      }
-
-      if (type === 'brightness') {
-        let tempValue = [];
-        for (let i = value[0]; i <= value[1]; i++) {
-          tempValue.push(i + ' lm');
-        }
-        value = tempValue;
-      }
-
-      index = findIndex(activeFilters, { type });
-      if (index === -1 && value) {
-        activeFilters.push({ type, value });
-      } else {
-        if (!value) {
-          activeFilters.splice(index, 1);
-        } else {
-          activeFilters[index] = { type, value };
-        }
-      }
-
-      // checkboxes
-    } else {
-      index = findIndex(activeFilters, { type, value });
-      if (index === -1) {
-        activeFilters.push({ type, value });
-
-      } else {
-        activeFilters.splice(index, 1);
-      }
-    }
-
-    this.setState({
-      activeFilters: activeFilters
-    });
-
-    this.props.onFilterChange(activeFilters);
-  }
-
   render() {
+    const {
+      resetActiveFilters,
+      onFilterChange,
+      activeFilters,
+    } = this.props;
+
     return <div className={classnames("filters", {
       "filter_active": this.state.shown
     })}>
@@ -109,11 +51,9 @@ class Filters extends Component {
         onClick={e => {
           e.preventDefault();
           this.setState({
-            activeFilters: [],
+            //activeFilters: [],
             tempSliderValues: [1, 3]
-          }, () => {
-            this.props.onFilterChange(this.state.activeFilters);
-          });
+          }, () => resetActiveFilters());
         }}
       >Clear Filters</a>
 
@@ -122,8 +62,8 @@ class Filters extends Component {
           <List
             key={`filter_group_${index}`}
             {...group}
-            onChange={this.onFilterChange.bind(this, group.type)}
-            activeList={this.state.activeFilters.filter(f => f.type === group.type).map(f => f.value)}
+            onChange={onFilterChange.bind(this, group.type)}
+            activeList={activeFilters.filter(f => f.type === group.type).map(f => f.value)}
           />
         ))}
       </div>
@@ -148,7 +88,7 @@ class Filters extends Component {
               //tipFormatter={v => temps[v]}
               range={true}
               onChange={v => {
-                this.onFilterChange('power', v);
+                onFilterChange('power', v);
                 this.setState({ powerSliderValues: v });
               }}
             />
@@ -171,7 +111,7 @@ class Filters extends Component {
               tipFormatter={v => temps[v]}
               range={true}
               onChange={v => {
-                this.onFilterChange('temperature', v);
+                onFilterChange('temperature', v);
                 this.setState({ tempSliderValues: v });
               }}
             />
@@ -195,7 +135,7 @@ class Filters extends Component {
               //tipFormatter={v => temps[v]}
               range={true}
               onChange={v => {
-                this.onFilterChange('brightness', v);
+                onFilterChange('brightness', v);
                 this.setState({ lmSliderValues: v });
               }}
             />
@@ -206,11 +146,11 @@ class Filters extends Component {
           <h5 className="filters__group-title">Size (mm)</h5>
           <div className="filters__size">
             <label className="filters__input-wrap">
-              <Input onChange={e => this.onFilterChange('width', e.target.value)} />
+              <Input onChange={e => onFilterChange('width', e.target.value)} />
               <span>width</span>
             </label>
             <label className="filters__input-wrap">
-              <Input onChange={e => this.onFilterChange('length', e.target.value)} />
+              <Input onChange={e => onFilterChange('length', e.target.value)} />
               <span>length</span>
             </label>
           </div>
@@ -221,8 +161,8 @@ class Filters extends Component {
             <List
               key={`filter_group_${index}`}
               {...group}
-              onChange={this.onFilterChange.bind(this, group.type)}
-              activeList={this.state.activeFilters.filter(f => f.type === group.type).map(f => f.value)}
+              onChange={onFilterChange.bind(this, group.type)}
+              activeList={activeFilters.filter(f => f.type === group.type).map(f => f.value)}
             />
           ))}
         </div>
