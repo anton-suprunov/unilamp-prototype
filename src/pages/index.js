@@ -5,12 +5,14 @@ import ProductTable from '../components/ProductTable'
 import Filters from '../components/Filters'
 import ViewToggles from '../components/ViewToggles'
 import findIndex from 'lodash/findIndex';
+//import airtable from 'airtable/build/airtable.browser';
+import airtable from 'airtable';
+import map from 'lodash/map';
 
 import {
   filterProductsByFeature,
   filterProductsByColor,
   filterProductByAttr,
-  filterByCategory,
 } from '../shared/products-api/product-filters';
 import formatProductsData, {
   extractCategories
@@ -23,28 +25,50 @@ class IndexPage extends Component {
   constructor(props) {
     super(props);
 
-    const {
-      data: {
-        allAirtable: {
-          edges: initialProducts
-        }
-      }
-    } = props;
-
-    let products = formatProductsData(initialProducts);
+    //let products = formatProductsData(initialProducts);
 
     this.state = {
       gridShown: true,
       tableShown: false,
       activeFilters: [],
-      initialProducts: products.slice(0),
-      products: products.slice(0),
-      categories: extractCategories(initialProducts),
+      initialProducts:[],
+      products: [],
+      categories: [],
     };
 
-    console.log(this.state.products);
+    //console.log(this.state.products);
   }
 
+  componentDidMount() {
+    let products = [];
+
+    airtable.configure({
+      endpointUrl: 'https://api.airtable.com',
+      apiKey: 'keylNnhWyJwtJp88R'
+    });
+    var base = airtable.base('appJzeZHla96AZbFA');
+    base('Imported table').select({
+      view: "Grid view"
+    }).eachPage(function page(records, fetchNextPage) {
+      products = products.concat(map(records, 'fields'));
+      fetchNextPage();
+
+    }, err => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log(products);
+      let parsedProducts = formatProductsData(products);
+      console.log(parsedProducts);
+      this.setState({
+        initialProducts: parsedProducts.slice(0),
+        products: parsedProducts.slice(0),
+        categories: extractCategories(products),
+      });
+    });
+
+  }
  
   filterProducts = () => {
     let filteredColor;
@@ -207,34 +231,4 @@ class IndexPage extends Component {
   }
 }
 
-export const query = graphql `
-query Airtable {
-  allAirtable {
-    edges {
-      node {
-        A_SKU
-        A_CardPhoto {
-          url
-        }
-        Name_Original
-        Name_stripped
-        Main_product
-        A_CardNameLive
-        A_Applications1
-        A_Category
-        A_Features
-        A_Color
-        Socket
-        Size
-        Power
-        Protection
-        Temperature
-        Brightness
-        Current
-        CRI
-      }
-    }
-  }
-}`;
-
-export default IndexPage
+export default IndexPage;

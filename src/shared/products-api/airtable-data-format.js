@@ -3,8 +3,10 @@ import values from 'lodash/values';
 const MainProductCategoryField = 'A_CardNameLive';
 
 const prepareData = (data) => {
+  console.log(data);
   let res = data.reduce((prev, cur) => {
-    let node = cur.node;
+    console.log(cur);
+    let node = cur;
 
     if (!node[MainProductCategoryField]) {
       return prev;
@@ -44,11 +46,11 @@ export default prepareData;
 
 export const extractCategories = (data) => {
   return data.reduce((r, cur) => {
-    if (!cur.node['A_Category']) {
+    if (!cur['A_Category']) {
       return r;
     }
 
-    let cat = cur.node['A_Category'][0];
+    let cat = cur['A_Category'][0];
 
     if (r.indexOf(cat) === -1) {
       r.push(cat);
