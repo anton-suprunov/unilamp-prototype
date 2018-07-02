@@ -58,9 +58,9 @@ class IndexPage extends Component {
         console.error(err);
         return;
       }
-      console.log(products);
+      
       let parsedProducts = formatProductsData(products);
-      console.log(parsedProducts);
+      //console.log(parsedProducts);
       this.setState({
         initialProducts: parsedProducts.slice(0),
         products: parsedProducts.slice(0),
@@ -92,6 +92,7 @@ class IndexPage extends Component {
         case 'protection':
         case 'execution':
         case 'category':
+        case 'application':
           return filterProductByAttr(products, filter);
         break;
 
@@ -127,7 +128,8 @@ class IndexPage extends Component {
       type === 'length' ||
       type === 'brightness' ||
       type === 'power' ||
-      type === 'category') {
+      type === 'category' ||
+      type === 'application') {
 
       // provide all range of temps to filtering func
       if (type === 'temperature') {
@@ -185,7 +187,7 @@ class IndexPage extends Component {
     
         <Categories 
           categoriesList={this.state.categories}
-          onCategorySelect={cat => this.onFilterChange('category', cat)}
+          onCategorySelect={(type, cat) => this.onFilterChange(type, cat)}
         />
 
         <Filters 

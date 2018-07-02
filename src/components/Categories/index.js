@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import SortList from './SortList'
 
 class Categories extends Component {
-  onCategoryClick = (item) => {
-    this.props.onCategorySelect(item.title);
+  onItemClick = (type, item) => {
+    console.log(type, item.title);
+    this.props.onCategorySelect(type, item.title);
   }
 
   render() {
@@ -31,7 +32,7 @@ class Categories extends Component {
             "key": "trade-housing", 
             "title": "Trade and Housing",
             "sublist": [
-              { "key": "corridor", "title": "Corridor / Staircase" },
+              { "key": "corridor", "title": "Korridor/Trapp" },
               { "key": "reception", "title": "Reception" },
               { "key": "office", "title": "Office and meeting rooms" },
               { "key": "subordinate", "title": "Subordinate room" }
@@ -44,6 +45,7 @@ class Categories extends Component {
           'trade-housing',
           'corridor'
         ]}
+        onClick={this.onItemClick.bind(this, 'application')}
       />
 
       <SortList
@@ -52,7 +54,7 @@ class Categories extends Component {
           "key": v.replace(/ /g, '_'),
           "title": v
         }))}
-        onClick={this.onCategoryClick}
+        onClick={this.onItemClick.bind(this, 'category')}
       />
     </div>
   }

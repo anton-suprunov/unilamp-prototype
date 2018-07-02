@@ -47,7 +47,3 @@ export const filterProductByAttr = (products, filter) => {
 
   return res;
 }
-
-export const filterByCategory = (products, category) => {
-  return products.filter(p => p.category === category);
-}

@@ -23,6 +23,7 @@ const prepareData = (data) => {
     prev[node[MainProductCategoryField]].subProducts.push({
       article: node.A_SKU,
       category: node["A_Category"][0],
+      application: node["A_Applications1"]  && node["A_Applications1"][0],
       diameter: '1000 mm',
       width: '100 mm',
       "title": node.Name_Original,
