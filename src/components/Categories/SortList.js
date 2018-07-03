@@ -51,16 +51,32 @@ export default class SortList extends Component {
 
   render() {
     const { isActive } = this.state;
-    
+    const { onTitleClick } = this.props;
+
     return (
       <div className={classnames("sort-list", {
         "sort-list_active": isActive
       })}>
         <h4 className="sort-list__title" onClick={() => {
-          this.setState({ 
-            isActive: !isActive
-          });
-        }}>{ this.props.title }</h4>
+          if (onTitleClick) {
+            onTitleClick();
+          } else {
+            this.setState({
+              isActive: !isActive
+            });
+          }
+        }}>
+          <span 
+            className="sort-list__title-arrow"
+            onClick={e => {
+              this.setState({
+                isActive: !isActive
+              });
+              e.stopPropagation();
+            }}
+          ></span>
+          { this.props.title }
+        </h4>
 
         <ul className="sort-list__ul">
           { this.props.list.map(item => (

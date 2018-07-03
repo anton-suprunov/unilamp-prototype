@@ -10,6 +10,7 @@ class Categories extends Component {
   render() {
     const {
       categoriesList,
+      //onCategoryReset,
     } = this.props;
     
     return <div>
@@ -46,6 +47,7 @@ class Categories extends Component {
           'corridor'
         ]}
         onClick={this.onItemClick.bind(this, 'application')}
+        onTitleClick={() => this.props.onCategorySelect('application')}
       />
 
       <SortList

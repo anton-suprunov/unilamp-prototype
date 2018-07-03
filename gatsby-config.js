@@ -28,17 +28,5 @@ module.exports = {
         prefixes: ['/product/*'] 
       },
     },
-    {
-      resolve: `gatsby-source-airtable`,
-      options: {
-        apiKey: `keylNnhWyJwtJp88R`,
-        //baseId: `apply6kNJW5MM1eZ1`,
-        //baseId: `appFtV9T1TrOaFvMl`,
-        baseId: `appJzeZHla96AZbFA`,
-        tableName: `Imported table`,
-        tableView: `Grid view`,
-        queryName: ``
-      }
-    },
   ],
 };

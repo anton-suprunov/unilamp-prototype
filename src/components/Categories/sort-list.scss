@@ -28,13 +28,12 @@
     color: $color-active;
   }
 
-  .sort-list_active &:before {
+  .sort-list_active & .sort-list__title-arrow {
     transform: rotate(0deg);
     background-image: url(../../img/arrow-down-red.svg);
   }
     
-  &:before {
-    content: "";
+  .sort-list__title-arrow {
     background-image: url(../../img/arrow-down.svg);
     transform: rotate(270deg);
     background-size: 100% auto;

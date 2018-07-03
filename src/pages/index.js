@@ -188,6 +188,7 @@ class IndexPage extends Component {
         <Categories 
           categoriesList={this.state.categories}
           onCategorySelect={(type, cat) => this.onFilterChange(type, cat)}
+          //onCategoryReset={type => this.onFilterChange(type)}
         />
 
         <Filters 
