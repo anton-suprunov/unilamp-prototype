@@ -60,6 +60,9 @@ export default class SortList extends Component {
         <h4 className="sort-list__title" onClick={() => {
           if (onTitleClick) {
             onTitleClick();
+            this.setState({
+              lastActiveKey: null
+            })
           } else {
             this.setState({
               isActive: !isActive
