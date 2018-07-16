@@ -22,7 +22,7 @@ const TemplateWrapper = ({ children }) => (
     <div className="container">
       {children()} 
     </div>
-    <Subscribe />
+    {/*<Subscribe /> */}
     <Footer />
   </div>
 )

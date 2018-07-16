@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
+import findIndex from 'lodash/findIndex';
+
 import Search from '../components/Search'
 import ProductGrid from '../components/ProductGrid'
 import ProductTable from '../components/ProductTable'
 import Filters from '../components/Filters'
 import ViewToggles from '../components/ViewToggles'
-import findIndex from 'lodash/findIndex';
-//import airtable from 'airtable/build/airtable.browser';
-import airtable from 'airtable';
-import map from 'lodash/map';
+import Breadcrumbs from '../components/Breadcrumbs';
+import Categories from '../components/Categories';
 
+import fetchTable from '../shared/products-api';
 import {
   filterProductsByFeature,
   filterProductsByColor,
@@ -17,15 +18,12 @@ import {
 import formatProductsData, {
   extractCategories
 } from '../shared/products-api/airtable-data-format';
-import Categories from '../components/Categories';
 
-import './home.scss'
+import './home.scss';
 
 class IndexPage extends Component {
   constructor(props) {
     super(props);
-
-    //let products = formatProductsData(initialProducts);
 
     this.state = {
       gridShown: true,
@@ -35,39 +33,19 @@ class IndexPage extends Component {
       products: [],
       categories: [],
     };
-
-    //console.log(this.state.products);
   }
 
   componentDidMount() {
-    let products = [];
+    fetchTable(process.env.AIRTABLE_BASE_MAIN, process.env.AIRTABLE_BASE_MAIN_NAME, process.env.AIRTABLE_BASE_MAIN_TABLE_VIEW)
+      .then(products => {
+        let parsedProducts = formatProductsData(products);
 
-    airtable.configure({
-      endpointUrl: 'https://api.airtable.com',
-      apiKey: 'keylNnhWyJwtJp88R'
-    });
-    var base = airtable.base('appJzeZHla96AZbFA');
-    base('Imported table').select({
-      view: "Grid view"
-    }).eachPage(function page(records, fetchNextPage) {
-      products = products.concat(map(records, 'fields'));
-      fetchNextPage();
-
-    }, err => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      
-      let parsedProducts = formatProductsData(products);
-      //console.log(parsedProducts);
-      this.setState({
-        initialProducts: parsedProducts.slice(0),
-        products: parsedProducts.slice(0),
-        categories: extractCategories(products),
+        this.setState({
+          initialProducts: parsedProducts.slice(0),
+          products: parsedProducts.slice(0),
+          categories: extractCategories(products),
+        });
       });
-    });
-
   }
  
   filterProducts = () => {
@@ -95,10 +73,6 @@ class IndexPage extends Component {
         case 'application':
           return filterProductByAttr(products, filter);
         break;
-
-        /*case 'category': 
-          return filterByCategory(products, filter.value);
-        break;*/
         
         default: 
           return products;
@@ -183,7 +157,7 @@ class IndexPage extends Component {
   render() {
     return <div className="home-page col-container">
       <div className="lcol">
-        <h3 className="section-title">Sort Products</h3>
+        <h3 className="section-title">PRODUCTS</h3>
     
         <Categories 
           categoriesList={this.state.categories}
@@ -199,6 +173,7 @@ class IndexPage extends Component {
 
       
         <div className="rcol">
+          <Breadcrumbs />
           <Search />      
           <ViewToggles 
             onClickGrid={() => this.setState({

@@ -5,7 +5,7 @@
 	margin-top: 67px;
 	display: none;
 	position: relative;
-	left: 30px;
+	//left: 30px;
 	
 	&_active {
 		display: block;
@@ -25,14 +25,15 @@
 }
 
 .grid__li {
-	flex-basis: 20%;
-	background-size: 110px auto;
+	flex-basis: 16.5%;
+	background-size: 85px auto;
 	background-position: 50% 20px;
 	background-repeat: no-repeat;
 	position: relative;
-	padding-top: 180px;
+	padding-top: 135px;
 	text-align: center;
 	margin-bottom: 32px;
+	cursor: pointer;
 	
 	@include mq('mobile') {
 		flex-basis: 50%;
@@ -45,8 +46,14 @@
 		right: 0;
 		opacity: .1;
 		position: absolute;
-		top: 157px;
+		top: 115px;
 		background: radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,0) 100%);
+	}
+
+	&:hover {
+		.grid__link {
+			color: #D83F2A;
+		}
 	}
 }
 
@@ -64,16 +71,21 @@
 }
 
 .grid__link {
-	color: #D83F2A;
-	//font-family: "Open Sans";
-	font-size: 16px;
-	line-height: 24px;
+	//color: #D83F2A;
 	text-decoration: none;
 	display: block;
 	max-width: 80%;
 	margin: 0 auto;
 	text-align: center;
-  
+	
+	height: 20px;
+	width: 160px;
+	color: #4D4D4D;
+	font-family: Muli;
+	font-size: 14px;
+	line-height: 20px;
+	
+
   &:after {
     content: "";
   	height: 0.56%;
@@ -86,14 +98,10 @@
 
 .grid__colors {
 	display: flex;
-	//position: absolute;
-	//bottom: 0;
-	//left: 50%;
 	margin: 20px auto 0;
 	padding: 0;
 	list-style: none;
 	width: 80px;
-	//transform: translateX(-50%);
 	justify-content: space-around;
 }
 
@@ -102,7 +110,6 @@
 	width: 12px;
 	height: 12px;
 	border-radius: 44px;
-	//background: radial-gradient(circle, #FFFFFF 0%, #FEFEFE 59.08%, #F6F6F6 100%);
 
 	&:first-child {
 		border: 0.8px solid #FF7676;

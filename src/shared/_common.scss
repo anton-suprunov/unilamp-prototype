@@ -12,14 +12,40 @@ a:hover {
 	color: $color-active;
 }
 
+.ant-checkbox-inner {
+	background-color: transparent !important
+}
+
 .section-title {
-	height: 32px;
-	opacity: 0.5;
+	height: 38px;
 	color: #4D4D4D;
 	font-family: Muli;
-  font-size: 20px;
-  font-weight: 400;
-	line-height: 32px;
 	margin: 0;
 	padding: 0;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 20px;
+	padding-left: 30px;
+	max-width: 166px;
+	border-bottom: 1px solid #979797;
+	position: relative;
+	text-transform: uppercase;
+
+	&:before {
+		content: "";
+		width: 16px;
+		height: 16px;
+		position: absolute;
+		border:1px solid #4D4D4D;
+		left: 0;
+		top: 2px;
+		//transform: translateY(-50%)
+	}
+
+	&_sub {
+		//height: 30px;
+		color: #474747;
+		font-family: Muli;
+		font-size: 12px;
+	}
 }

@@ -9,14 +9,14 @@ export default class SortList extends Component {
     super(props);
     
     this.state = {
-      isActive: props.activePath && props.activePath.length,
       activeSubmenus: props.activePath ? props.activePath.slice(0, props.activePath.length - 1) : [],
       lastActiveKey: props.activePath ? props.activePath[props.activePath.length - 1] : undefined
     }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return !isEqual(nextState, this.state);
+    //return !isEqual(nextState, this.state);
+    return true;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,31 +50,30 @@ export default class SortList extends Component {
   }
 
   render() {
-    const { isActive } = this.state;
-    const { onTitleClick } = this.props;
+    const { 
+      onTitleClick,
+      onTitleSpecialClick,
+      isActive,
+    } = this.props;
 
     return (
       <div className={classnames("sort-list", {
         "sort-list_active": isActive
       })}>
         <h4 className="sort-list__title" onClick={() => {
-          if (onTitleClick) {
-            onTitleClick();
+          if (onTitleSpecialClick) {
+            onTitleSpecialClick();
             this.setState({
               lastActiveKey: null
             })
           } else {
-            this.setState({
-              isActive: !isActive
-            });
+            onTitleClick();
           }
         }}>
           <span 
             className="sort-list__title-arrow"
             onClick={e => {
-              this.setState({
-                isActive: !isActive
-              });
+              onTitleClick();
               e.stopPropagation();
             }}
           ></span>

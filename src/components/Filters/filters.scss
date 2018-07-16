@@ -28,7 +28,7 @@
 }
 
 .filters__group {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .filters__size {
@@ -76,13 +76,14 @@
 .filters__group-title {
   margin: 0;
   padding: 0;
-	//width: 75px;
 	color: #474747;
 	font-family: Muli;
 	font-size: 12px;
   line-height: 30px;
   position: relative;
   max-width: 180px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .filters__info {
@@ -108,9 +109,9 @@
 }
 
 .filters__filter {
-  max-width: 157px;
+  max-width: 204px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex-grow: 1;
 
@@ -118,18 +119,28 @@
      max-width: 115px;
   }
 
+  &_has-text {
+    .filters__filter-color {
+      margin-right: 0;
+    }
+  }
+
   &_checkbox {
     .ant-checkbox-inner {
       height: 16px;
       width: 16px;
-      opacity: 0.5;
+      opacity: 0.75 !important;
       border-color: #918BA3;
+    }
+
+    .ant-checkbox-wrapper {
+      min-width: 120px;
     }
 
     .ant-checkbox-wrapper:hover .ant-checkbox-inner, 
     .ant-checkbox:hover .ant-checkbox-inner, 
     .ant-checkbox-input:focus + .ant-checkbox-inner {
-      opacity: 1;
+      //opacity: 1;
       border-color: #918BA3;
     }
 
@@ -142,15 +153,21 @@
       padding: 0 0 0 14px
     }
 
-    .ant-checkbox-checked .ant-checkbox-inner, 
+
+    .ant-checkbox-checked .ant-checkbox-inner:after {
+      border-color: #444;
+    }
+
+    .ant-checkbox-checked .ant-checkbox-inner,
     .ant-checkbox-indeterminate .ant-checkbox-inner {
-      background-color: $color-active;
-      border-color: $color-active;
-      opacity: 1;
+      //background-color: $color-active;
+      //border-color: $color-active;
+      //border-color: #444;
+      //opacity: 1;
     }
 
     .ant-checkbox-checked:after {
-      border-color: $color-active
+      border-color: $color-gray;
     }
   }
 }
@@ -164,24 +181,14 @@
     margin: 12px 0 0;
     max-width: 180px
   }
-
-  .ant-slider-rail {
-    background-color: #D3D3D3;
-  }
+  .ant-slider-rail,
   .ant-slider:hover .ant-slider-rail {
     background-color: #D3D3D3;
   }
-
-  
-  .ant-slider-track {
-    //background-color: rgba(216,63,42,.4)
-    background-color: $color-active;
-  }
+  .ant-slider-track,
   .ant-slider:hover .ant-slider-track {
-    //background-color: rgba(216,63,42,.4)
     background-color: $color-active;
   }
-
   .ant-slider-handle {
     border-width: 4px;
     border-color: #fff;
@@ -206,7 +213,7 @@
   padding: 0 !important;
   cursor: pointer;
   position: relative;
-
+  margin-left: auto;
   background-repeat: no-repeat;
 }
 
@@ -215,14 +222,14 @@
 	height: 14.8px;
 	width: 14.8px;
 	border: 0.8px solid #EAEAEA;
-  //box-shadow: 0 0 5px 0 rgba(125,125,125,0.5);
   border-radius: 44px;
   padding: 0 !important;
+  margin-left: auto;
+  margin-right: 40px;
 }
 
 .filters__wrap {
-  
   &_top-margin {
-    margin-top: 34px;
+    margin-top: 75px;
   }
 }

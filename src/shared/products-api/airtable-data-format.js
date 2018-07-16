@@ -3,9 +3,9 @@ import values from 'lodash/values';
 const MainProductCategoryField = 'A_CardNameLive';
 
 const prepareData = (data) => {
-  console.log(data);
+  //console.log(data);
   let res = data.reduce((prev, cur) => {
-    console.log(cur);
+    //console.log(cur);
     let node = cur;
 
     if (!node[MainProductCategoryField]) {

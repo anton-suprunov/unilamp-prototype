@@ -4,7 +4,6 @@
 .col-container {
   display: flex;
   flex-grow: 1;
-  margin-top: 85px;
   justify-content: space-between;
 
   @include mq('mobile') {
@@ -13,9 +12,11 @@
 }
 
 .lcol {
-  width: 283px;
-  padding-top: 84px;
-  padding-left: 24px;
+  padding-top: 50px;
+  padding-left: 80px;
+  min-width: 332px;
+  background-color: #f9f9f9;
+
 
   @include mq('mobile') {
     display: none;
@@ -24,7 +25,9 @@
 
 .rcol {
   position: relative;
-  width: 1025px;
+  min-width: 1025px;
+  padding-top: 50px;
+  padding-left: 35px;
 
   @include mq('mobile') {
     width: auto;

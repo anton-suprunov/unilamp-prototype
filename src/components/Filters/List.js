@@ -12,16 +12,17 @@ const FiltersListItem = ({
   activeList = [],
 }) => (
   <li className={classnames("filters__filter", "filters__filter_checkbox", {
-    "filters__filter_shorter": shorter
+    "filters__filter_shorter": shorter,
+    "filters__filter_has-color" : item.color,
+    "filters__filter_has-text": item.text,
   })} >
     <Checkbox
       onChange={() => onChange(item.title)}
       checked={activeList.indexOf(item.title) !== -1}
     >{item.title}</Checkbox>
 
-    {item.color
-      ? <span className="filters__filter-color" style={{ background: item.color }}></span>
-      : <PopupContainer className="filters__filter-info">
+    {item.color && <span className="filters__filter-color" style={{ background: item.color }}></span>}
+    {item.text && <PopupContainer className="filters__filter-info">
           <Popup text={item.text} />
         </PopupContainer>
     }

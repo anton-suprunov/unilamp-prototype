@@ -17,7 +17,7 @@
   color: $color-gray;
   font-size: 12px;
   position: relative;
-  padding-left: 30px;
+  padding-left: 50px;
   margin: 15px 0 0;
   font-weight: 600;
   cursor: pointer;
@@ -31,21 +31,34 @@
   .sort-list_active & .sort-list__title-arrow {
     transform: rotate(0deg);
     background-image: url(../../img/arrow-down-red.svg);
+    opacity: 1;
   }
     
-  .sort-list__title-arrow {
-    background-image: url(../../img/arrow-down.svg);
-    transform: rotate(270deg);
-    background-size: 100% auto;
-    background-repeat: no-repeat;
-    background-size: 9px 9px;
-    background-position: 50% 50%;
+  &:before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    border: 1px solid $color-gray;
     position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 24px;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
   }
+}
+
+.sort-list__title-arrow {
+  background-image: url(../../img/arrow-down.svg);
+  transform: rotate(270deg);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-size: 10px 10px;
+  background-position: 50% 50%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 16px;
+  opacity: .5;
 }
 
 .sort-list__ul {
@@ -66,7 +79,7 @@
 }
 
 .sort-list__li {
-  padding-left: 15px;
+  padding-left: 20px;
   position: relative;
 
   &_active {
