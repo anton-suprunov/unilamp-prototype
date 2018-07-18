@@ -1,19 +1,35 @@
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import {
-  Checkbox,
-  Slider,
-  Input
-} from 'antd'
 
-import Popup, { PopupContainer } from '../Popup'
-import List from './List'
-import {
-  filtersSimple,
-  filtersAdvanced,
-} from './filters-config'
+import orderBy from 'lodash/orderBy'
+
+import fetchTable from '../../shared/products-api'
+import Filter from './Filter'
 
 import './filters.scss'
+
+const parseFiltersData = filters => {
+  let res = filters.reduce((res, filter) => {
+    if (filter['Type'] === 'Group' && !filter['A_Order']) {
+      return res;
+    }
+
+    if (filter['Type'] === 'Group') {
+      res.push(filter);
+    } else {
+      let i = res.findIndex(f => f['Subcategory'] === filter['Subcategory']);
+      if (i !== -1) {
+        !res[i].items && (res[i].items = []);
+        res[i].items = [ ...res[i].items, filter ];
+      }
+    }
+
+    return res;
+  }, []);
+
+  res = res.map(f => ({ ...f, items: orderBy(f.items, ['Group_order']) }))
+  return orderBy(res, ['A_Order']);
+}
 
 class Filters extends Component {
   constructor(props) {
@@ -21,12 +37,21 @@ class Filters extends Component {
 
     this.state = {
       shown: true,
-      lmSliderValues: [800, 1500],
+      filtersBasic: [],
+      filtersAdvanced: [],
     }
   }
 
   componentDidMount() {
-    
+    fetchTable(process.env.AIRTABLE_BASE_FILTERS, process.env.AIRTABLE_BASE_FILTERS_NAME, process.env.AIRTABLE_BASE_FILTERS_TABLE_VIEW)
+      .then(filters => {
+        let parsedFilters = parseFiltersData(filters);
+
+        this.setState({
+          filtersBasic: parsedFilters.filter(f => f['A_FilterCategory'] === 'Basic'),
+          filtersAdvanced: parsedFilters.filter(f => f['A_FilterCategory'] === 'Expert'),
+        }, () => console.log(this.state))
+      })
   }
 
   render() {
@@ -35,6 +60,11 @@ class Filters extends Component {
       onFilterChange,
       activeFilters,
     } = this.props;
+
+    const {
+      filtersBasic,
+      filtersAdvanced,
+    } = this.state;
 
     return <div className={classnames("filters", {
       "filter_active": this.state.shown
@@ -57,19 +87,29 @@ class Filters extends Component {
       </a>
 
       <div className="filters__wrap">
-        {filtersSimple.map((group, index) => (
-          <List
-            key={`filter_group_${index}`}
-            {...group}
-            onChange={onFilterChange.bind(this, group.type)}
-            activeList={activeFilters.filter(f => f.type === group.type).map(f => f.value)}
-          />
-        ))}
+        {filtersBasic.map((filter, i) => 
+          <Filter 
+            key={`filter_basic_${i}`}
+            filter={filter}
+            onChange={onFilterChange.bind(this, filter.Subcategory)}
+            activeList={activeFilters.filter(f => f.type === filter.Subcategory).map(f => f.value)}
+          /> 
+        )}
       </div>
 
       <div className="filters__wrap filters__wrap_top-margin">
         <h3 className="section-title section-title_sub">Expert Filters</h3>
+        
+        {filtersAdvanced.map((filter, i) => 
+          <Filter 
+            key={`filter_advanced_${i}`}
+            filter={filter}
+            onChange={onFilterChange.bind(this, filter.Subcategory)}
+            activeList={activeFilters.filter(f => f.type === filter.Subcategory).map(f => f.value)}
+          /> 
+        )}
 
+        {/*
         <div className="filters__group">
           <h5 className="filters__group-title">
             Power (W)
@@ -90,28 +130,6 @@ class Filters extends Component {
         </div>
 
         <div className="filters__group">
-          <h5 className="filters__group-title">
-            Brightness (lm)
-            <PopupContainer className="filters__info">
-              <Popup text="The lumen(symbol: lm) is the SI derived unit of luminous flux, a measure of the total quantity of visible light emitted by a source." />
-            </PopupContainer>
-          </h5>
-          <div className="filters__slider">
-            <Slider
-              min={300}
-              max={3000}
-              step={100}
-              value={this.state.lmSliderValues}
-              range={true}
-              onChange={v => {
-                onFilterChange('brightness', v);
-                this.setState({ lmSliderValues: v });
-              }}
-            />
-          </div>
-        </div>
-
-        <div className="filters__group">
           <h5 className="filters__group-title">Size (mm)</h5>
           <div className="filters__size">
             <label className="filters__input-wrap">
@@ -125,15 +143,17 @@ class Filters extends Component {
           </div>
         </div>
 
+        */}
+
         <div className="filters__advanced-lists">
-          {filtersAdvanced.map((group, index) => (
+          {/*filtersAdvanced.map((group, index) => (
             <List
               key={`filter_group_${index}`}
               {...group}
               onChange={onFilterChange.bind(this, group.type)}
               activeList={activeFilters.filter(f => f.type === group.type).map(f => f.value)}
             />
-          ))}
+          ))*/}
         </div>
       </div>
 

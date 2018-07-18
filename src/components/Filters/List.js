@@ -4,39 +4,53 @@ import { Checkbox } from 'antd'
 
 import Popup, { PopupContainer } from '../Popup'
 
+const colorsMap = {
+  'White': '#FFFFFF',
+  'Matt White': '#FFFFFF',
+  'Silver': 'radial-gradient(circle, #FFFEFE 0%, #CACACA 100%)',
+  'Graphite': 'rgba(73,79,79,.4)',
+  'Black': '#434848',
+}
+
 const FiltersListItem = ({
-  item,
-  type,
-  shorter,
+  item: {
+    A_PopupName: title,
+    Subcategory: type,
+    A_PopupText_ENG: info = null
+  },
+  //shorter,
   onChange,
   activeList = [],
 }) => (
   <li className={classnames("filters__filter", "filters__filter_checkbox", {
-    "filters__filter_shorter": shorter,
-    "filters__filter_has-color" : item.color,
-    "filters__filter_has-text": item.text,
+    //"filters__filter_shorter": shorter,
+    "filters__filter_has-color": type === 'Color',
+    "filters__filter_has-text": info,
   })} >
     <Checkbox
-      onChange={() => onChange(item.title)}
-      checked={activeList.indexOf(item.title) !== -1}
-    >{item.title}</Checkbox>
+      onChange={() => onChange(title)}
+      checked={activeList.indexOf(title) !== -1}
+    >{title}</Checkbox>
 
-    {item.color && <span className="filters__filter-color" style={{ background: item.color }}></span>}
-    {item.text && <PopupContainer className="filters__filter-info">
-          <Popup text={item.text} />
-        </PopupContainer>
+    {/*item.color && <span className="filters__filter-color" style={{ background: item.color }}></span>*/}
+    {info && <PopupContainer className="filters__filter-info">
+        <Popup text={info} />
+      </PopupContainer>
     }
   </li> 
 )
 
-const FiltersList = (props) => {
+const FiltersList = ({
+  filter, 
+  ...props
+}) => {
   const {
     title,
-    list,
+    items,
     type,
     info = null,
-  } = props;
-  
+  } = filter;
+
   return (
     <div className="filters__group">
       <h5 className="filters__group-title">
@@ -46,7 +60,7 @@ const FiltersList = (props) => {
         </PopupContainer>}
       </h5>
       <ul className="filters__list">
-        { list.length && list.map((item, index) => (
+        { items && items.length && items.map((item, index) => (
           <FiltersListItem 
             key={`filter_${type}_${index}`} 
             item={item}
