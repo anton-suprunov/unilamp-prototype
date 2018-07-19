@@ -10,6 +10,10 @@ import Popup, {
 } from '../Popup'
 
 class Size extends Component {
+  constructor(props) {
+    super(props);
+    
+  }
   onChange = (type, val) => {
     //this.props.onChange
   }

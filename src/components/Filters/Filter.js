@@ -4,7 +4,7 @@ import {
   Power,
   Brightness,
   Size,
-} from './Filters'
+} from './CustomFilters'
 
 const FiltersMap = {
   Power,
