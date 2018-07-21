@@ -29,6 +29,13 @@
 
 .filters__group {
   margin-top: 30px;
+
+  &:hover {
+    .filters__info,
+    .filters__filter-info {
+      opacity: 1;
+    }
+  }
 }
 
 .filters__size {
@@ -98,6 +105,8 @@
   top: 50%;
   transform: translateY(-50%);
   background-size: 15px 15px;
+  opacity: 0;
+  transition: opacity ease .25s;
 }
 
 .filters__advanced-lists {
@@ -143,7 +152,6 @@
     .ant-checkbox-wrapper:hover .ant-checkbox-inner, 
     .ant-checkbox:hover .ant-checkbox-inner, 
     .ant-checkbox-input:focus + .ant-checkbox-inner {
-      //opacity: 1;
       border-color: #918BA3;
     }
 
@@ -159,14 +167,6 @@
 
     .ant-checkbox-checked .ant-checkbox-inner:after {
       border-color: #444;
-    }
-
-    .ant-checkbox-checked .ant-checkbox-inner,
-    .ant-checkbox-indeterminate .ant-checkbox-inner {
-      //background-color: $color-active;
-      //border-color: $color-active;
-      //border-color: #444;
-      //opacity: 1;
     }
 
     .ant-checkbox-checked:after {
@@ -191,7 +191,6 @@
   
   .ant-slider-track,
   .ant-slider:hover .ant-slider-track {
-    //background-color: $color-active;
     background-color: #747171;
     opacity: 0.5;
   }
@@ -222,6 +221,8 @@
   position: relative;
   margin-left: auto;
   background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity ease .25s;
 }
 
 .filters__filter-color {

@@ -46,7 +46,7 @@ class Filters extends Component {
     fetchTable(process.env.AIRTABLE_BASE_FILTERS, process.env.AIRTABLE_BASE_FILTERS_NAME, process.env.AIRTABLE_BASE_FILTERS_TABLE_VIEW)
       .then(filters => {
         let parsedFilters = parseFiltersData(filters);
-
+        
         this.setState({
           filtersBasic: parsedFilters.filter(f => f['A_FilterCategory'] === 'Basic'),
           filtersAdvanced: parsedFilters.filter(f => f['A_FilterCategory'] === 'Expert'),

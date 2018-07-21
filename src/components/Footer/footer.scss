@@ -2,9 +2,10 @@
 @import "../../shared/mixins";
 
 .footer {
-	background-color: #A0A0A0;
-  box-shadow: 0 8px 8px 0 rgba(216,63,42,0.18);
-  margin-bottom: 88px;
+  background-color: #f3f3f3;
+  margin-top: 61px;
+  //box-shadow: 0 8px 8px 0 rgba(216,63,42,0.18);
+  //margin-bottom: 88px;
 
   @include mq('mobile') {
     margin-bottom: 0
@@ -12,8 +13,68 @@
 }
 
 .footer__container {
-  max-width: 1360px;
-  margin: 0 auto;
+  //max-width: 1360px;
+  //margin: 0 auto;
   position: relative;
-  height: 154px;
+  //height: 154px;
+  height: 260px;
+  display: flex;
+  justify-content: center;
+}
+
+.footer__copy {
+  color: #4D4D4D;
+  font-family: Muli;
+  font-size: 14px;
+  line-height: 18px;
+  //position: absolute;
+  padding-top: 175px;
+  width: 224px;
+}
+
+.footer__nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 75px 0 0;
+  width: 110px;
+  margin-left: 60px;
+
+  &:first-of-type {
+    margin-left: 90px
+  }
+
+  &:last-child {
+    margin-left: 123px;
+    min-width: 224px
+  }
+}
+
+.footer__nav-li {
+  
+  &_title {
+    height: 32px;
+    color: #4D4D4D;
+    font-family: Muli;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 18px;
+    white-space: nowrap;
+    margin-bottom: 12px;
+  }
+
+  &_info {
+  
+
+
+  }
+}
+
+.footer__nav-link {
+  //height: 100px;
+  //width: 94.98px;
+  color: #4D4D4D;
+  font-family: Muli;
+  font-size: 14px;
+  line-height: 38px;
+  opacity: 0.75
 }

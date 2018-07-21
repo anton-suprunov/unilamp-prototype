@@ -24,6 +24,11 @@ const Filter = ({
   ...props,
 }) => {
   const F = FiltersMap[filter.Subcategory];
+
+  if (!F) {
+    return <div>no filter configured for {filter.Subcategory}</div>;
+  }
+
   return <F 
     filter={{
       title: filter['A_PopupName'],

@@ -55,12 +55,10 @@ class IndexPage extends Component {
       switch (filter.type) {
         case 'Features':
           return filterProductsByFeature(products, filter.value);
-          break;
         
         case 'Color':
           !filteredColor && (filteredColor = filter.value);
           return filterProductsByColor(products, filter.value);
-        break;
         
         case 'Warmth':
         case 'Power':
@@ -73,7 +71,6 @@ class IndexPage extends Component {
         case 'category':
         case 'application':
           return filterProductByAttr(products, filter);
-        break;
         
         default: 
           return products;

@@ -1,5 +1,3 @@
-import flatten from 'lodash/flatten'
-
 export const filterProductsByFeature = (products, feature) => {
   let res = [];
   //console.log('filtering by', feature);
@@ -53,7 +51,7 @@ export const filterProductByAttr = (products, filter) => {
     let passed = false;
 
     passed = subProducts.some(s => {
-      // skip brightness test for now as there are now samples in db output
+      // skip brightness test for now as there are now no samples in db
       if (filter.type === 'Brightness') {
         return true;
       
