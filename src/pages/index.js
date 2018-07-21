@@ -39,7 +39,7 @@ class IndexPage extends Component {
     fetchTable(process.env.AIRTABLE_BASE_MAIN, process.env.AIRTABLE_BASE_MAIN_NAME, process.env.AIRTABLE_BASE_MAIN_TABLE_VIEW)
       .then(products => {
         let parsedProducts = formatProductsData(products);
-
+        console.log('products', parsedProducts);
         this.setState({
           initialProducts: parsedProducts.slice(0),
           products: parsedProducts.slice(0),
@@ -53,22 +53,23 @@ class IndexPage extends Component {
     let filteredProducts = this.state.activeFilters.reduce((products, filter) => {
       
       switch (filter.type) {
-        case 'functionality':
+        case 'Features':
           return filterProductsByFeature(products, filter.value);
           break;
         
-        case 'color':
+        case 'Color':
           !filteredColor && (filteredColor = filter.value);
           return filterProductsByColor(products, filter.value);
         break;
         
-        case 'temperature':
-        case 'power':
-        case 'brightness':
-        case 'width':
-        case 'length':
-        case 'protection':
-        case 'execution':
+        case 'Warmth':
+        case 'Power':
+        case 'Brightness':
+        case 'Size':
+        case 'Protection':
+        case 'Execution':
+        case 'Mounting':
+        case 'LUX':
         case 'category':
         case 'application':
           return filterProductByAttr(products, filter);
@@ -97,34 +98,11 @@ class IndexPage extends Component {
     let index;
 
     // single value filters
-    if (type === 'temperature' ||
-      type === 'width' ||
-      type === 'length' ||
-      type === 'brightness' ||
-      type === 'power' ||
+    if (type === 'Size' ||
+      type === 'Brightness' ||
+      type === 'Power' ||
       type === 'category' ||
       type === 'application') {
-
-      // provide all range of temps to filtering func
-      if (type === 'temperature') {
-        value = temps.slice(value[0], value[1] + 1);
-      }
-
-      if (type === 'power') {
-        let tempValue = [];
-        for (let i = value[0]; i <= value[1]; i++) {
-          tempValue.push(i + 'W');
-        }
-        value = tempValue;
-      }
-
-      if (type === 'brightness') {
-        let tempValue = [];
-        for (let i = value[0]; i <= value[1]; i++) {
-          tempValue.push(i + ' lm');
-        }
-        value = tempValue;
-      }
 
       index = findIndex(activeFilters, { type });
       if (index === -1 && value) {
@@ -151,6 +129,7 @@ class IndexPage extends Component {
     this.setState({
       activeFilters: activeFilters
     }, () => this.filterProducts(activeFilters));
+
     console.log('active filters', activeFilters);
   }
 

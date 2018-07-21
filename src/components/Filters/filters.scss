@@ -34,12 +34,12 @@
 .filters__size {
   display: flex;
   justify-content: space-between;
-  width: 115px;
+  width: 155px;
   margin-top: 8px;
 
   .ant-input {
     height: 23px;
-    width: 40px;
+    width: 45px;
     border: 0.5px solid #979797;
     opacity: 0.5;
     border-radius: 2px;
@@ -49,6 +49,9 @@
 }
 
 .filters__input-wrap {
+  max-width: 50%;
+  flex-grow: 1;
+
   span {
     display: block;
     margin-top: 8px;
@@ -178,21 +181,25 @@
 
 .filters__slider {
   .ant-slider {
-    margin: 12px 0 0;
-    max-width: 180px
+    margin: 50px 0 0;
+    max-width: 220px
   }
   .ant-slider-rail,
   .ant-slider:hover .ant-slider-rail {
     background-color: #D3D3D3;
   }
+  
   .ant-slider-track,
   .ant-slider:hover .ant-slider-track {
-    background-color: $color-active;
+    //background-color: $color-active;
+    background-color: #747171;
+    opacity: 0.5;
   }
+
   .ant-slider-handle {
     border-width: 4px;
     border-color: #fff;
-    background-color: $color-active;
+    background-color: #747171;
     box-shadow: 0 2px 4px 0 rgba(12,0,51,0.1);
     width: 18px;
     height: 18px;

@@ -17,13 +17,16 @@ const prepareData = (data) => {
       "shortTitle": node[MainProductCategoryField],
       "new": false,
       "bgImage": node["A_CardPhoto"][0].url,
-      subProducts: []
+      subProducts: [],
+      colors: [],
+      images: {},
+      isNew: false,
     };
 
     prev[node[MainProductCategoryField]].subProducts.push({
       article: node.A_SKU,
       category: node["A_Category"][0],
-      application: node["A_Applications1"]  && node["A_Applications1"][0],
+      application: node["A_Applications1"] && node["A_Applications1"][0],
       diameter: '1000 mm',
       width: '100 mm',
       "title": node.Name_Original,
@@ -32,10 +35,21 @@ const prepareData = (data) => {
       "protection": node.Protection,
       "temperature": node.Temperature,
       "features": node.A_Features,
-      "color": node.A_Color,
+      "color": node.A_Color && node.A_Color[0],
       "downloadLink": "",
       "manualLink": ""
     });
+
+    if (node.A_Color && node.A_Color.length) {
+      if (prev[node[MainProductCategoryField]].colors.indexOf(node.A_Color[0]) === -1) {
+        prev[node[MainProductCategoryField]].colors.push(node.A_Color[0]);
+        prev[node[MainProductCategoryField]].images[node.A_Color[0].toLowerCase()] = node["A_CardPhoto"][0].url;
+      }
+    }
+
+    if (node.A_New) {
+      prev[node[MainProductCategoryField]].isNew = true;
+    }
 
     return prev;
   }, Object.create(null));

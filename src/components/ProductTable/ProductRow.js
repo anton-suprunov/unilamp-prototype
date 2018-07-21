@@ -174,13 +174,13 @@ class ProductRow extends Component {
       }
 
       <div className="table__cell table__cell_colors">
-        {item.colors && <ColorsList
+        {/*item.colors && <ColorsList
           colors={item.colors}
           parentItemKey={index}
           isVertical={true}
           onClick={this.onColorClicked}
           activeColor={this.state.colorSelected ? this.state.colorSelected : item.colors[0]}
-        />}
+        />*/}
       </div>
 
       <div className="table__cell">

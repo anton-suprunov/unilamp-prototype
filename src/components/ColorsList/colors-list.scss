@@ -4,16 +4,15 @@
 	padding: 0;
 	list-style: none;
 	width: 80px;
-	justify-content: space-around;
+	justify-content: center;
 	
 	&_vertical {
 		flex-direction: column;
 		width: 14px;
 		margin: 0 10px 0;
 		height: 80px;
-		.colors-list__li {
 
-		}
+		display: none;
 	}
 }
 
@@ -23,12 +22,17 @@
 	height: 12px;
 	border-radius: 44px;
 	cursor: pointer;
-	border: .8px solid #fff;
+	margin-right: 8px;
+	border: .8px solid #434848;
+
+	&:last-child {
+		margin-right: 0;
+	}
 
 	&_white {
 		border-color:#888;
 	}
-
+	
 	&_active,
 	&:hover {
 		border-color: #FF7676;

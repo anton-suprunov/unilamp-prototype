@@ -12,10 +12,23 @@ import Popup, {
 class Size extends Component {
   constructor(props) {
     super(props);
-    
+    this.state = {
+      widthmin: 0,
+      widthmax: null,
+      lengthmin: 0,
+      lengthmax: null,
+    }
   }
+
   onChange = (type, val) => {
-    //this.props.onChange
+    this.setState({
+      [type]: val
+    }, () => {
+      this.props.onChange({
+        width: [this.state.widthmin, this.state.widthmax],
+        length: [this.state.lengthmin, this.state.lengthmax],
+      })
+    });
   }
 
   render() {
@@ -25,19 +38,29 @@ class Size extends Component {
 
     return  <div className="filters__group">
       <h5 className="filters__group-title">
-        Size (mm)
+        Size
         <PopupContainer className="filters__info">
           <Popup text={filter.info} />
         </PopupContainer>
       </h5>
       <div className="filters__size">
         <label className="filters__input-wrap">
-          <Input onChange={e => onChange('width', e.target.value)} />
-          <span>width</span>
+          <Input onChange={e => this.onChange('widthmin', e.target.value)} />
+          <span>w/diam min</span>
         </label>
         <label className="filters__input-wrap">
-          <Input onChange={e => onChange('length', e.target.value)} />
-          <span>length</span>
+          <Input onChange={e => this.onChange('widthmax', e.target.value)} />
+          <span>w/diam max</span>
+        </label>
+      </div>
+      <div className="filters__size">
+        <label className="filters__input-wrap">
+          <Input onChange={e => this.onChange('lengthmin', e.target.value)} />
+          <span>length min</span>
+        </label>
+        <label className="filters__input-wrap">
+          <Input onChange={e => this.onChange('lengthmax', e.target.value)} />
+          <span>length max</span>
         </label>
       </div>
     </div>
@@ -45,8 +68,20 @@ class Size extends Component {
 }
 
 class Power extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      min: 0,
+      max: null,
+    }
+  }
+
   onChange = (type, val) => {
-    //this.props.onChange
+    this.setState({
+      [type]: val
+    }, () => {
+      this.props.onChange([this.state.min, this.state.max])
+    });
   }
 
   render() {
@@ -63,11 +98,11 @@ class Power extends Component {
       </h5>
       <div className="filters__size">
         <label className="filters__input-wrap">
-          <Input onChange={e => onChange('min', e.target.value)} />
+          <Input onChange={e => this.onChange('min', e.target.value)} />
           <span>min W</span>
         </label>
         <label className="filters__input-wrap">
-          <Input onChange={e => onChange('max', e.target.value)} />
+          <Input onChange={e => this.onChange('max', e.target.value)} />
           <span>max W</span>
         </label>
       </div>
@@ -108,6 +143,7 @@ class Brightness extends Component {
           onChange(v);
           this.setState({ sliderValues: v });
         }}
+        tipFormatter={v => v + 'lm'}
       />
     </div>
   </div>

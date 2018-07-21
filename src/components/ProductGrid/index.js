@@ -26,20 +26,21 @@ class GridElement extends Component {
 
     let bgImage = item.bgImage;
     if (this.state.colorSelected) {
-      bgImage = item.images[this.state.colorSelected.title.toLowerCase()];
+      bgImage = item.images[this.state.colorSelected.toLowerCase()];
     } else if (filteredColor) {
       bgImage = item.images[filteredColor.toLowerCase()];
     }
-
+    
     return <li
       className="grid__li"
       style={{ 'backgroundImage': `url(${bgImage})` }}
     >
-      {item.new && <span className="grid__badge">NEW</span>}
+      {item.isNew && <span className="grid__badge">NY</span>}
       <Link to="/product/" className="grid__link">{item.title}</Link>
       {item.colors && <ColorsList
         colors={item.colors}
-        parentItemKey={index}
+        //parentItemKey={`${index}_`}
+        parentItemKey={item.subProducts[0].article}
         onClick={this.onColorClicked}
         activeColor={this.state.colorSelected ? this.state.colorSelected : item.colors[0]}
       />}
@@ -67,7 +68,8 @@ export default class ProductGrid extends Component {
           {this.props.products.map((item, index) => 
             <GridElement 
               key={`product_${index}`} 
-              item={item} 
+              item={item}
+              index={index} 
               filteredColor={this.props.filteredColor}
             />
           )}

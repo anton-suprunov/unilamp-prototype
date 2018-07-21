@@ -2,10 +2,9 @@
 @import "../../shared/mixins";
 
 .grid {
-	margin-top: 67px;
+	margin-top: 40px;
 	display: none;
 	position: relative;
-	//left: 30px;
 	
 	&_active {
 		display: block;
@@ -71,20 +70,21 @@
 }
 
 .grid__link {
-	//color: #D83F2A;
 	text-decoration: none;
 	display: block;
-	max-width: 80%;
+	max-width: 90%;
 	margin: 0 auto;
 	text-align: center;
-	
 	height: 20px;
 	width: 160px;
 	color: #4D4D4D;
 	font-family: Muli;
 	font-size: 14px;
 	line-height: 20px;
-	
+
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 
   &:after {
     content: "";

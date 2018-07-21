@@ -1,0 +1,25 @@
+.breadcrumbs {
+  position: relative;
+  left: 35px;
+  margin-bottom: 20px;
+}
+
+.breadcrumbs__link {
+  height: 20px;
+  width: 282px;
+  color: #4D4D4D;
+  font-family: Muli;
+  font-size: 14px;
+  line-height: 20px;
+  
+  &:first-child {
+    opacity: .5;
+  }
+
+  &:after {
+    content: "/";
+    padding: 0 5px;
+  }
+
+  &:last-child:after { content: "" }
+}
