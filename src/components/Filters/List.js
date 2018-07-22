@@ -4,26 +4,16 @@ import { Checkbox } from 'antd'
 
 import Popup, { PopupContainer } from '../Popup'
 
-const colorsMap = {
-  'White': '#FFFFFF',
-  'Matt White': '#FFFFFF',
-  'Silver': 'radial-gradient(circle, #FFFEFE 0%, #CACACA 100%)',
-  'Graphite': 'rgba(73,79,79,.4)',
-  'Black': '#434848',
-}
-
 const FiltersListItem = ({
   item: {
     A_PopupName: title,
     Subcategory: type,
     A_PopupText_ENG: info = null
   },
-  //shorter,
   onChange,
   activeList = [],
 }) => (
   <li className={classnames("filters__filter", "filters__filter_checkbox", {
-    //"filters__filter_shorter": shorter,
     "filters__filter_has-color": type === 'Color',
     "filters__filter_has-text": info,
   })} >

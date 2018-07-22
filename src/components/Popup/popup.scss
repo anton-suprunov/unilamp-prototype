@@ -12,18 +12,19 @@
 }
 
 .popup {
-  //height: 158.75px;
-  width: 336px;
-  border: 1px solid #E3E3E3;
-  background-color: #FFFFFF;
-  //box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
-  //box-shadow: 0 2px 4px 0 rgba(218, 74, 54, 0.15);
-  box-shadow: 0 2px 4px 0 rgba(218, 74, 54, 0.15);
-  //box-shadow: 0 2px 4px 0 #D83F2A;
   position: absolute;
   right: -355px;
   top: -18px;
   display: none;
+  padding-left: 30px;
+}
+
+.popup__wrap {
+  width: 336px;
+  border: 1px solid #E3E3E3;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 4px 0 rgba(218, 74, 54, 0.15);
+  position: relative;
 }
 
 .popup__content {

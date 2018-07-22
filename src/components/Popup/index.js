@@ -7,10 +7,12 @@ const Popup = ({
   text
 }) => (
   <div className="popup">
-    <span className="popup__triangle"></span>
-    <div className="popup__content">
-      <p className="popup__text">{text}</p>
-      <a href="#" className="popup__link">Read More</a>
+    <div className="popup__wrap">
+      <span className="popup__triangle"></span>
+      <div className="popup__content">
+        <p className="popup__text">{text}</p>
+        <a href="#" className="popup__link">Read More</a>
+      </div>
     </div>
   </div>
 )
@@ -25,17 +27,19 @@ class PopupContainer extends Component {
   }
 
   render() {
-    return <ClickOutside
+    return <div
       {...this.props}
-      onClickOutside={() => this.setState({ open: false })}
+      onMouseEnter={() => this.setState({ open: true })}
+      onMouseLeave={() => this.setState({ open: false })}
+      //onClickOutside={() => this.setState({ open: false })}
       className={"popup-container " + 
         (this.props.className ? this.props.className : "") + 
         (this.state.open ? " popup-container_open" : "")
       }
-      onClick={() => this.setState({ open: !this.state.open })}
+      //onClick={() => this.setState({ open: !this.state.open })}
     >
       {this.props.children}
-    </ClickOutside>
+    </div>
   }
 }
 
