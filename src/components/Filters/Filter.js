@@ -35,6 +35,7 @@ const Filter = ({
       items: filter.items,
       type: filter['Subcategory'],
       info: filter['A_PopupText_ENG'],
+      popupIcon: filter['A_PopupIcon']
     }}
     {...props}
   />

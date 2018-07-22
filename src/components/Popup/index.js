@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ClickOutside from 'react-click-outside'
+//import ClickOutside from 'react-click-outside'
 
 import './popup.scss'
 
@@ -27,16 +27,23 @@ class PopupContainer extends Component {
   }
 
   render() {
+    const {
+      popupIcon,
+      ...props,
+    } = this.props;
+
     return <div
-      {...this.props}
+      {...props}
       onMouseEnter={() => this.setState({ open: true })}
       onMouseLeave={() => this.setState({ open: false })}
-      //onClickOutside={() => this.setState({ open: false })}
+      
       className={"popup-container " + 
         (this.props.className ? this.props.className : "") + 
         (this.state.open ? " popup-container_open" : "")
       }
-      //onClick={() => this.setState({ open: !this.state.open })}
+      style={{
+        backgroundImage: (popupIcon ? `url(${popupIcon[0].url})` : null)
+      }}
     >
       {this.props.children}
     </div>

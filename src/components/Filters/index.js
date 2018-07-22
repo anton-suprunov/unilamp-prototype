@@ -50,7 +50,7 @@ class Filters extends Component {
         this.setState({
           filtersBasic: parsedFilters.filter(f => f['A_FilterCategory'] === 'Basic'),
           filtersAdvanced: parsedFilters.filter(f => f['A_FilterCategory'] === 'Expert'),
-        });
+        }, () => { console.log(this.state) });
       })
   }
 

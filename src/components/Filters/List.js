@@ -8,7 +8,9 @@ const FiltersListItem = ({
   item: {
     A_PopupName: title,
     Subcategory: type,
-    A_PopupText_ENG: info = null
+    A_PopupText_ENG: info = null,
+    A_HelperIcon: helperIcon = null,
+    A_PopupIcon: popupIcon = null,
   },
   onChange,
   activeList = [],
@@ -22,8 +24,12 @@ const FiltersListItem = ({
       checked={activeList.indexOf(title) !== -1}
     >{title}</Checkbox>
 
-    {/*item.color && <span className="filters__filter-color" style={{ background: item.color }}></span>*/}
-    {info && <PopupContainer className="filters__filter-info">
+    { helperIcon && <span className="filters__filter-color" style={{ backgroundImage: `url(${helperIcon[0].url})` }}></span> }
+    { info && 
+      <PopupContainer 
+        className="filters__filter-info"
+        popupIcon={popupIcon}
+      >
         <Popup text={info} />
       </PopupContainer>
     }
@@ -39,15 +45,21 @@ const FiltersList = ({
     items,
     type,
     info = null,
+    popupIcon = null,
   } = filter;
 
   return (
     <div className="filters__group">
       <h5 className="filters__group-title">
         {title}
-        {info && <PopupContainer className="filters__info">
-          <Popup text={info} />
-        </PopupContainer>}
+        {info && 
+          <PopupContainer 
+            className="filters__info"
+            popupIcon={popupIcon}
+          >
+            <Popup text={info} />
+          </PopupContainer>
+        }
       </h5>
       <ul className="filters__list">
         { items && items.length && items.map((item, index) => (

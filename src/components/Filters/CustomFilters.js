@@ -39,7 +39,7 @@ class Size extends Component {
     return  <div className="filters__group">
       <h5 className="filters__group-title">
         Size
-        <PopupContainer className="filters__info">
+        <PopupContainer className="filters__info" popupIcon={filter.popupIcon}>
           <Popup text={filter.info} />
         </PopupContainer>
       </h5>
@@ -92,7 +92,7 @@ class Power extends Component {
     return <div className="filters__group">
       <h5 className="filters__group-title">
         Power (W)
-        <PopupContainer className="filters__info">
+        <PopupContainer className="filters__info" popupIcon={filter.popupIcon}>
           <Popup text={filter.info} />
         </PopupContainer>
       </h5>
@@ -128,7 +128,7 @@ class Brightness extends Component {
     return <div className="filters__group">
     <h5 className="filters__group-title">
       Brightness (lm)
-      <PopupContainer className="filters__info">
+      <PopupContainer className="filters__info" popupIcon={filter.popupIcon}>
         <Popup text={filter.info} />
       </PopupContainer>
     </h5>
