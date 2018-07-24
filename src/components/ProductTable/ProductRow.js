@@ -5,9 +5,36 @@ import { StickyContainer, Sticky } from 'react-sticky'
 
 import SubTable from './SubTable'
 import SubTableMobile from './SubTableMobile'
-import ColorsList from '../ColorsList'
+//import ColorsList from '../ColorsList'
 import WindowSize from '../../shared/WindowSize'
 import Popup, { PopupContainer } from '../Popup'
+
+import flatten from 'lodash/flatten';
+import uniq from 'lodash/uniq';
+import compact from 'lodash/compact';
+import chunk from 'lodash/chunk';
+
+const ExpandLink = ({
+  expanded = false,
+  onExpandClick,
+  className = '',
+  style = {},
+  itemsLength,
+}) => 
+  <div className={classnames('table__product-expand', className, {
+    'table__product-expand': expanded,
+  })}>
+    <a href="#"
+      onClick={e => {
+        e.preventDefault();
+        onExpandClick();
+      }}
+      style={style}
+    >
+      { expanded ? "Collapse" : `Expand (${itemsLength})` }
+    </a>
+  </div>
+
 
 class ProductRow extends Component {
   constructor(props) {
@@ -61,11 +88,21 @@ class ProductRow extends Component {
     if (this.state.colorSelected) {
       bgImage = item.images[this.state.colorSelected.title.toLowerCase()];
     }
+
+    let featuresList = uniq(flatten(compact(item.subProducts.map(s => s.features))));
+
+    let tempsList = uniq(flatten(compact(item.subProducts.map(s => s.temperature))));
+
+    let powerList = uniq(flatten(compact(item.subProducts.map(s => s.power)))).slice(0, 2);
+
+    let protectionList = uniq(flatten(compact(item.subProducts.map(s => s.protection))));
+
+    //let sizeList = uniq(flatten(compact(item.subProducts.map(s => `${s.diameter} / ${s.width}`)))).slice(0, 2);
+    let sizeList = uniq(flatten(compact(item.subProducts.map(s => s.size))));
     
     const TitlePhoto = <div>
       <Link to="/product/" className="table__product-title">
-        {item.shortTitle ? item.shortTitle : item.title} 
-        {!isMobile ? (" (" + item.subProducts.length + " products)") : ""}
+        {item.shortTitle ? item.shortTitle : item.title}
       </Link>
 
       <Link to="/product/">
@@ -81,20 +118,16 @@ class ProductRow extends Component {
         "table__row_active": this.state.expanded,
         "table__row_collapsed": !this.state.expanded,
       })}
-      onClick={() => {
-        if (isMobile) return;
-        //onExpandClick();
-      }}
-      >
+    >
 
       {/* non mobile header */}
-      {!isMobile && <div className="table__cell table__cell_first">
+      {!isMobile && <div className="table__cell table__cell_first table__cell_main">
         {TitlePhoto}
       </div>
       }
 
       {isMobile &&
-        <div className="table__cell table__cell_first">
+        <div className="table__cell table__cell_main table__cell_first">
           {/* bottom offset should be equal height of "product names" label plus some extra space for padding */}
           {expanded ?
             <Sticky topOffset={-85} bottomOffset={161} className="sticky">
@@ -116,148 +149,142 @@ class ProductRow extends Component {
         </div>
       }
 
-      {isMobile ?
-        <div className="table__cell table__cell_expand">
-          {expanded ?
-            <Sticky topOffset={-85} bottomOffset={161}>
-              {({
-                isSticky,
-                style,
-              }) =>
-                <div
-                  className="table__product-expand table__product-expand_sticky"
-                  style={{
-                    ...style,
-                    top: 0,
-                    transform: isSticky ? "translateY(" + (style.top + 85) + "px)" : "none"
-                  }}>
-                  <a
-                    href="#"
-
-                    onClick={e => {
-                      e.preventDefault();
-                      onExpandClick();
+      <div className="table__main-data-wrap">
+        {isMobile ?
+          <div className="table__cell table__cell_expand">
+            {expanded ?
+              <Sticky topOffset={-85} bottomOffset={161}>
+                {({
+                  isSticky,
+                  style,
+                }) =>
+                  <ExpandLink 
+                    className="table__product-expand_sticky"
+                    style={{
+                      ...style,
+                      top: 0,
+                      transform: isSticky ? "translateY(" + (style.top + 85) + "px)" : "none"
                     }}
-                  >
-                    {expanded ? "Collapse" : "Expand"} Product Family
-                    </a>
-                </div>
-              }
-            </Sticky> :
+                    onExpandClick={onExpandClick}
+                    expanded={expanded}
+                    itemsLength={item.subProducts.length}
+                  />
+                }
+              </Sticky> :
+              <ExpandLink 
+                onExpandClick={onExpandClick}
+                expanded={expanded}
+                itemsLength={item.subProducts.length}
+              />
+            }
+          </div> :
+          <div className="table__cell table__cell_expand">
+            <ExpandLink 
+              onExpandClick={onExpandClick}
+              expanded={expanded}
+              itemsLength={item.subProducts.length}
+            />
+          </div>
+        }
 
-            <div className="table__product-expand">
+        <div className="table__cell">
+          <p className="table__cell-title">Features</p>
+          {chunk(featuresList, 2).map((f, i) => 
+            <p className="table__features-inline" key={`${item.subProducts[0].article}_feature_${i}`}>
+              {f.join(', ')}
+              <br />
+            </p>
+          )}
+        </div>
+
+        <div className="table__cell">
+          <p className="table__cell-title">Temperature</p>
+          <div className="table__cell-data table__cell-data_has-info">
+            {/*<PopupContainer className="table__cell-info">
+              <Popup
+                text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
+              />
+            </PopupContainer>*/}
+            { tempsList.length === 1 ? <span>{tempsList[0]}</span> : "" }
+            { tempsList.length === 2 ? <span>
+              {tempsList[0]}
+              <br />
+              ...
+              <br/>
+              {tempsList[tempsList.length-1]}
+            </span> : "" }
+          </div>
+        </div>
+
+        <div className="table__cell">
+          <p className="table__cell-title">Brigthness</p>
+          <div className="table__cell-data table__cell-data_has-info">
+            {/*<PopupContainer className="table__cell-info">
+              <Popup
+                text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
+              />
+              </PopupContainer>*/}
+            3000 lumen,
+            <br />
+            4000 lumen
+          </div>
+        </div>
+        
+
+        <div className="table__cell">
+          <p className="table__cell-title">LED Power</p>
+          <div className="table__cell-data table__cell-data_has-info">
+            {/*<PopupContainer className="table__cell-info">
+              <Popup 
+                text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
+              />
+            </PopupContainer>*/}
+            {powerList.map((f, i) => 
+              <p className="table__cell-data" key={`${item.subProducts[0].article}_power_${i}`}>
+                {f}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="table__cell">
+          <p className="table__cell-title">Protection</p>
+          <div className="table__cell-data table__cell-data_has-info">
+            {/*<PopupContainer className="table__cell-info">
+              <Popup
+                text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
+              />
+            </PopupContainer>*/}
+            {chunk(protectionList,2).map((f, i) => 
+              <p className="table__cell-data" key={`${item.subProducts[0].article}_protection_${i}`}>
+                {f.join(', ')}
+              </p>
+            )}
+          </div>
+        </div>   
+      
+        <div className="table__cell">
+          <p className="table__cell-title">Diameter/Width</p>
+          {sizeList.map((f, i) => 
+              <p className="table__cell-data" key={`${item.subProducts[0].article}_size_${i}`}>
+                {f}
+              </p>
+            )}
+        </div>
+
+        <div className="table__cell table__cell_last">
+          <p className="table__cell-title">Downloads</p>          
+          
+          <div className="table__product-expand table__product-expand_inline">
               <a href="#"
                 onClick={e => {
                   e.preventDefault();
                   onExpandClick();
                 }}
               >
-                {expanded ? "Collapse" : "Expand"} Product Family
-                </a>
+                See all
+              </a>
             </div>
-          }
-        </div> :
-        <div className="table__cell table__cell_expand">
-          <div className="table__product-expand">
-            <a href="#"
-              onClick={e => {
-                e.preventDefault();
-                onExpandClick();
-              }}
-            >
-              { /* {expanded ? "Collapse" : "Expand"} Product Family */ }
-              Entire Family characteristics 
-              <span> (expand for detailed info)</span>
-            </a>
-          </div>
-        </div>
-      }
-
-      <div className="table__cell table__cell_colors">
-        {/*item.colors && <ColorsList
-          colors={item.colors}
-          parentItemKey={index}
-          isVertical={true}
-          onClick={this.onColorClicked}
-          activeColor={this.state.colorSelected ? this.state.colorSelected : item.colors[0]}
-        />*/}
-      </div>
-
-      <div className="table__cell">
-        <p className="table__cell-title">Diameter</p>
-        <p className="table__cell-data">260 mm</p>
-        <p className="table__cell-data">340 mm</p>
-        <p className="table__cell-data">400 mm</p>
-      </div>
-
-      <div className="table__cell">
-        <p className="table__cell-title">Width</p>
-        <p className="table__cell-data">107 mm</p>
-      </div>
-
-      <div className="table__cell">
-        <p className="table__cell-title">LED Power</p>
-        <div className="table__cell-data table__cell-data_has-info">
-          <PopupContainer className="table__cell-info">
-            <Popup 
-              text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
-            />
-          </PopupContainer>
-          30W
-        </div>
-      </div>
-
-      <div className="table__cell">
-        <p className="table__cell-title">Brigthness</p>
-        <div className="table__cell-data table__cell-data_has-info">
-          <PopupContainer className="table__cell-info">
-            <Popup
-              text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
-            />
-          </PopupContainer>
-          3000 lumen
-        </div>
-      </div>
-
-      <div className="table__cell">
-        <p className="table__cell-title">Protection</p>
-        <div className="table__cell-data table__cell-data_has-info">
-          <PopupContainer className="table__cell-info">
-            <Popup
-              text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
-            />
-          </PopupContainer>
-          IP44
-        </div>
-      </div>
-
-      <div className="table__cell">
-        <p className="table__cell-title">Temperature</p>
-        <div className="table__cell-data table__cell-data_has-info">
-          <PopupContainer className="table__cell-info">
-            <Popup
-              text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
-            />
-          </PopupContainer>
-          3000K
-        </div>
-      </div>
-
-      <div className="table__cell table__cell_features">
-        <p className="table__cell-title">Features</p>
-        <div className="table__features">
-          <p className="table__feature">EM03</p>
-          <p className="table__feature">Dali</p>
-          <p className="table__feature">Sendor</p>
-          <p className="table__feature">Dim</p>
-        </div>
-      </div>
-
-      <div className="table__cell table__cell_last">
-        <p className="table__cell-title">Downloads</p>
-        <div className="table__features table__features_single-col">
-          <a href="#" className="table__feature table__feature_manual">See all</a>
-          { /* <a href="#" className="table__feature table__feature_calc">Light Calc</a> */ }
         </div>
       </div>
 

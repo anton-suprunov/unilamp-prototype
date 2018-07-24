@@ -71,7 +71,7 @@ export default class ProductTable extends Component {
           { !this.state.allProductsExpanded ? "expand all" : "collapse all" }
         </a>
 
-        <ul className="table__body">
+        <div className="table__body">
           {this.props.products.map((item, index) => (
             <ProductRow 
               key={`product_${index}`}
@@ -83,7 +83,7 @@ export default class ProductTable extends Component {
               onExpandClick={this.toggleRow.bind(this, index)}
             />
           ))}
-        </ul>
+        </div>
       </div>
     )
   }

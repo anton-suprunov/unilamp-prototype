@@ -29,6 +29,7 @@ const prepareData = (data) => {
       application: node["A_Applications1"] && node["A_Applications1"][0],
       diameter: '1000 mm',
       width: '100 mm',
+      size: node.Size,
       "title": node.Name_Original,
       "power": node.Power,
       "brightness": node.Brightness,
@@ -37,7 +38,8 @@ const prepareData = (data) => {
       "features": node.A_Features,
       "color": node.A_Color && node.A_Color[0],
       "downloadLink": "",
-      "manualLink": ""
+      "manualLink": "",
+      "image": node["A_CardPhoto"][0].url,
     });
 
     if (node.A_Color && node.A_Color.length) {
