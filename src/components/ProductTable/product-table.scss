@@ -60,7 +60,7 @@
   &_sub {
     margin-bottom: 40px;
     margin-top: 0;
-    padding: 0 25px;
+    //padding: 0 25px;
     
     @include mq('mobile') {
       margin-bottom:0;
@@ -299,6 +299,7 @@
       height: 116px;
       width: 122px;
       max-width: 122px;
+      z-index: 1;
 
       .table__row_collapsed &:after {
         display: none;
@@ -324,15 +325,39 @@
         }
       }
     }
-    
-    .table__row_active > &.table__cell_first {
+
+    .table__row_active>&.table__cell_first {
       height: auto;
     }
-
+    
     // make same width for header and content cells in sub tables
     &.table__cell_sub:not(.table__cell_downloads):not(.table__cell_features) {
       //flex-basis: 8%;
       //max-width: 8%;
+    }
+
+    &_expand {
+      position: absolute;
+      left: 13px;
+      top: 0px;
+      height: 36px;
+    }
+
+    &_downloads {
+      max-width: 120px;
+      /*.table_sub & { max-width: 65px; }*/
+    }
+
+    &_features {
+      max-width: 170px;
+      width: 170px;
+      margin-right: 30px;
+      @include mq('mobile') {
+        max-width: none;
+        width: auto;
+        margin-right: 0;
+        min-width: 65%;
+      }
     }
 
     &_image {
@@ -378,52 +403,6 @@
         display: block;
         max-width: 65vw;
       }
-    }
-  }
-  
-  &_first {
-    z-index: 1;
-
-    /*.table_sub & {
-      width: 110px;
-      max-width: 110px;
-    }*/
-
-    /*.table_sub-mobile & {
-      width: auto;
-    }*/
-  }
-
-  &_downloads {
-    max-width: 120px;
-    .table_sub & {
-      max-width: 65px;
-    }
-  }
-
-  &_features {
-    max-width: 170px;
-    width: 170px;
-    margin-right: 30px;
-
-    @include mq('mobile') {
-      max-width: none;
-      width: auto;
-      margin-right: 0;
-      min-width: 65%;
-    }
-  }
-
-  /*&_colors {
-    width: 40px;
-  }*/
-
-  &_expand {
-    @include mq('desktop') {
-      position: absolute;
-      left: 13px;
-      top: 0px;
-      height: 36px;
     }
   }
 }

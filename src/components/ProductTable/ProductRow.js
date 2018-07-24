@@ -149,7 +149,7 @@ class ProductRow extends Component {
         </div>
       }
 
-      <div className="table__main-data-wrap">
+      <div className="table__main-data-wrap" onClick={() => onExpandClick()}>
         {isMobile ?
           <div className="table__cell table__cell_expand">
             {expanded ?
