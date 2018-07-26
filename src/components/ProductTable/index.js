@@ -68,7 +68,7 @@ export default class ProductTable extends Component {
           className={"expand-all " + (this.state.allProductsExpanded ? "expand-all_expanded" : "")}
           onClick={this.toggleAllTables}
         >
-          { !this.state.allProductsExpanded ? "expand all" : "collapse all" }
+          { !this.state.allProductsExpanded ? "Expand all" : "Collapse all" }
         </a>
 
         <div className="table__body">

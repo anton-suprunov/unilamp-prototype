@@ -187,7 +187,7 @@ class ProductRow extends Component {
           </div>
         }
 
-        <div className="table__cell">
+        <div className="table__cell table__cell_features table__cell_main">
           <p className="table__cell-title">Features</p>
           {chunk(featuresList, 2).map((f, i) => 
             <p className="table__features-inline" key={`${item.subProducts[0].article}_feature_${i}`}>
@@ -197,7 +197,7 @@ class ProductRow extends Component {
           )}
         </div>
 
-        <div className="table__cell">
+        <div className="table__cell table__cell_temp">
           <p className="table__cell-title">Temperature</p>
           <div className="table__cell-data table__cell-data_has-info">
             {/*<PopupContainer className="table__cell-info">
@@ -216,7 +216,7 @@ class ProductRow extends Component {
           </div>
         </div>
 
-        <div className="table__cell">
+        <div className="table__cell table__cell_brightness">
           <p className="table__cell-title">Brigthness</p>
           <div className="table__cell-data table__cell-data_has-info">
             {/*<PopupContainer className="table__cell-info">
@@ -231,7 +231,7 @@ class ProductRow extends Component {
         </div>
         
 
-        <div className="table__cell">
+        <div className="table__cell table__cell_power">
           <p className="table__cell-title">LED Power</p>
           <div className="table__cell-data table__cell-data_has-info">
             {/*<PopupContainer className="table__cell-info">
@@ -247,7 +247,7 @@ class ProductRow extends Component {
           </div>
         </div>
 
-        <div className="table__cell">
+        <div className="table__cell table__cell_protection">
           <p className="table__cell-title">Protection</p>
           <div className="table__cell-data table__cell-data_has-info">
             {/*<PopupContainer className="table__cell-info">
@@ -263,7 +263,7 @@ class ProductRow extends Component {
           </div>
         </div>   
       
-        <div className="table__cell">
+        <div className="table__cell table__cell_size">
           <p className="table__cell-title">Diameter/Width</p>
           {sizeList.map((f, i) => 
               <p className="table__cell-data" key={`${item.subProducts[0].article}_size_${i}`}>
@@ -272,7 +272,7 @@ class ProductRow extends Component {
             )}
         </div>
 
-        <div className="table__cell table__cell_last">
+        <div className="table__cell table__cell_downloads">
           <p className="table__cell-title">Downloads</p>          
           
           <div className="table__product-expand table__product-expand_inline">
