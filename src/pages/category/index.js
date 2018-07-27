@@ -14,7 +14,9 @@ class CategoryPage extends Component {
   }
 
   componentDidMount() {
-    let categoryKey = this.props.location.pathname.replace("/category/", "");
+    let location = this.props.location.pathname.replace('/unilamp-prototype', '');
+    let categoryKey = location.replace("/category/", "");
+    
     this.setState({
       'products': filterProductByAttr(this.props.initialProducts, {
         type: 'categoryKey',
