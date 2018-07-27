@@ -58,6 +58,17 @@ export default class ProductGrid extends Component {
   }
 
   render() {
+    const {
+      products,
+      limit = 0,
+    } = this.props;
+    
+    let list = products;
+
+    if (limit > 0) {
+      list = products.slice(0, limit);
+    }
+
     return (
       <div
         className={classnames("grid", {
@@ -65,7 +76,7 @@ export default class ProductGrid extends Component {
         })}
       >
         <ul className="grid__list">
-          {this.props.products.map((item, index) => 
+          {list.map((item, index) => 
             <GridElement 
               key={`product_${index}`} 
               item={item}

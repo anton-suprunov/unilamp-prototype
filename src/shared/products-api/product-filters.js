@@ -41,7 +41,7 @@ export const filterProductByAttr = (products, filter) => {
   let res = [];
   //console.log(filter);
   
-  if (filter.type === 'Warnth') {
+  if (filter.type === 'Warmth') {
     filter.value = parseWarmthValue(filter.value);
   }
 
