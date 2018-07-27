@@ -44,8 +44,9 @@ class Categories extends Component {
 
   getPaths = () => {
     let paths = [];
-    paths = this.props.location.pathname.split('/').slice(1);
+    let pathname = this.props.location.pathname.replace('/unilamp-prototype', '');
 
+    paths = pathname.split('/').slice(1);
     if (paths.length === 1 && paths[0].length === 0) {
       return [];
     }
