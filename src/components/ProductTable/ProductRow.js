@@ -42,7 +42,8 @@ class ProductRow extends Component {
 
     this.state = {
       colorSelected: undefined,
-      activeSlide: 0
+      activeSlide: 0,
+      hovered: false,
     };
   }
 
@@ -117,6 +118,7 @@ class ProductRow extends Component {
       className={classnames("table__row", "table__row_top-product", {
         "table__row_active": this.state.expanded,
         "table__row_collapsed": !this.state.expanded,
+        "table__row_hovered": this.state.hovered,
       })}
     >
 
@@ -149,7 +151,11 @@ class ProductRow extends Component {
         </div>
       }
 
-      <div className="table__main-data-wrap" onClick={() => onExpandClick()}>
+      <div 
+        onMouseEnter={() => this.setState({ hovered: true })}
+        onMouseLeave={() => this.setState({ hovered: false })}
+        className="table__main-data-wrap" 
+        onClick={() => onExpandClick()}>
         {isMobile ?
           <div className="table__cell table__cell_expand">
             {expanded ?
@@ -200,11 +206,6 @@ class ProductRow extends Component {
         <div className="table__cell table__cell_temp">
           <p className="table__cell-title">Temperature</p>
           <div className="table__cell-data table__cell-data_has-info">
-            {/*<PopupContainer className="table__cell-info">
-              <Popup
-                text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
-              />
-            </PopupContainer>*/}
             { tempsList.length === 1 ? <span>{tempsList[0]}</span> : "" }
             { tempsList.length === 2 ? <span>
               {tempsList[0]}
@@ -219,11 +220,6 @@ class ProductRow extends Component {
         <div className="table__cell table__cell_brightness">
           <p className="table__cell-title">Brigthness</p>
           <div className="table__cell-data table__cell-data_has-info">
-            {/*<PopupContainer className="table__cell-info">
-              <Popup
-                text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
-              />
-              </PopupContainer>*/}
             3000 lumen,
             <br />
             4000 lumen
@@ -234,11 +230,6 @@ class ProductRow extends Component {
         <div className="table__cell table__cell_power">
           <p className="table__cell-title">LED Power</p>
           <div className="table__cell-data table__cell-data_has-info">
-            {/*<PopupContainer className="table__cell-info">
-              <Popup 
-                text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
-              />
-            </PopupContainer>*/}
             {powerList.map((f, i) => 
               <p className="table__cell-data" key={`${item.subProducts[0].article}_power_${i}`}>
                 {f}
@@ -250,11 +241,6 @@ class ProductRow extends Component {
         <div className="table__cell table__cell_protection">
           <p className="table__cell-title">Protection</p>
           <div className="table__cell-data table__cell-data_has-info">
-            {/*<PopupContainer className="table__cell-info">
-              <Popup
-                text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
-              />
-            </PopupContainer>*/}
             {chunk(protectionList,2).map((f, i) => 
               <p className="table__cell-data" key={`${item.subProducts[0].article}_protection_${i}`}>
                 {f.join(', ')}
@@ -274,17 +260,16 @@ class ProductRow extends Component {
 
         <div className="table__cell table__cell_downloads">
           <p className="table__cell-title">Downloads</p>          
-          
-          <div className="table__product-expand table__product-expand_inline">
-              <a href="#"
-                onClick={e => {
-                  e.preventDefault();
-                  onExpandClick();
-                }}
-              >
-                See all
-              </a>
-            </div>
+          <p className="table__cell-data">
+            <a href="#"
+              onClick={e => {
+                e.preventDefault();
+                onExpandClick();
+              }}
+            >
+              See all
+            </a>
+          </p>
         </div>
       </div>
 

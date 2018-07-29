@@ -8,12 +8,10 @@ const SubTable = ({ products }) => (
       <li className="table__row table__row_sub table__row_header">
       <div className="table__cell table__cell_sub table__cell_image"></div>
 
-        <div className="table__cell table__cell_sub table__cell_sku">
-          <p className="table__cell-title">SKU</p>
-        </div>
+        <div className="table__cell table__cell_sub table__cell_sku">&nbsp;</div>
 
-        <div className="table__cell table__cell_sub table__cell_type">
-          <p className="table__cell-title">Product Types</p>
+        <div className="table__cell table__cell_sub table__cell_features">
+          <p className="table__cell-title">Features</p>
         </div>
 
         <div className="table__cell table__cell_sub table__cell_temp">
@@ -48,18 +46,16 @@ const SubTable = ({ products }) => (
           </div>
           
           <div className="table__cell table__cell_sub table__cell_sku">
-            <p className="table__cell-data">{item.article}</p>
+            <p className="table__cell-data table__cell-data_highlight">
+              {item.title}
+              <span className="table__article">{item.article}</span>
+            </p>
           </div>
           
-          <div className="table__cell table__cell_sub table__cell_type">
-            <p className="table__cell-data table__cell-data_highlight table__cell-data_name">
-              {item.title}
+          <div className="table__cell table__cell_sub table__cell_features">
+            <p className="table__cell-data">
+              {item.features ? item.features.join(', ') : ''}
             </p>
-            <PopupContainer className="table__cell-info table__cell-info_right-align">
-              <Popup
-                text="LED is the biggest thing in light since electric light was invented.It shines for over 20 years, can be built into lamps for new designs, and uses a sliver of the energy of incandescent bulbs."
-              />
-            </PopupContainer>
           </div>
           
           <div className="table__cell table__cell_sub table__cell_temp">
@@ -86,7 +82,7 @@ const SubTable = ({ products }) => (
           <div className="table__cell table__cell_sub table__cell_downloads">
             <a href="#" className="table__feature table__feature_manual table__feature_icon-only">Manual</a>
             <a href="#" className="table__feature table__feature_calc table__feature_icon-only">Light calc</a>
-            <a href="#" className="table__feature table__feature_calc table__feature_icon-only">Light calc</a>
+            <a href="#" className="table__feature table__feature_download table__feature_icon-only">Light calc</a>
           </div>
         </li>
       ))}
