@@ -3,9 +3,9 @@ import values from 'lodash/values';
 const MainProductCategoryField = 'A_CardNameLive';
 
 
-const prepareData = (data, categories) => {
+const prepareData = (data) => {
   //console.log(data);
-  //console.log(categories);
+  
   let res = data.reduce((prev, node) => {
     //console.log(node);
 
@@ -27,10 +27,16 @@ const prepareData = (data, categories) => {
 
     prev[node[MainProductCategoryField]].subProducts.push({
       article: node.A_SKU,
+      
       //category: getCategory(node["A_Category"][0], categories),
       category: node["category_name"][0],
       categoryKey: node["category_name"][0].replace(/ /g, '_'),
-      application: node["A_Applications1"] && node["A_Applications1"][0],
+      
+      //application: node["A_Applications1"] && node["A_Applications1"][0],
+      application: node["application_name"] ? node["application_name"][0] : "",
+      applicationKey: node["application_name"] ? 
+        node["application_name"][0].replace(/ /g, '_').replace(/\//g, '_') : "",
+
       diameter: '1000 mm',
       width: '100 mm',
       size: node.Size,

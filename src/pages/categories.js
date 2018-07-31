@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Link from 'gatsby-link';
+import sampleSize from 'lodash/sampleSize'
 
 import ProductGrid from '../components/ProductGrid'
-import { filterProductByAttr } from '../shared/products-api/product-filters';
+//import { filterProductByAttr } from '../shared/products-api/product-filters';
 import './categories.scss';
 
 class CategoriesPage extends Component {
@@ -26,10 +27,11 @@ class CategoriesPage extends Component {
 
     return <div className="cat-list">  
       { categories.map((cat, index) => {
-        let products = filterProductByAttr(initialProducts, {
+        /*let products = filterProductByAttr(initialProducts, {
           type: 'category',
           value: cat.Name,
-        });
+        });*/
+        let products = sampleSize(initialProducts, 4);
         return <div className="cat-list__item" key={`category_${index}`}>
           <span className="cat-list__img" style={{
             backgroundImage: `url(${cat.Photo[0].url})`

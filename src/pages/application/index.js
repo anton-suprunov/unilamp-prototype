@@ -4,7 +4,7 @@ import Link from 'gatsby-link';
 import Landing from '../../components/Landing'
 import { filterProductByAttr } from '../../shared/products-api/product-filters';
 
-class CategoryPage extends Component {
+class ApplicationPage extends Component {
   constructor(props) {
     super(props);
 
@@ -14,12 +14,12 @@ class CategoryPage extends Component {
   }
 
   componentDidMount() {
-    let categoryKey = this.props.location.pathname.replace('/unilamp-prototype', '').replace('/category/', '');
+    let applicationKey = this.props.location.pathname.replace('/unilamp-prototype', '').replace('/application/', '');
 
     this.setState({
       'products': filterProductByAttr(this.props.initialProducts, {
-        type: 'categoryKey',
-        value: categoryKey,
+        type: 'applicationKey',
+        value: applicationKey,
       })
     })
   }
@@ -36,4 +36,4 @@ class CategoryPage extends Component {
   }
 }
 
-export default CategoryPage;
+export default ApplicationPage;

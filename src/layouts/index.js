@@ -40,17 +40,20 @@ class Layout extends Component {
   componentDidMount() {
     Promise.all([
       fetchTable(process.env.AIRTABLE_BASE_MAIN, process.env.AIRTABLE_BASE_MAIN_NAME, process.env.AIRTABLE_BASE_MAIN_VIEW),
-      fetchTable(process.env.AIRTABLE_BASE_MAIN, process.env.AIRTABLE_BASE_CATEGORIES_NAME, process.env.AIRTABLE_BASE_CATEGORIES_VIEW)
+      fetchTable(process.env.AIRTABLE_BASE_MAIN, process.env.AIRTABLE_BASE_CATEGORIES_NAME, process.env.AIRTABLE_BASE_CATEGORIES_VIEW),
+      fetchTable(process.env.AIRTABLE_BASE_MAIN, process.env.AIRTABLE_BASE_APPLICATIONS_NAME, process.env.AIRTABLE_BASE_APPLICATIONS_VIEW),
     ])
-      .then(([ products, categories ]) => {
-        let parsedProducts = formatProductsData(products, categories);
+      .then(([ products, categories, applications ]) => {
+        let parsedProducts = formatProductsData(products);
         console.log('products', parsedProducts);
         console.log('categories', categories);
+        console.log('applications', applications);
         this.setState({
           initialProducts: parsedProducts.slice(0),
           products: parsedProducts.slice(0),
           //categories: extractCategories(products),
-          categories: categories,
+          categories,
+          applications,
         });
       });
   }
@@ -139,13 +142,14 @@ class Layout extends Component {
 
   render() {
     const { 
-      children 
+      children,
     } = this.props;
 
     const {
       initialProducts,
       products,
       categories,
+      applications,
     } = this.state;
 
     return <div>
@@ -165,7 +169,8 @@ class Layout extends Component {
             <h3 className="section-title">PRODUCTS</h3>
 
             <Categories
-              categoriesList={this.state.categories}
+              categories={this.state.categories}
+              applications={this.state.applications}
               onCategorySelect={(type, cat) => this.onFilterChange(type, cat)}
               location={this.props.location}
             />
@@ -186,6 +191,7 @@ class Layout extends Component {
               initialProducts,
               products,
               categories,
+              applications,
             }) : ''} 
           </div>
         </div>

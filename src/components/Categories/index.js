@@ -31,28 +31,54 @@ class Categories extends Component {
       path = 'categories';
     }
 
+    if (path === 'application') {
+      path = 'applications';
+    }
+
     if (paths.length && this.state.activeList !== paths[0]) {
       this.setState({
         activeList: path,
-      }, () => console.log(this.state))
+      });
     }
-  }
-
-  onItemClick = (type, item) => {
-    this.props.onCategorySelect(type, item.title);
-  }
-
+  }  
+  
   getPaths = () => {
     let paths = [];
     let pathname = this.props.location.pathname.replace('/unilamp-prototype', '');
 
     paths = pathname.split('/').slice(1);
     if (paths.length === 1 && paths[0].length === 0) {
-      return [];
+      return ['application', 'Korridor_Trapp'];
     }
 
     return paths;
   }
+
+  prepareApplications = (list) => {
+    return list.reduce((res, item) => {
+      let temp = {
+        "key": item['Name'].replace(/ /g, '_').replace(/\//g, '_'),
+        "title": item['Name'],
+      };
+
+      if (item['parent_application']) {
+        let parentIndex = res.findIndex(i => i['title'] === item['parent_application']);
+        res[parentIndex].sublist = res[parentIndex].sublist ? res[parentIndex].sublist : [];
+        res[parentIndex].sublist.push(temp);
+        return res;
+      }
+
+      res.push(temp);
+      return res;
+
+    }, []);
+  }
+
+  onItemClick = (type, item) => {
+    this.props.onCategorySelect(type, item.title);
+  }
+
+
 
   onTitleClick = listName => {
     let activeList = '';
@@ -66,8 +92,8 @@ class Categories extends Component {
 
   render() {
     const {
-      categoriesList,
-      location,
+      categories = [],
+      applications = [],
     } = this.props;
 
     const {
@@ -75,6 +101,7 @@ class Categories extends Component {
     } = this.state;
 
     let paths = this.getPaths();
+    let applicationsList = this.prepareApplications(applications);
 
     return <div>
       <SortList 
@@ -99,46 +126,28 @@ class Categories extends Component {
 
       <SortList
         title="Product Categories"
-        list={categoriesList.map(v => ({
+        list={categories.map(v => ({
           "key": v.Name.replace(/ /g, '_'),
           "title": v.Name,
         }))}
-        onClick={this.onItemClick.bind(this, 'categories')}
+        //onClick={this.onItemClick.bind(this, 'categories')}
         isActive={activeList === 'categories'}
         onTitleClick={this.onTitleClick.bind(this, 'categories')}
         onTitleSpecialClick={() => navigateTo('/categories')}
         linkTo={'category'}
-        activePath={(paths && paths[0] === 'category') ? [paths[1]] : []}
+        activePath={(paths[0] === 'category') ? paths.slice(1) : []}
       />
 
       <SortList
         title="Product Applications"
-        list={[
-          { "key": "kitchen", "title": "Kitchen" },
-          { "key": "outdoors", "title": "Outdoors" },
-          { "key": "livingroom", "title": "Livingroom" },
-          { "key": "bathroom", "title": "Bathroom" },
-          {
-            "key": "trade-housing", 
-            "title": "Trade and Housing",
-            "sublist": [
-              { "key": "corridor", "title": "Korridor/Trapp" },
-              { "key": "reception", "title": "Reception" },
-              { "key": "office", "title": "Office and meeting rooms" },
-              { "key": "subordinate", "title": "Subordinate room" }
-            ]
-          },
-          { "key": "smarthome", "title": "Smarthome" },
-          { "key": "other", "title": "Other" }
-        ]}
-        activePath={(paths.length === 0 || paths[0] === 'application') ? [
-          'trade-housing',
-          'corridor'
-        ] : []}
-        onClick={this.onItemClick.bind(this, 'application')}
-        onTitleSpecialClick={() => this.props.onCategorySelect('application')}
+        list={applicationsList}
+        activePath={(paths[0] === 'application') ? paths.slice(1) : []}
+        //onClick={this.onItemClick.bind(this, 'application')}
+        //onTitleSpecialClick={() => this.props.onCategorySelect('application')}
+        onTitleSpecialClick={() => navigateTo('/applications')}
         isActive={activeList === 'applications'}
         onTitleClick={this.onTitleClick.bind(this, 'applications')}
+        linkTo={'application'}
       />
     </div>
   }
