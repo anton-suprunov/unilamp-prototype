@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Link from 'gatsby-link'
+import Link, { navigateTo } from 'gatsby-link'
 import classnames from 'classnames'
 import { StickyContainer, Sticky } from 'react-sticky'
 
@@ -102,11 +102,11 @@ class ProductRow extends Component {
     let sizeList = uniq(flatten(compact(item.subProducts.map(s => s.size))));
     
     const TitlePhoto = <div>
-      <Link to="/product/" className="table__product-title">
+      <Link to={`/product/${item.key}`} className="table__product-title">
         {item.shortTitle ? item.shortTitle : item.title}
       </Link>
 
-      <Link to="/product/">
+      <Link to={`/product/${item.key}`}>
         <span
           style={{ 'backgroundImage': `url(${bgImage})` }}
           className="table__photo"
@@ -123,10 +123,9 @@ class ProductRow extends Component {
     >
 
       {/* non mobile header */}
-      {!isMobile && <div className="table__cell table__cell_first table__cell_main">
+      {!isMobile && <div onClick={() => navigateTo(`/product/${item.key}`)} className="table__cell table__cell_first table__cell_main">
         {TitlePhoto}
-      </div>
-      }
+      </div>}
 
       {isMobile &&
         <div className="table__cell table__cell_main table__cell_first">

@@ -34,6 +34,7 @@ class Layout extends Component {
       products: [],
       categories: [],
       activeFilters: [],
+      activePage: props.location.pathname.indexOf('/product/') !== -1 ? 'product' : 'landing',
     }
   }
 
@@ -51,11 +52,18 @@ class Layout extends Component {
         this.setState({
           initialProducts: parsedProducts.slice(0),
           products: parsedProducts.slice(0),
-          //categories: extractCategories(products),
           categories,
           applications,
         });
       });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      this.setState({
+        activePage: nextProps.location.pathname.indexOf('/product/') !== -1 ? 'product' : 'landing',
+      })
+    }
   }
 
   filterProducts = () => {
@@ -152,6 +160,19 @@ class Layout extends Component {
       applications,
     } = this.state;
 
+    const contents = () => {
+      if (products.length > 0) {
+        return children({
+          ...this.props,
+          initialProducts,
+          products,
+          categories,
+          applications,
+        })
+      }
+      return null;
+    }
+
     return <div>
       <Helmet>
         <title>UNILAMP Prototype</title>
@@ -165,37 +186,30 @@ class Layout extends Component {
 
       <div className="container">
         <div className="home-page col-container">
-          <div className="lcol">
-            <h3 className="section-title">PRODUCTS</h3>
+          
+          {this.state.activePage === 'landing' ? [
+            <div className="lcol">
+              <h3 className="section-title">PRODUCTS</h3>
+              <Categories
+                categories={this.state.categories}
+                applications={this.state.applications}
+                onCategorySelect={(type, cat) => this.onFilterChange(type, cat)}
+                location={this.props.location}
+              />
+              <Filters
+                onFilterChange={this.onFilterChange}
+                resetActiveFilters={this.resetActiveFilters}
+                activeFilters={this.state.activeFilters}
+              />
+            </div>,
 
-            <Categories
-              categories={this.state.categories}
-              applications={this.state.applications}
-              onCategorySelect={(type, cat) => this.onFilterChange(type, cat)}
-              location={this.props.location}
-            />
-
-            <Filters
-              onFilterChange={this.onFilterChange}
-              resetActiveFilters={this.resetActiveFilters}
-              activeFilters={this.state.activeFilters}
-            />
-          </div>
-
-          <div className="rcol">
-            <Breadcrumbs />
-            <Search />   
-
-            {products.length > 0 ? children({
-              ...this.props,
-              initialProducts,
-              products,
-              categories,
-              applications,
-            }) : ''} 
-          </div>
+            <div className="rcol">
+              <Breadcrumbs />
+              <Search />
+              {contents()}
+            </div>
+          ] : contents()}
         </div>
-
       </div>
 
       {/*<Subscribe /> */}

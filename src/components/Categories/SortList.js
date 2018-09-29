@@ -59,7 +59,7 @@ export default class SortList extends Component {
       let activeSubmenus = nextProps.list.filter(i => 
         i.sublist && i.sublist.filter(j => j['key'] === lastActiveKey).length > 0
       );
-      console.log('updating categories list', lastActiveKey, nextProps)
+      //console.log('updating categories list', lastActiveKey, nextProps)
       this.setState({
         //activeSubmenus: nextProps.activePath.slice(0, nextProps.activePath.length - 1),
         activeSubmenus: activeSubmenus.length > 0 ? [activeSubmenus[0].key] : [], 

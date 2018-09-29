@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import Link from 'gatsby-link'
+import Link, { navigateTo } from 'gatsby-link'
+//import { navigate } from "gatsby"
 import classnames from 'classnames'
 
 import ColorsList from '../ColorsList'
@@ -30,13 +31,15 @@ class GridElement extends Component {
     } else if (filteredColor) {
       bgImage = item.images[filteredColor.toLowerCase()];
     }
-    
+    let productURL = `/product/${item.key}`;
+
     return <li
       className="grid__li"
       style={{ 'backgroundImage': `url(${bgImage})` }}
+      onClick={() => navigateTo(productURL)}
     >
       {item.isNew && <span className="grid__badge">NY</span>}
-      <Link to="/product/" className="grid__link">{item.title}</Link>
+      <Link to={productURL} className="grid__link">{item.title}</Link>
       {item.colors && <ColorsList
         colors={item.colors}
         //parentItemKey={`${index}_`}

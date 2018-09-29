@@ -287,6 +287,8 @@
 	flex-grow: 1;
 	position: relative;
   
+  &_main { cursor: pointer; }
+
   &_sub { 
     display: flex;
     align-items: center;

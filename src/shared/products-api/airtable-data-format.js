@@ -2,6 +2,9 @@ import values from 'lodash/values';
 
 const MainProductCategoryField = 'A_CardNameLive';
 
+const productGroupKey = key => {
+  return key.replace(/\s/g, '_').toLowerCase().trim();
+};
 
 const prepareData = (data) => {
   //console.log(data);
@@ -22,6 +25,8 @@ const prepareData = (data) => {
       colors: [],
       images: {},
       isNew: false,
+      description: node['A_ProductFamilyDescription_ENG'],
+      key: productGroupKey(node[MainProductCategoryField])
     };
 
 
