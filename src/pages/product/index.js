@@ -42,6 +42,10 @@ class ProductPage extends Component {
       featuresList = uniq(flatten(compact(product.subProducts.map(s => s.features))));
     }
     
+    if (!product.title) {
+      return null;
+    }
+
     return <div className="product">
       <div className="product__top">
         <div className="product__photos">
@@ -50,7 +54,7 @@ class ProductPage extends Component {
         </div>
 
         <div className="product__desc">
-          <h4 className="product__title">{product['title']}</h4>
+          <h4 className="product__title product__title_main">{product['title']}</h4>
           <span className="product__cat">Bruksområde / Novodisc</span>
           <a href="#" className="product__product-data-link">Jump to Produkt data & Produkt nedlastinger</a>
 
@@ -71,7 +75,7 @@ class ProductPage extends Component {
         </div>
       </div>
       
-      <div className="product__description">
+      <div className="product__section">
         <h4 className="product__title product__title_center">Description</h4>
         <ul className="product__descr-list">
           {product.descriptionExtra1 && <li className="product__descr-li">
@@ -90,6 +94,43 @@ class ProductPage extends Component {
           </li>}
         </ul>
         
+      </div>
+
+      <div className="product__section">
+        <h4 className="product__title product__title_apps">Applications</h4>
+        <div className="product__apps">
+          <p className="product__apps-text">{product.applicationsText}</p>
+          <div className="product__apps-photos">
+            <img src={product.applicationsPhotos[0].url} className="product__apps-main-photo" />
+            <div className="product__apps-photos-list">
+              <img src={product.applicationsPhotos[0].url} className="product__apps-photo-small" />
+              <img src={product.applicationsPhotos[1].url} className="product__apps-photo-small" />
+              <img src={product.applicationsPhotos[2].url} className="product__apps-photo-small" />
+              <img src={product.applicationsPhotos[0].url} className="product__apps-photo-small" />
+              <img src={product.applicationsPhotos[1].url} className="product__apps-photo-small" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="product__section">
+        <h4 className="product__title product__title_center">Tech Details / Sensor</h4>
+        <ul className="product__descr-list">
+          {product.descriptionExtra1 && <li className="product__descr-li">
+              <span className="product__descr-img" style={{ backgroundImage: `url(${product.bgImage})` }}></span>
+              <p className="product__descr-text">{product.techDescription1}</p>
+          </li>}
+
+          {product.descriptionExtra2 && <li className="product__descr-li">
+              <span className="product__descr-img" style={{ backgroundImage: `url(${product.bgImage})` }}></span>
+              <p className="product__descr-text">{product.techDescription2}</p>
+          </li>}
+
+          {product.descriptionExtra3 && <li className="product__descr-li">
+              <span className="product__descr-img" style={{ backgroundImage: `url(${product.bgImage})` }}></span>
+              <p className="product__descr-text">{product.techDescription3}</p>
+          </li>}
+        </ul>
       </div>
 
     </div>

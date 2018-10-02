@@ -30,9 +30,15 @@ const prepareData = (data) => {
 
       descriptionExtra1: node["A_ProductDescription_1"],
       descriptionExtra2: node["A_ProductDescription_2"],
-      descriptionExtra3: node["A_ProductDescription_3"]
-    };
+      descriptionExtra3: node["A_ProductDescription_3"],
 
+      applicationsText: node["A_ProductApplicationText_ENG"],
+      applicationsPhotos: node["A_ApplicationsPhoto"],
+
+      techDescription1: node["A_ProductTechDescription1"],
+      techDescription2: node["A_ProductTechDescription2"],
+      techDescription3: node["A_ProductTechDescription3"],
+    };
 
     prev[node[MainProductCategoryField]].subProducts.push({
       article: node.A_SKU,
