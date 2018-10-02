@@ -6,7 +6,9 @@
 .product__top {
   padding: 0 160px;
   display: flex;
+  position: relative;
 }
+
 .product__photos {
   min-width: 380px;
 }
@@ -20,25 +22,40 @@
   background-position: 50% 50%;
 }
 
+.product__slider {
+  background-image: url(../../img/product-slider.jpg);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  width: 600px;
+  height: 153px;
+  position: absolute;
+  left: 54px;
+  top: 290px;
+}
+
 .product__desc {
   width: 320px;
   margin-left: 160px;
+  flex-grow: 1;
 }
 
 .product__title {
-  //height: 50px;
-  //width: 341.22px;
   color: #4D4D4D;
   font-family: Muli;
   font-size: 36px;
   font-weight: 300;
   line-height: 54px;
   margin: 0;
+
+  &_center {
+    color: #8A8A8A;
+    letter-spacing: 1px;
+    line-height: 54px;
+    text-align: center;
+  }
 }
 
 .product__cat {
-  //height: 16px;
-  //width: 323.41px;
   color: #4D4D4D;
   font-family: Muli;
   font-size: 12px;
@@ -47,8 +64,6 @@
 
 .product__product-data-link {
   display: block;
-  //height: 16px;
-  //width: 425.28px;
   color: #B53737;
   font-family: Muli;
   font-size: 12px;
@@ -56,13 +71,11 @@
 }
 
 .product__text {
-  //height: 140px;
-  //width: 443.49px;
   margin-top: 40px;
   color: #4D4D4D;
   font-family: Muli;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 15px;
+  line-height: 22px;
 }
 
 .product__list-title {
@@ -107,3 +120,45 @@
   }
 }
 
+.product__description {
+  margin-top: 100px;
+  padding: 0 240px 0 160px;
+}
+
+.product__descr-list {
+  list-style: none;
+}
+
+.product__descr-li {
+  margin-top: 50px;
+  position: relative;
+  min-height: 100px;
+  display: flex;
+  align-items: center
+}
+
+.product__descr-img {
+  //position: absolute;
+  display: block;
+  margin-left: 30px;
+  top: 0;
+  //min-width: 96px;
+  height: 96px;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: 30px 0;
+  flex-grow: 1;
+  min-width: 320px;
+  //background-position: 
+}
+
+.product__descr-text {
+  //height: 394.56px;
+  //width: 592.35px;
+  //padding-left: 220px;
+  color: #4D4D4D;
+  font-family: Muli;
+  font-size: 15px;
+  line-height: 22px;
+  //padding-top: 5px;
+}

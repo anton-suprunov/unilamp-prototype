@@ -26,7 +26,11 @@ const prepareData = (data) => {
       images: {},
       isNew: false,
       description: node['A_ProductFamilyDescription_ENG'],
-      key: productGroupKey(node[MainProductCategoryField])
+      key: productGroupKey(node[MainProductCategoryField]),
+
+      descriptionExtra1: node["A_ProductDescription_1"],
+      descriptionExtra2: node["A_ProductDescription_2"],
+      descriptionExtra3: node["A_ProductDescription_3"]
     };
 
 
