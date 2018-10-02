@@ -17,7 +17,7 @@ class ProductPage extends Component {
   }
 
   initState = (props) => {
-    let productKey = props.location.pathname.replace('/product/', '');
+    let productKey = props.location.pathname.replace('/unilamp-prototype', '').replace('/product/', '');
     console.log(props.initialProducts.find(p => p.key === productKey));
     this.setState({
       product: props.initialProducts ? props.initialProducts.find(p => p.key === productKey) : {}
