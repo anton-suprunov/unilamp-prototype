@@ -5,6 +5,7 @@ body {
 	@include mq('mobile') {
 		padding-top: 40px;
 	}
+	overflow-x: hidden;
 }
 
 // ant design overrides

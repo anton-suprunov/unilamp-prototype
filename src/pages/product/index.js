@@ -93,7 +93,10 @@ class ProductPage extends Component {
             <p className="product__descr-text">{product.descriptionExtra3}</p>
           </li>}
         </ul>
-        
+      </div>
+
+      <div className="warranty-container">
+          <div className="warranty"></div>
       </div>
 
       <div className="product__section">
@@ -132,6 +135,14 @@ class ProductPage extends Component {
           </li>}
         </ul>
       </div>
+
+      <div className="products-thumb"></div>
+
+      <div className="related"></div>
+
+      <div className="related-articles"></div>
+
+      <div className="related-hardware"></div>
 
     </div>
   }

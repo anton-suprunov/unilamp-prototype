@@ -200,6 +200,7 @@
   height: 332px;
   width: 612px;
 }
+
 .product__apps-photos-list {
   margin-top: 20px;
   display: flex;
@@ -211,4 +212,79 @@
   height: 51.39px;
   width: 114.9px;
   border: 1px solid #FFFFFF;
+}
+
+.warranty-container {
+  position: relative;
+  margin: 75px 0;
+  height: 450px;
+
+  &:after,
+  &:before {
+    content: "";
+    position: absolute;
+    top:0;
+    bottom: 0;
+    background-color: #f9f9f9;
+    left: -1000px;
+    right: -1000px;
+    z-index: 1;
+  }
+
+  //&:after { left: -999px; right }
+  //&:before { : -999px; }
+}
+
+.warranty {
+  position: relative;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  background-image: url(../../img/warranty.jpg);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: auto 100%; 
+}
+
+.products-thumb {
+  position: relative;
+  margin: 75px 0;
+  height: 510px;
+  background-image: url(../../img/products.jpg);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: auto 100%;
+}
+
+.related {
+  position: relative;
+  margin: 75px 0;
+  height: 310px;
+  background-image: url(../../img/related.jpg);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: auto 100%;
+}
+
+.related-articles {
+  position: relative;
+  margin: 75px 0;
+  height: 660px;
+  background-image: url(../../img/related-articles.jpg);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: auto 100%;
+}
+
+.related-hardware {
+  position: relative;
+  margin: 75px 0;
+  height: 360px;
+  background-image: url(../../img/related-hardware.jpg);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: auto 100%;
 }
